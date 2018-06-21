@@ -10,6 +10,9 @@ import Mood from "@material-ui/icons/Mood";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Whatshot from "@material-ui/icons/Whatshot";
 import * as React from "react";
+import { Link } from "react-router-dom";
+import * as Routes from "src/utils/routes";
+import { LinkStyle } from "src/utils/styles";
 import { BLOCK } from "../../utils/constants";
 
 export default class HomepageTabs extends React.Component {
@@ -17,13 +20,19 @@ export default class HomepageTabs extends React.Component {
     return (
       <Grid container={true}>
         <Grid item={true} xs={12} md={4}>
-          <TabButton title="Mais fáceis" icon={Mood} />
+          <Link to={Routes.ListarFacil} style={LinkStyle}>
+            <TabButton title="Mais fáceis" icon={Mood} />
+          </Link>
         </Grid>
         <Grid item={true} xs={12} md={4}>
-          <TabButton title="Mais úteis" icon={ThumbUp} />
+          <Link to={Routes.ListarUtil} style={LinkStyle}>
+            <TabButton title="Mais úteis" icon={ThumbUp} />
+          </Link>
         </Grid>
         <Grid item={true} xs={12} md={4}>
-          <TabButton title="Mais recomendadas" icon={Whatshot} />
+          <Link to={Routes.ListarRecomendado} style={LinkStyle}>
+            <TabButton title="Mais recomendadas" icon={Whatshot} />
+          </Link>
         </Grid>
       </Grid>
     );

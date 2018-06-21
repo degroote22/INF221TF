@@ -15,7 +15,14 @@ import {
 import TextField from "@material-ui/core/TextField";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
+import { Link } from "react-router-dom";
+import { LinkStyle } from "src/utils/styles";
+import { SearchState } from "src/utils/types";
+import Menu from "../../components/Menu";
+import ClassManager from "../../singletons/ClassManager";
+import UserManager from "../../singletons/UserManager";
 import { BLOCK } from "../../utils/constants";
+import { DisciplinaGo, UsuarioGo } from "../../utils/routes";
 import Tabs from "./Tabs";
 
 type ClassNames =
@@ -60,13 +67,8 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
   }
 });
 
-enum SearchState {
-  NONE,
-  CLASS,
-  USER
-}
-
 const initialState = {
+  anchorEl: undefined as HTMLElement | undefined,
   search: "",
   state: SearchState.NONE
 };
@@ -90,12 +92,16 @@ class RecipeReviewCard extends React.Component<
               title: classes.headerText
             }}
             action={
-              <IconButton>
+              <IconButton onClick={this.onPopopverClick}>
                 <MoreVertIcon color="secondary" />
               </IconButton>
             }
             title="Catálogo de Matérias - UFV"
             subheader="Escolha por categoria ou use a busca"
+          />
+          <Menu
+            anchorEl={this.state.anchorEl}
+            onClose={this.handlePopoverClose}
           />
           <Tabs />
           <CardContent className={classes.actions}>
@@ -146,41 +152,42 @@ class RecipeReviewCard extends React.Component<
     );
   }
 
+  private onPopopverClick = (event: React.MouseEvent<HTMLElement>) => {
+    this.setState({
+      anchorEl: event.currentTarget
+    });
+  };
+
+  private handlePopoverClose = () => {
+    this.setState({
+      anchorEl: undefined
+    });
+  };
+
   private renderUserList = () => {
-    const users = [
-      { name: "João da Silva", id: "0" },
-      { name: "Maria da Silva", id: "1" },
-      { name: "José da Silva", id: "2" },
-      { name: "Carla da Silva", id: "3" },
-      { name: "Antônia da Silva", id: "4" },
-      { name: "Manoel da Silva", id: "5" }
-    ];
-    return users.map(u => {
+    return UserManager.getUsers(this.state.search, this.state.state).map(u => {
       return (
-        <ListItem key={u.id} button={true} component="a" href="#simple-list">
-          <ListItemText primary={u.name} />
-        </ListItem>
+        <Link key={u.id} to={UsuarioGo(u.id)} style={LinkStyle}>
+          <ListItem button={true}>
+            <ListItemText primary={u.name} />
+          </ListItem>
+        </Link>
       );
     });
   };
 
   private renderClassList = () => {
-    const users = [
-      { name: "INF221", id: "0" },
-      { name: "INF222", id: "1" },
-      { name: "INF223", id: "2" },
-      { name: "INF224", id: "3" },
-      { name: "INF225", id: "4" },
-      { name: "INF226", id: "5" },
-      { name: "ECO270", id: "6" }
-    ];
-    return users.map(u => {
-      return (
-        <ListItem key={u.id} button={true} component="a" href="#simple-list">
-          <ListItemText primary={u.name} />
-        </ListItem>
-      );
-    });
+    return ClassManager.getClasses(this.state.search, this.state.state).map(
+      c => {
+        return (
+          <Link key={c.id} to={DisciplinaGo(c.id)} style={LinkStyle}>
+            <ListItem button={true}>
+              <ListItemText primary={c.name} />
+            </ListItem>
+          </Link>
+        );
+      }
+    );
   };
 
   private onChangeClass = (event: React.ChangeEvent<HTMLInputElement>) => {
