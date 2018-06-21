@@ -4,6 +4,7 @@ import HomePage from "src/pages/HomePage";
 import MinhaConta from "src/pages/MinhaConta";
 import HistoryManager from "src/singletons/HistoryManager";
 import * as Routes from "src/utils/routes";
+import Login from "./pages/Login";
 
 class App extends React.Component {
   public render() {
@@ -17,7 +18,7 @@ class App extends React.Component {
           <Route path={Routes.MinhasAvaliacoes} component={MinhaConta} />
           <Route path={Routes.Logoff} component={MinhaConta} />
           <Route path={Routes.Listar} component={MinhaConta} />
-          <Route path={Routes.Login} component={MinhaConta} />
+          <Route path={Routes.Login} component={Login} />
           <HomePage />
         </span>
       </Router>

@@ -11,10 +11,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
 import HistoryManager from "../singletons/HistoryManager";
 import { BLOCK } from "../utils/constants";
+import CardHeaderAction from "./CardHeaderAction";
 import Menu from "./Menu";
 
 type ClassNames =
@@ -158,9 +158,7 @@ class Layout extends React.Component<
           <Typography variant="title" color="inherit" className={classes.flex}>
             {this.props.title}
           </Typography>
-          <IconButton onClick={this.onPopopverClick}>
-            <MoreVertIcon color="secondary" />
-          </IconButton>
+          <CardHeaderAction onPopopverClick={this.onPopopverClick} />
           <Menu
             onClose={this.handlePopoverClose}
             anchorEl={this.state.anchorEl}

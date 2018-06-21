@@ -2,7 +2,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -13,9 +12,9 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import CardHeaderAction from "src/components/CardHeaderAction";
 import { LinkStyle } from "src/utils/styles";
 import { SearchState } from "src/utils/types";
 import Menu from "../../components/Menu";
@@ -91,11 +90,7 @@ class RecipeReviewCard extends React.Component<
               subheader: classes.headerText,
               title: classes.headerText
             }}
-            action={
-              <IconButton onClick={this.onPopopverClick}>
-                <MoreVertIcon color="secondary" />
-              </IconButton>
-            }
+            action={<CardHeaderAction onPopopverClick={this.onPopopverClick} />}
             title="Catálogo de Matérias - UFV"
             subheader="Escolha por categoria ou use a busca"
           />
