@@ -19,6 +19,7 @@ import Menu from "./Menu";
 
 type ClassNames =
   | "paper"
+  | "innerPaper"
   | "root"
   | "bigHeader"
   | "bigButton"
@@ -37,8 +38,8 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
     [theme.breakpoints.up("md")]: {
       display: "block",
       position: "absolute",
-      right: 0,
-      top: 0,
+      right: -BLOCK / 4,
+      top: -BLOCK / 4,
       zIndex: 99999
     }
   },
@@ -52,6 +53,11 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
   flex: {
     flex: 1
   },
+  innerPaper: {
+    height: "100%",
+    maxHeight: "calc(100vh - 64px)",
+    overflow: "auto"
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20
@@ -62,6 +68,7 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
     height: "100%",
     position: "absolute",
     width: "100%",
+
     [theme.breakpoints.up("md")]: {
       height: "initial",
       minHeight: theme.breakpoints.values.md / 2,
@@ -71,6 +78,7 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
   root: {
     display: "flex",
     justifyContent: "center",
+
     width: "100%",
     [theme.breakpoints.up("md")]: {
       paddingTop: BLOCK / 2
@@ -94,7 +102,6 @@ class Layout extends React.Component<
     return (
       <Modal open={true}>
         <div className={classes.root}>
-          {this.renderBigButton()}
           <div
             onClick={HistoryManager.goHome}
             style={{
@@ -105,9 +112,13 @@ class Layout extends React.Component<
             }}
           />
           <div className={classes.paper}>
-            {this.renderAppBar()}
-            {this.renderBigHeader()}
-            {this.props.children}
+            <div style={{ height: BLOCK }} className={classes.appBar} />
+            <div className={classes.innerPaper}>
+              {this.renderBigButton()}
+              {this.renderAppBar()}
+              {this.renderBigHeader()}
+              {this.props.children}
+            </div>
           </div>
         </div>
       </Modal>
@@ -145,7 +156,7 @@ class Layout extends React.Component<
     const { classes } = this.props;
 
     return (
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             className={classes.menuButton}

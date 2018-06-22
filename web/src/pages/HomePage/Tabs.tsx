@@ -15,30 +15,6 @@ import * as Routes from "src/utils/routes";
 import { LinkStyle } from "src/utils/styles";
 import { BLOCK } from "../../utils/constants";
 
-export default class HomepageTabs extends React.Component {
-  public render() {
-    return (
-      <Grid container={true}>
-        <Grid item={true} xs={12} md={4}>
-          <Link to={Routes.ListarFacil} style={LinkStyle}>
-            <TabButton title="Mais fáceis" icon={Mood} />
-          </Link>
-        </Grid>
-        <Grid item={true} xs={12} md={4}>
-          <Link to={Routes.ListarUtil} style={LinkStyle}>
-            <TabButton title="Mais úteis" icon={ThumbUp} />
-          </Link>
-        </Grid>
-        <Grid item={true} xs={12} md={4}>
-          <Link to={Routes.ListarRecomendado} style={LinkStyle}>
-            <TabButton title="Mais recomendadas" icon={Whatshot} />
-          </Link>
-        </Grid>
-      </Grid>
-    );
-  }
-}
-
 const TabButtonBase: React.SFC<
   WithStyles<ButtonClassesNames> & { title: string; icon: any }
 > = props => {
@@ -76,3 +52,27 @@ const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
 });
 
 const TabButton = withStyles(styles)(TabButtonBase);
+
+export default class HomepageTabs extends React.Component {
+  public render() {
+    return (
+      <Grid container={true}>
+        <Grid item={true} xs={12} md={4}>
+          <Link to={Routes.ListarFacil} style={LinkStyle}>
+            <TabButton title="Mais fáceis" icon={Mood} />
+          </Link>
+        </Grid>
+        <Grid item={true} xs={12} md={4}>
+          <Link to={Routes.ListarUtil} style={LinkStyle}>
+            <TabButton title="Mais úteis" icon={ThumbUp} />
+          </Link>
+        </Grid>
+        <Grid item={true} xs={12} md={4}>
+          <Link to={Routes.ListarRecomendado} style={LinkStyle}>
+            <TabButton title="Mais recomendadas" icon={Whatshot} />
+          </Link>
+        </Grid>
+      </Grid>
+    );
+  }
+}

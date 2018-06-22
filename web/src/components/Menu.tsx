@@ -1,3 +1,4 @@
+import { Divider } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import * as React from "react";
@@ -8,8 +9,7 @@ import { LinkStyle } from "../utils/styles";
 const options = [
   { label: "Minha Conta", to: MinhaConta },
   { label: "Minhas Reações", to: Home },
-  { label: "Minhas Avaliações", to: Home },
-  { label: "Sair da conta", to: Logoff }
+  { label: "Minhas Avaliações", to: Home }
 ];
 
 class CommonMenu extends React.Component<{
@@ -36,6 +36,10 @@ class CommonMenu extends React.Component<{
             <MenuItem onClick={this.props.onClose}>{option.label}</MenuItem>
           </Link>
         ))}
+        <Divider />
+        <Link to={Logoff} style={LinkStyle}>
+          <MenuItem onClick={this.props.onClose}>Sair da conta</MenuItem>
+        </Link>
       </Menu>
     );
   }

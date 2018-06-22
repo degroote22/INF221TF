@@ -1,9 +1,18 @@
+import HistoryManager from "../singletons/HistoryManager";
+
 export const Home = "/";
 export const MinhasReacoes = "/mreacoes";
 export const MinhaConta = "/minhaconta";
 export const MinhasAvaliacoes = "/mavaliacoes";
+export const AvaliarDisciplina = "/avaliardisciplina";
 export const Logoff = "/logoff";
 export const Login = "/login";
+export const LoginGo = () => {
+  return {
+    pathname: "/login",
+    state: { from: HistoryManager.getRoute() }
+  };
+};
 export const Listar = "/listar/:type(facil|util|recomendado)";
 export const ListarFacil = "/listar/facil";
 export const ListarUtil = "/listar/util";

@@ -1,12 +1,15 @@
+import HistoryManager from "./HistoryManager";
+
 type FnType = (logged: boolean) => void;
 
 class AuthManager {
-  private logged = false;
+  private logged = true;
   private subscriptionMap = {} as { [index: string]: FnType };
   private counter = 0;
 
   public login = () => {
     this.logged = true;
+    HistoryManager.clearLoginUrl();
     this.onAuthChanged();
   };
 
@@ -14,6 +17,8 @@ class AuthManager {
     this.logged = false;
     this.onAuthChanged();
   };
+
+  public getLogged = () => this.logged;
 
   public subscribeToLogged = (fn: FnType) => {
     const id = String(this.counter) + String(new Date().getTime());

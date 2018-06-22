@@ -15,6 +15,7 @@ import TextField from "@material-ui/core/TextField";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import CardHeaderAction from "src/components/CardHeaderAction";
+import Fab from "src/pages/HomePage/Fab";
 import { LinkStyle } from "src/utils/styles";
 import { SearchState } from "src/utils/types";
 import Menu from "../../components/Menu";
@@ -83,6 +84,7 @@ class RecipeReviewCard extends React.Component<
 
     return (
       <div className={classes.root}>
+        <Fab />
         <Card className={classes.card}>
           <CardHeader
             classes={{

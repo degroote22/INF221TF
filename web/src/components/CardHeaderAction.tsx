@@ -4,7 +4,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import AuthManager from "src/singletons/AuthManager";
-import { Login } from "src/utils/routes";
+import { LoginGo } from "src/utils/routes";
 import { LinkStyle } from "src/utils/styles";
 
 type onPopopverClickType = (event: React.MouseEvent<HTMLElement>) => void;
@@ -42,7 +42,7 @@ class CardHeaderAction extends React.Component<
       );
     } else {
       return (
-        <Link to={Login} style={LinkStyle}>
+        <Link to={LoginGo()} style={LinkStyle}>
           <Button color="secondary">Entrar</Button>
         </Link>
       );

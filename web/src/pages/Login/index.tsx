@@ -15,7 +15,7 @@ const Login: React.SFC = props => {
         }}
       >
         <a onClick={AuthManager.login}>
-          <img style={{ maxWidth: 250, cursor: "pointer" }} src="./fb.png" />
+          <img style={{ maxWidth: 250, cursor: "pointer" }} src="/fb.png" />
         </a>
       </div>
     </Layout>
