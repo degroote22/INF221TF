@@ -13,6 +13,8 @@
     "history": "^4.7.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-popper": "^1.0.0",
+    "fuse.js": "latest",
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "2.16.0"
   },
@@ -27,6 +29,7 @@
     "@types/node": "^10.3.4",
     "@types/react": "^16.4.1",
     "@types/react-dom": "^16.0.6",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "typestrict": "^0.0.9"
   }
 }

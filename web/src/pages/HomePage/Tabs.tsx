@@ -1,78 +1,113 @@
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import {
+  List,
+  ListItem,
+  ListItemText,
   StyleRulesCallback,
-  WithStyles,
-  withStyles
-} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+  withStyles,
+  WithStyles
+} from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
 import Mood from "@material-ui/icons/Mood";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Whatshot from "@material-ui/icons/Whatshot";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import * as Routes from "src/utils/routes";
-import { LinkStyle } from "src/utils/styles";
-import { BLOCK } from "../../utils/constants";
+import { IClassType, RankTypes } from "src/utils/types";
+import ClassManager from "../../singletons/ClassManager";
+import { DisciplinaGo } from "../../utils/routes";
+import { LinkStyle } from "../../utils/styles";
 
-const TabButtonBase: React.SFC<
-  WithStyles<ButtonClassesNames> & { title: string; icon: any }
-> = props => {
-  const Icon = props.icon;
-  return (
-    <Button className={props.classes.base}>
-      <span className={props.classes.rowOrColumn}>
-        <span style={{ padding: BLOCK / 8 }}>
-          <Icon color="primary" />
-        </span>
-        <Typography component="span" variant="subheading" color="primary">
-          {props.title}
-        </Typography>
-      </span>
-    </Button>
-  );
-};
-
-type ButtonClassesNames = "base" | "rowOrColumn";
+type ButtonClassesNames = "root";
 const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
-  base: {
-    height: BLOCK,
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      height: 2 * BLOCK
-    }
-  },
-  rowOrColumn: {
-    alignItems: "center",
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      flexDirection: "column"
-    }
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    flexGrow: 1,
+    width: "100%"
   }
 });
 
-const TabButton = withStyles(styles)(TabButtonBase);
+const initialState = {
+  rank: RankTypes.useful
+};
 
-export default class HomepageTabs extends React.Component {
+class HomepageTabs extends React.Component<
+  WithStyles<ButtonClassesNames>,
+  typeof initialState
+> {
+  public readonly state = initialState;
   public render() {
     return (
-      <Grid container={true}>
-        <Grid item={true} xs={12} md={4}>
-          <Link to={Routes.ListarFacil} style={LinkStyle}>
-            <TabButton title="Mais fáceis" icon={Mood} />
-          </Link>
-        </Grid>
-        <Grid item={true} xs={12} md={4}>
-          <Link to={Routes.ListarUtil} style={LinkStyle}>
-            <TabButton title="Mais úteis" icon={ThumbUp} />
-          </Link>
-        </Grid>
-        <Grid item={true} xs={12} md={4}>
-          <Link to={Routes.ListarRecomendado} style={LinkStyle}>
-            <TabButton title="Mais recomendadas" icon={Whatshot} />
-          </Link>
-        </Grid>
-      </Grid>
+      <React.Fragment>
+        <AppBar position="static" color="default" elevation={1}>
+          <Tabs
+            value={this.state.rank}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            fullWidth={true}
+            centered={true}
+            className={this.props.classes.root}
+          >
+            <Tab label="Uteis" value={RankTypes.useful} icon={<Mood />} />
+            <Tab label="Fáceis" value={RankTypes.easy} icon={<ThumbUp />} />
+            <Tab
+              label="Recomendadas"
+              value={RankTypes.recommended}
+              icon={<Whatshot />}
+            />
+          </Tabs>
+        </AppBar>
+        {this.renderList()}
+      </React.Fragment>
     );
   }
+
+  private renderList = () => {
+    return (
+      <div style={{ overflow: "hidden" }}>
+        <List component="nav" style={{ padding: 0 }}>
+          {ClassManager.getClassesRanked(this.state.rank).map(c => {
+            return this.renderListItem(c, this.state.rank);
+          })}
+        </List>
+      </div>
+    );
+  };
+
+  private getSecondaryText = (c: IClassType, rank: RankTypes) => {
+    if (rank === RankTypes.easy) {
+      return "Facilidade média: " + c.easy.toFixed(2);
+    }
+    if (rank === RankTypes.recommended) {
+      return "Recomendado por: " + c.recommended + " alunos";
+    }
+    if (rank === RankTypes.useful) {
+      return "Utilidade média: " + c.useful.toFixed(2);
+    }
+
+    throw Error("Não implementado");
+  };
+
+  private renderListItem = (c: IClassType, rank: RankTypes) => {
+    const secondary = this.getSecondaryText(c, rank);
+
+    return (
+      <Link to={DisciplinaGo(c.id)} key={c.id} style={LinkStyle}>
+        <ListItem button={true}>
+          <ListItemText
+            primary={c.cod + " - " + c.name}
+            secondary={secondary}
+          />
+        </ListItem>
+      </Link>
+    );
+  };
+
+  private handleChange = (event: React.ChangeEvent<{}>, rank: RankTypes) => {
+    this.setState({ rank });
+  };
 }
+
+export default withStyles(styles)(HomepageTabs);

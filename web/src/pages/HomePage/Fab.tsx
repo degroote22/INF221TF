@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Edit";
 import * as React from "react";
@@ -12,14 +13,17 @@ const Fab: React.SFC = props => {
         bottom: 0,
         padding: BLOCK / 4,
         position: "fixed",
-        right: 0
+        right: 0,
+        zIndex: 999
       }}
     >
-      <Link to={AvaliarDisciplina}>
-        <Button variant="fab" color="secondary">
-          <AddIcon />
-        </Button>
-      </Link>
+      <Tooltip title="Enviar avaliação">
+        <Link to={AvaliarDisciplina}>
+          <Button variant="fab" color="secondary">
+            <AddIcon />
+          </Button>
+        </Link>
+      </Tooltip>
     </span>
   );
 };

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Route, Router } from "react-router-dom";
+import Disciplina from "src/pages/Disciplina";
 import HomePage from "src/pages/HomePage";
 import Logoff from "src/pages/Logoff";
 import MinhaConta from "src/pages/MinhaConta";
@@ -14,7 +15,7 @@ class App extends React.Component {
     return (
       <Router history={HistoryManager.getHistory()}>
         <span>
-          <Route path={Routes.Disciplina} component={MinhaConta} />
+          <Route path={Routes.Disciplina} component={Disciplina} />
           <Route path={Routes.Usuario} component={MinhaConta} />
           <Route path={Routes.Listar} component={MinhaConta} />
           <Route path={Routes.Logoff} component={Logoff} />
@@ -22,6 +23,10 @@ class App extends React.Component {
           <PrivateRoute path={Routes.MinhaConta} component={MinhaConta} />
           <PrivateRoute path={Routes.MinhasReacoes} component={MinhaConta} />
           <PrivateRoute path={Routes.MinhasAvaliacoes} component={MinhaConta} />
+          <PrivateRoute
+            path={Routes.AvaliarDisciplinaNoParam}
+            component={AvaliarDisciplina}
+          />
           <PrivateRoute
             path={Routes.AvaliarDisciplina}
             component={AvaliarDisciplina}

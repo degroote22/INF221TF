@@ -1,5 +1,6 @@
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
+import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -11,19 +12,42 @@ import withStyles, {
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import * as React from "react";
+import { RouteComponentProps, withRouter } from "react-router";
 import Layout from "src/components/Layout";
+import SearchSuggestion from "src/pages/AvaliarDisciplina/SearchSuggestion";
 import { BLOCK } from "src/utils/constants";
+import ClassManager from "../../singletons/ClassManager";
 import SelectFiveScale, { ISelectFiveScaleValues } from "./SelectFiveScale";
 
 const descriptionPlaceholder =
   "Informe o que você achou sobre os métodos de avaliação da disciplina, \
 cobrança de presença e quaisquer outros dados relevantes.";
 
+const initialState = {
+  cod: "",
+  codFocus: false
+};
+
+const getCod = (id: string) => {
+  if (!id) {
+    return "";
+  }
+  const disciplina = ClassManager.getClass(id);
+
+  return disciplina.cod;
+};
+
 class AvaliarDisciplinasBase extends React.Component<
-  WithStyles<ButtonClassesNames> & {}
+  WithStyles<ButtonClassesNames> & RouteComponentProps<{ id: string }>,
+  typeof initialState
 > {
+  public readonly state = {
+    ...initialState,
+    cod: getCod(this.props.match.params.id) || ""
+  };
   public render() {
     const { classes } = this.props;
+
     return (
       <Layout title="Avaliar Disciplina">
         <CardContent>
@@ -38,6 +62,15 @@ class AvaliarDisciplinasBase extends React.Component<
               className={classes.textField}
               fullWidth={true}
               margin="normal"
+              value={this.state.cod}
+              onChange={this.handleCodChange}
+              onBlur={this.onCodBlur}
+              onFocus={this.onCodFocus}
+            />
+            <SearchSuggestion
+              search={this.state.cod}
+              onChange={this.handleCodSelect}
+              open={this.state.codFocus}
             />
             <FormControl className={classes.paddingTop}>
               <FormLabel component="legend">Utilidade</FormLabel>
@@ -61,14 +94,14 @@ class AvaliarDisciplinasBase extends React.Component<
             <FormControlLabel
               className={classes.paddingTop}
               control={
-                <Switch
+                <Checkbox
                   checked={false}
                   onChange={this.onChangeSwitch}
                   value="gilad"
                   color="primary"
                 />
               }
-              label="Recomenar matéria"
+              label="Recomendar matéria"
             />
             <FormControlLabel
               className={classes.paddingTop}
@@ -92,6 +125,25 @@ class AvaliarDisciplinasBase extends React.Component<
       </Layout>
     );
   }
+
+  private handleCodSelect = (cod: string) => {
+    this.setState({ cod });
+    this.onCodBlur();
+  };
+
+  private handleCodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ cod: event.target.value });
+  };
+
+  private onCodBlur = () => {
+    setTimeout(() => {
+      this.setState({ codFocus: false });
+    }, 1);
+  };
+
+  private onCodFocus = () => {
+    this.setState({ codFocus: true });
+  };
 
   private onChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -121,4 +173,4 @@ const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
   }
 });
 
-export default withStyles(styles)(AvaliarDisciplinasBase);
+export default withStyles(styles)(withRouter(AvaliarDisciplinasBase));
