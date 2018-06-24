@@ -11,7 +11,7 @@ import ReviewManager from "src/singletons/ReviewManager";
 import UserProfile from "../../components/UserProfile";
 
 const Usuario: React.SFC<
-  WithStyles<UsuarioClassesNames> & {} & RouteComponentProps<{ id: string }>
+  WithStyles<UsuarioClassesNames> & RouteComponentProps<{ id: string }>
 > = props => {
   const reviews = ReviewManager.getUserReviews(props.match.params.id);
 

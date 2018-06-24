@@ -10,13 +10,14 @@
     "@types/react-router-dom": "^4.2.7",
     "classnames": "^2.2.6",
     "firebase": "^5.1.0",
+    "fuse.js": "latest",
     "history": "^4.7.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-popper": "^1.0.0",
-    "fuse.js": "latest",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.16.0"
+    "react-scripts-ts": "2.16.0",
+    "tslint-sonarts": "^1.7.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",

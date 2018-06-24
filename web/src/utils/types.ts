@@ -66,9 +66,3 @@ export enum Votes {
   agree = "agree",
   disagree = "disagree"
 }
-
-// export interface IReview {
-//   classId: string,
-//   userId: string,
-
-// }

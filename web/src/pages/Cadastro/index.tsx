@@ -23,7 +23,7 @@ const initialState = {
   year: ""
 };
 class Cadastro extends React.Component<
-  WithStyles<ClassesNames> & {},
+  WithStyles<ClassesNames>,
   typeof initialState
 > {
   public readonly state = initialState;

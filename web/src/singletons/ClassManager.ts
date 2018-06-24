@@ -2,34 +2,6 @@ import * as Fuse from "fuse.js";
 import { IClassResult, IClassType, RankTypes } from "src/utils/types";
 import { FUSE_OPT } from "../utils/constants";
 
-// const classes: IClassType[] = [
-//   {
-//     cod: "INF22",
-//     easy: 0,
-//     id: "0",
-//     name: "Engenharia de Software ",
-//     useful: 5,
-//     recommended: 22
-//   }
-// ];
-
-// function makeClasses() {
-//   const classesToRet: IClassType[] = [];
-//   const c = classes[0];
-//   for (let i = 1 as number; i < 15; i++) {
-//     classesToRet.push({
-//       ...c,
-//       id: String(i),
-//       cod: c.cod + i,
-//       name: c.name + i,
-//       recommended: c.recommended + i,
-//       useful: Math.random() * 5,
-//       easy: Math.random() * 5
-//     });
-//   }
-//   return classesToRet;
-// }
-
 const classes: IClassType[] = [
   {
     cod: "INF221",

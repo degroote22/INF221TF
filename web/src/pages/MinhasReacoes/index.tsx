@@ -9,7 +9,7 @@ import Review from "src/components/Review";
 import ReviewManager from "src/singletons/ReviewManager";
 
 const MinhasAvaliacoes: React.SFC<
-  WithStyles<MinhasAvaliacoesClassesNames> & {}
+  WithStyles<MinhasAvaliacoesClassesNames>
 > = props => {
   const reviews = ReviewManager.getMyVotes();
 

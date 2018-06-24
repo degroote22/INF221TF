@@ -20,9 +20,10 @@ import { IClassResult } from "src/utils/types";
 import ClassManager from "../../singletons/ClassManager";
 import SelectFiveScale, { ISelectFiveScaleValues } from "./SelectFiveScale";
 
-const descriptionPlaceholder =
-  "Informe o que você achou sobre os métodos de avaliação da disciplina, \
-cobrança de presença e quaisquer outros dados relevantes.";
+const descriptionPlaceholder = [
+  "Informe o que você achou sobre os métodos de avaliação da disciplina, ",
+  "cobrança de presença e quaisquer outros dados relevantes."
+].join("");
 
 const initialState = {
   cod: "",
@@ -135,12 +136,7 @@ class AvaliarDisciplinasBase extends React.Component<
   private getPrimary = (result: IClassResult) => result.item.cod;
   private getSecondary = (result: IClassResult) => result.item.name;
   private getId = (result: IClassResult) => result.item.id;
-
-  private getResult = (search: string) => {
-    const result = ClassManager.getClasses(search);
-
-    return result;
-  };
+  private getResult = (search: string) => ClassManager.getClasses(search);
 
   private handleCodSelect = (cod: string) => {
     this.setState({ cod });

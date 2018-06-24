@@ -4,6 +4,6 @@
     "object-literal-sort-keys": false
   },
   "linterOptions": {
-    "exclude": ["config/**/*.js", "node_modules/**/*.ts", "node_modules/"]
+    "exclude": ["config/**/*.js", "node_modules/**/*.{ts,tsx}"]
   }
 }

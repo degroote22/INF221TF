@@ -62,7 +62,7 @@ class AutoComplete<T> extends React.Component<
   };
 }
 type SearchSuggestionClassnames = "paper";
-const styles: StyleRulesCallback<SearchSuggestionClassnames> = theme => ({
+const styles: StyleRulesCallback<SearchSuggestionClassnames> = _ => ({
   paper: {
     position: "absolute",
     zIndex: 9999

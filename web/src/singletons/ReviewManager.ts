@@ -2,21 +2,6 @@ import { IClassReview, Votes } from "../utils/types";
 import AuthManager from "./AuthManager";
 import HistoryManager from "./HistoryManager";
 
-// export interface IClassReview extends IClassReviewBase {
-//     id: string;
-//     userId: string;
-//     score: number;
-//   }
-
-//   export interface IClassReviewBase {
-//     classId: string;
-//     useful: "0" | "1" | "2" | "3" | "4" | "5";
-//     easy: "0" | "1" | "2" | "3" | "4" | "5";
-//     description: string;
-//     anonymous: boolean;
-//     recommended: boolean;
-//   }
-
 const reviews: IClassReview[] = [
   {
     id: "1",
@@ -118,6 +103,7 @@ class ReviewManager {
     return null;
   };
 
+  // tslint:disable-next-line:no-identical-functions
   public upvote = (reviewId: string) => {
     const logged = AuthManager.getLogged();
     if (!logged) {

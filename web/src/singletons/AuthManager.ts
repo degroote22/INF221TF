@@ -38,11 +38,9 @@ class AuthManager {
     this.subscriptionMap[id] = fn;
     fn(this.logged);
 
-    const deleteFn = () => {
+    return () => {
       delete this.subscriptionMap[id];
     };
-
-    return deleteFn;
   };
 
   private onAuthChanged = () => {

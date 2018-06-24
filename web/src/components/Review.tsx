@@ -21,15 +21,6 @@ import { IClassReview, UserRateEnum, Votes } from "src/utils/types";
 
 type IPosition = "first" | "second" | "third" | "other";
 
-// const getBadgeText = (position: IPosition) => {
-//   const map = {
-//     first: 1,
-//     second: 2,
-//     third: 3
-//   };
-
-//   return map[position] || "";
-// };
 class Review extends React.Component<
   WithStyles<ButtonClassesNames> & {
     review: IClassReview;
@@ -140,10 +131,8 @@ class Review extends React.Component<
           onClick={this.onUpvote}
           variant="contained"
           className={classes.button}
-          color={
-            myVote && (myVote as Votes) === Votes.agree ? "primary" : "default"
-          }
-          disabled={Boolean(myVote && (myVote as Votes) === Votes.disagree)}
+          color={myVote && myVote === Votes.agree ? "primary" : "default"}
+          disabled={Boolean(myVote && myVote === Votes.disagree)}
         >
           <ThumbUp className={classes.leftIcon} />
           Concordo
@@ -152,12 +141,8 @@ class Review extends React.Component<
           variant="contained"
           onClick={this.onDownvote}
           className={classes.button}
-          disabled={Boolean(myVote && (myVote as Votes) === Votes.agree)}
-          color={
-            myVote && (myVote as Votes) === Votes.disagree
-              ? "primary"
-              : "default"
-          }
+          disabled={Boolean(myVote && myVote === Votes.agree)}
+          color={myVote && myVote === Votes.disagree ? "primary" : "default"}
         >
           <ThumbDown className={classes.leftIcon} />
           Discordo

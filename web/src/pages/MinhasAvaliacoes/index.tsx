@@ -10,7 +10,7 @@ import AuthManager from "src/singletons/AuthManager";
 import ReviewManager from "src/singletons/ReviewManager";
 
 const MinhasAvaliacoes: React.SFC<
-  WithStyles<MinhasAvaliacoesClassesNames> & {}
+  WithStyles<MinhasAvaliacoesClassesNames>
 > = props => {
   const me = AuthManager.getId();
   const reviews = ReviewManager.getUserReviews(me);
