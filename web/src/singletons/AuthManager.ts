@@ -4,25 +4,34 @@ type FnType = (logged: boolean) => void;
 
 class AuthManager {
   private logged = true;
+  private registered = true;
   private id = "1";
   private subscriptionMap = {} as { [index: string]: FnType };
   private counter = 0;
 
   public login = () => {
-    this.logged = true;
     this.id = "1";
-    HistoryManager.clearLoginUrl();
-    this.onAuthChanged();
+    HistoryManager.goToCadastro();
   };
 
   public logoff = () => {
     this.logged = false;
     this.id = "";
+    this.registered = false;
     this.onAuthChanged();
   };
 
   public getLogged = () => this.logged;
   public getId = () => this.id;
+
+  public register = (course: string, year: string) => {
+    this.registered = true;
+    this.logged = true;
+    HistoryManager.clearLoginUrl();
+    this.onAuthChanged();
+  };
+
+  public getRegistered = () => this.registered;
 
   public subscribeToLogged = (fn: FnType) => {
     const id = String(this.counter) + String(new Date().getTime());

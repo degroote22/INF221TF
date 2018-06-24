@@ -65,7 +65,7 @@ const reviews: IClassReview[] = [
     anonymous: true,
     recommended: false
   }
-];
+].map(x => ({ ...(x as IClassReview), created_at: new Date() }));
 
 const myVotes = {
   3: Votes.agree,
@@ -77,6 +77,29 @@ class ReviewManager {
     return reviews.filter(x => x.classId === classId).sort((a, b) => {
       return b.score - a.score;
     });
+  };
+
+  public getUserReviews = (userId: string) => {
+    return reviews.filter(x => x.userId === userId).sort((a, b) => {
+      return b.created_at.getTime() - a.created_at.getTime();
+    });
+  };
+
+  public getMyVotes = () => {
+    const me = AuthManager.getId();
+    if (me) {
+      return Object.keys(myVotes).map(id => this.getReview(id));
+    }
+    return [];
+  };
+
+  public getReview = (reviewId: string) => {
+    const toRet = reviews.find(x => x.id === reviewId);
+
+    if (!toRet) {
+      throw Error("review nao encontrado");
+    }
+    return toRet;
   };
 
   public getMyVote = (review: IClassReview): Votes | null => {

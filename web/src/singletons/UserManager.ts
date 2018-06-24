@@ -2,13 +2,58 @@ import * as Fuse from "fuse.js";
 import { FUSE_OPT } from "../utils/constants";
 import { IUser, UserRateEnum } from "../utils/types";
 
+const EAL = "Engenharia de Alimentos";
+const y2018 = "2018/1";
+const createdAt = new Date();
 const users: IUser[] = [
-  { name: "João da Silva", id: "0", rate: UserRateEnum.iniciante },
-  { name: "Maria da Silva", id: "1", rate: UserRateEnum.confiavel },
-  { name: "José da Silva", id: "2", rate: UserRateEnum.iniciante },
-  { name: "Carla da Silva", id: "3", rate: UserRateEnum.iniciante },
-  { name: "Antônia da Silva", id: "4", rate: UserRateEnum.confiavel },
-  { name: "Manoel da Silva", id: "5", rate: UserRateEnum.iniciante }
+  {
+    name: "João da Silva",
+    id: "0",
+    rate: UserRateEnum.iniciante,
+    course: EAL,
+    year: y2018,
+    created_at: createdAt
+  },
+  {
+    name: "Maria da Silva",
+    id: "1",
+    rate: UserRateEnum.confiavel,
+    created_at: createdAt,
+    course: EAL,
+    year: y2018
+  },
+  {
+    name: "José da Silva",
+    id: "2",
+    rate: UserRateEnum.iniciante,
+    created_at: createdAt,
+    course: EAL,
+    year: y2018
+  },
+  {
+    name: "Carla da Silva",
+    id: "3",
+    created_at: createdAt,
+    rate: UserRateEnum.iniciante,
+    course: EAL,
+    year: y2018
+  },
+  {
+    name: "Antônia da Silva",
+    created_at: createdAt,
+    id: "4",
+    rate: UserRateEnum.confiavel,
+    course: EAL,
+    year: y2018
+  },
+  {
+    name: "Manoel da Silva",
+    id: "5",
+    created_at: createdAt,
+    rate: UserRateEnum.iniciante,
+    course: EAL,
+    year: y2018
+  }
 ];
 
 interface IUserResult {

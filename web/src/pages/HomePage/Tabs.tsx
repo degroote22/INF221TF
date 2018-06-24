@@ -125,7 +125,9 @@ class HomepageTabs extends React.Component<
   }
 
   private onDeptBlur = () => {
-    this.setState({ deptOpen: false });
+    setTimeout(() => {
+      this.setState({ deptOpen: false });
+    }, 1);
   };
 
   private onDeptFocus = () => {

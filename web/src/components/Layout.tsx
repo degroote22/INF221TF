@@ -63,7 +63,7 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     overflow: "hidden",
-    maxWidth: "75%"
+    maxWidth: "65%"
   },
   innerPaper: {
     height: "100%",
@@ -156,7 +156,7 @@ class Layout extends React.Component<
           variant="fab"
           color="primary"
           aria-label="delete"
-          onClick={HistoryManager.goHome}
+          onClick={HistoryManager.goBack}
         >
           <CloseIcon />
         </Button>
@@ -173,7 +173,7 @@ class Layout extends React.Component<
           <IconButton
             className={classes.menuButton}
             color="inherit"
-            onClick={HistoryManager.goHome}
+            onClick={HistoryManager.goBack}
             aria-label="Menu"
           >
             <ArrowBack />

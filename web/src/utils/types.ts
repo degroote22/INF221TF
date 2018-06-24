@@ -27,6 +27,7 @@ export interface IClassReview extends IClassReviewBase {
   id: string;
   userId: string;
   score: number;
+  created_at: Date;
 }
 
 export interface IClassReviewBase {
@@ -57,6 +58,9 @@ export interface IUser {
   name: string;
   id: string;
   rate: UserRateEnum;
+  course: string;
+  year: string;
+  created_at: Date;
 }
 export enum Votes {
   agree = "agree",

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, RouteComponentProps } from "react-router-dom";
 import AuthManager from "src/singletons/AuthManager";
-import { LoginGo } from "../utils/routes";
+import { CadastroGo, LoginGo } from "../utils/routes";
 class PrivateRoute extends React.Component<{
   component: React.ComponentClass | React.SFC<any>;
   path: string;
@@ -14,7 +14,11 @@ class PrivateRoute extends React.Component<{
   private renderSafe = (routeProps: RouteComponentProps<{}>) => {
     const Component = this.props.component;
     return AuthManager.getLogged() ? (
-      <Component {...routeProps} />
+      AuthManager.getRegistered() ? (
+        <Component {...routeProps} />
+      ) : (
+        <Redirect to={CadastroGo()} />
+      )
     ) : (
       <Redirect to={LoginGo()} />
     );

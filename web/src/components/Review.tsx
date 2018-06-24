@@ -12,11 +12,12 @@ import Star from "@material-ui/icons/Star";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import * as React from "react";
+import AuthManager from "src/singletons/AuthManager";
+import HistoryManager from "src/singletons/HistoryManager";
+import ReviewManager from "src/singletons/ReviewManager";
+import UserManager from "src/singletons/UserManager";
+import { BLOCK } from "src/utils/constants";
 import { IClassReview, UserRateEnum, Votes } from "src/utils/types";
-import AuthManager from "../../singletons/AuthManager";
-import ReviewManager from "../../singletons/ReviewManager";
-import UserManager from "../../singletons/UserManager";
-import { BLOCK } from "../../utils/constants";
 
 type IPosition = "first" | "second" | "third" | "other";
 
@@ -53,6 +54,7 @@ class Review extends React.Component<
           </Avatar>
         )}
         <CardHeader
+          className={classes.cardHeader}
           avatar={
             <Avatar
               className={
@@ -65,11 +67,18 @@ class Review extends React.Component<
             </Avatar>
           }
           title={userName}
+          onClick={this.onUserClick}
           subheader={
             userClassification + ", " + userRecomendation.toLowerCase()
           }
         />
         <div className={classes.textBlock}>
+          <Typography variant="headline" component="h2">
+            {review.created_at.toLocaleDateString()}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            data de criação
+          </Typography>
           <Typography variant="headline" component="h2">
             {review.easy}
           </Typography>
@@ -101,7 +110,9 @@ class Review extends React.Component<
       </Paper>
     );
   }
-
+  private onUserClick = () => {
+    HistoryManager.goToUser(this.props.review.userId);
+  };
   private renderButtons = () => {
     const { classes, review } = this.props;
 
@@ -157,8 +168,8 @@ class Review extends React.Component<
 
   private onEdit = () => {
     // tslint:disable-next-line:no-console
-    console.log("onedit")
-  }
+    console.log("onedit");
+  };
 
   private onUpvote = () => {
     ReviewManager.upvote(this.props.review.id);
@@ -176,10 +187,14 @@ type ButtonClassesNames =
   | "commentHeader"
   | "button"
   | "textBlock"
+  | "cardHeader"
   | "leftIcon"
   | "userAvatarNon"
   | "userAvatarRec";
 const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
+  cardHeader: {
+    cursor: "pointer"
+  },
   pos: {
     marginBottom: 12
   },

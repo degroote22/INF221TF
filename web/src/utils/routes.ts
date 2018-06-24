@@ -10,17 +10,24 @@ export const AvaliarDisciplinaGo = (id: string) =>
 export const AvaliarDisciplinaNoParam = "/avaliardisciplina";
 export const Logoff = "/logoff";
 export const Cadastro = "/cadastro";
+export const CadastroGo = () => Cadastro;
+// export const CadastroGo = () => {
+//   return {
+//     pathname: Cadastro,
+//     state: { from: HistoryManager.getRoute() }
+//   };
+// };
 export const Login = "/login";
 export const LoginGo = () => {
   return {
-    pathname: "/login",
+    pathname: Login,
     state: { from: HistoryManager.getRoute() }
   };
 };
-export const Listar = "/listar/:type(facil|util|recomendado)";
-export const ListarFacil = "/listar/facil";
-export const ListarUtil = "/listar/util";
-export const ListarRecomendado = "/listar/recomendado";
+// export const Listar = "/listar/:type(facil|util|recomendado)";
+// export const ListarFacil = "/listar/facil";
+// export const ListarUtil = "/listar/util";
+// export const ListarRecomendado = "/listar/recomendado";
 export const Usuario = "/usuario/:id";
 export const UsuarioGo = (id: string) => "/usuario/" + id;
 export const Disciplina = "/disciplina/:id";

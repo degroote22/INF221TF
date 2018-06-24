@@ -3,13 +3,18 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Home, Logoff, MinhaConta } from "../utils/routes";
+import {
+  Logoff,
+  MinhaConta,
+  MinhasAvaliacoes,
+  MinhasReacoes
+} from "../utils/routes";
 import { LinkStyle } from "../utils/styles";
 
 const options = [
   { label: "Minha Conta", to: MinhaConta },
-  { label: "Minhas Reações", to: Home },
-  { label: "Minhas Avaliações", to: Home }
+  { label: "Minhas Reações", to: MinhasReacoes },
+  { label: "Minhas Avaliações", to: MinhasAvaliacoes }
 ];
 
 class CommonMenu extends React.Component<{
