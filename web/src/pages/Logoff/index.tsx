@@ -1,26 +1,17 @@
 import * as React from "react";
 import { Redirect } from "react-router-dom";
+import { ComponentBase } from "resub";
 import Layout from "src/components/Layout";
-import AuthManager from "src/singletons/AuthManager";
+import AuthManager from "../../singletons/AuthManager";
 
 const initialState = {
   logged: true
 };
-
-class Logoff extends React.Component<{}, typeof initialState> {
+class Logoff extends ComponentBase<{}, typeof initialState> {
   public readonly state = initialState;
-  private unsubscribeToLogged!: (() => void | undefined);
 
   public componentDidMount() {
-    const cb = (logged: boolean) => this.setState({ logged });
-    this.unsubscribeToLogged = AuthManager.subscribeToLogged(cb);
     AuthManager.logoff();
-  }
-
-  public componentWillUnmount() {
-    if (this.unsubscribeToLogged) {
-      this.unsubscribeToLogged();
-    }
   }
 
   public render() {
@@ -29,6 +20,13 @@ class Logoff extends React.Component<{}, typeof initialState> {
     } else {
       return <Redirect to="/" />;
     }
+  }
+
+  protected _buildState(props: {}, initial: boolean) {
+    return {
+      ...this.state,
+      logged: AuthManager.getLogged()
+    };
   }
 }
 

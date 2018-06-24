@@ -22,6 +22,7 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import Whatshot from "@material-ui/icons/Whatshot";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { ComponentBase } from "resub";
 import { IClassType, RankTypes } from "src/utils/types";
 import AutoComplete from "../../components/AutoComplete";
 import ClassManager from "../../singletons/ClassManager";
@@ -52,13 +53,13 @@ const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
 const initialState = {
   rank: RankTypes.useful,
   dept: "",
-  deptOpen: false
+  deptOpen: false,
+  classes: [] as IClassType[]
 };
 
-class HomepageTabs extends React.Component<
-  WithStyles<ButtonClassesNames>,
-  typeof initialState
-> {
+type IProps = WithStyles<ButtonClassesNames>;
+
+class HomepageTabs extends ComponentBase<IProps, typeof initialState> {
   public readonly state = initialState;
   public render() {
     return (
@@ -124,6 +125,13 @@ class HomepageTabs extends React.Component<
     );
   }
 
+  protected _buildState(props: IProps, initial: boolean) {
+    return {
+      ...this.state,
+      classes: ClassManager.getClassesRanked(this.state.rank)
+    };
+  }
+
   private onDeptBlur = () => {
     setTimeout(() => {
       this.setState({ deptOpen: false });
@@ -162,7 +170,7 @@ class HomepageTabs extends React.Component<
     return (
       <div style={{ overflow: "hidden" }}>
         <List component="nav" style={{ padding: 0 }}>
-          {ClassManager.getClassesRanked(this.state.rank).map(c => {
+          {this.state.classes.map(c => {
             return this.renderListItem(c, this.state.rank);
           })}
         </List>

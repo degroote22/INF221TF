@@ -1,3 +1,4 @@
+import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
 import { IClassReview, Votes } from "../utils/types";
 import AuthManager from "./AuthManager";
 import HistoryManager from "./HistoryManager";
@@ -57,43 +58,49 @@ const myVotes = {
   2: Votes.disagree
 };
 
-class ReviewManager {
-  public getReviews = (classId: string): IClassReview[] => {
+@AutoSubscribeStore
+class ReviewManager extends StoreBase {
+  @autoSubscribe
+  public getReviews(classId: string): IClassReview[] {
     return reviews.filter(x => x.classId === classId).sort((a, b) => {
       return b.score - a.score;
     });
-  };
+  }
 
-  public getUserReviews = (userId: string) => {
+  @autoSubscribe
+  public getUserReviews(userId: string) {
     return reviews.filter(x => x.userId === userId).sort((a, b) => {
       return b.created_at.getTime() - a.created_at.getTime();
     });
-  };
+  }
 
-  public getMyVotes = () => {
+  @autoSubscribe
+  public getMyVotes() {
     const me = AuthManager.getId();
     if (me) {
       return Object.keys(myVotes).map(id => this.getReview(id));
     }
     return [];
-  };
+  }
 
-  public getReview = (reviewId: string) => {
+  @autoSubscribe
+  public getReview(reviewId: string) {
     const toRet = reviews.find(x => x.id === reviewId);
 
     if (!toRet) {
       throw Error("review nao encontrado");
     }
     return toRet;
-  };
+  }
 
-  public getMyVote = (review: IClassReview): Votes | null => {
+  @autoSubscribe
+  public getMyVote(review: IClassReview): Votes | null {
     const me = AuthManager.getId();
     if (me) {
       return myVotes[review.id] || null;
     }
     return null;
-  };
+  }
 
   public downvote = (reviewId: string) => {
     const logged = AuthManager.getLogged();

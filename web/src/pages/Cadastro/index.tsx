@@ -11,6 +11,7 @@ import withStyles, {
 import TextField from "@material-ui/core/TextField";
 import * as React from "react";
 import { Redirect } from "react-router";
+import { ComponentBase } from "resub";
 import AutoComplete from "src/components/AutoComplete";
 import Layout from "src/components/Layout";
 import { BLOCK } from "src/utils/constants";
@@ -20,16 +21,17 @@ import { Home } from "../../utils/routes";
 const initialState = {
   open: false,
   label: "",
-  year: ""
+  year: "",
+  registered: false
 };
-class Cadastro extends React.Component<
+class Cadastro extends ComponentBase<
   WithStyles<ClassesNames>,
   typeof initialState
 > {
   public readonly state = initialState;
   public render() {
     const { classes } = this.props;
-    const registered = AuthManager.getRegistered();
+    const registered = this.state.registered;
 
     if (registered) {
       return <Redirect to={Home} />;
@@ -82,6 +84,13 @@ class Cadastro extends React.Component<
         </CardContent>
       </Layout>
     );
+  }
+
+  protected _buildState(props: {}, initial: boolean) {
+    return {
+      ...this.state,
+      registered: AuthManager.getRegistered()
+    };
   }
 
   private onConfirm = () => {

@@ -1,4 +1,5 @@
 import * as Fuse from "fuse.js";
+import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
 import { IClassResult, IClassType, RankTypes } from "src/utils/types";
 import { FUSE_OPT } from "../utils/constants";
 
@@ -150,33 +151,37 @@ const getSortFn = (rank: RankTypes) => {
 
   throw Error("Não implementado");
 };
-class ClassManager {
+@AutoSubscribeStore
+class ClassManager extends StoreBase {
   private classes: IClassType[] = classes;
   private fuse = new Fuse(this.classes, {
     ...FUSE_OPT,
     keys: ["name", "cod"]
   });
 
-  public getClassesRanked = (rank: RankTypes) => {
+  @autoSubscribe
+  public getClassesRanked(rank: RankTypes) {
     const sortfn = getSortFn(rank);
     return this.classes.sort(sortfn);
-  };
+  }
 
-  public getClasses = (search: string) => {
+  @autoSubscribe
+  public getClasses(search: string) {
     if (search === "") {
       return [];
     }
     return this.fuse.search(search) as IClassResult[];
-  };
+  }
 
-  public getClass = (id: string) => {
+  @autoSubscribe
+  public getClass(id: string) {
     const toRet = classes.find(x => x.id === id);
 
     if (!toRet) {
       throw Error("get class com id inválido");
     }
     return toRet;
-  };
+  }
 }
 
 export default new ClassManager();

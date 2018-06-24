@@ -1,4 +1,5 @@
 import * as Fuse from "fuse.js";
+import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
 import { FUSE_OPT } from "../utils/constants";
 import { IUser, UserRateEnum } from "../utils/types";
 
@@ -60,27 +61,30 @@ interface IUserResult {
   item: IUser;
   score: number;
 }
-
-class UserManager {
+@AutoSubscribeStore
+class UserManager extends StoreBase {
   private fuse = new Fuse(users, {
     ...FUSE_OPT,
     keys: ["name"]
   });
-  public getUsers = (search: string) => {
+
+  @autoSubscribe
+  public getUsers(search: string) {
     if (search === "") {
       return [];
     }
     return this.fuse.search(search) as IUserResult[];
-  };
+  }
 
-  public getUser = (userId: string) => {
+  @autoSubscribe
+  public getUser(userId: string) {
     const toRet = users.find(x => x.id === userId);
 
     if (!toRet) {
       throw Error("Usuario nao encontrado com este id");
     }
     return toRet;
-  };
+  }
 }
 
 export default new UserManager();

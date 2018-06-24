@@ -9,23 +9,22 @@ import { StyleRulesCallback, WithStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
+import { ComponentBase } from "resub";
 import Layout from "../../components/Layout";
 import UserProfile from "../../components/UserProfile";
 import AuthManager from "../../singletons/AuthManager";
 import { BLOCK } from "../../utils/constants";
 
 const initialState = {
-  open: false
+  open: false,
+  me: ""
 };
-
-class MinhaConta extends React.Component<
-  WithStyles<ClassesNames>,
-  typeof initialState
-> {
+type IProps = WithStyles<ClassesNames>;
+class MinhaConta extends ComponentBase<IProps, typeof initialState> {
   public readonly state = initialState;
 
   public render() {
-    const me = AuthManager.getId();
+    const me = this.state.me;
     const { classes } = this.props;
     return (
       <Layout title="Minha Conta">
@@ -77,6 +76,13 @@ class MinhaConta extends React.Component<
         </CardContent>
       </Layout>
     );
+  }
+
+  protected _buildState(props: IProps, initial: boolean) {
+    return {
+      ...this.state,
+      me: AuthManager.getId()
+    };
   }
 
   private handleClose = () => {

@@ -1,13 +1,11 @@
+import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
 import HistoryManager from "./HistoryManager";
 
-type FnType = (logged: boolean) => void;
-
-class AuthManager {
+@AutoSubscribeStore
+class AuthManager extends StoreBase {
   private logged = true;
   private registered = true;
   private id = "1";
-  private subscriptionMap = {} as { [index: string]: FnType };
-  private counter = 0;
 
   public login = () => {
     this.id = "1";
@@ -18,39 +16,29 @@ class AuthManager {
     this.logged = false;
     this.id = "";
     this.registered = false;
-    this.onAuthChanged();
+    this.trigger();
   };
 
-  public getLogged = () => this.logged;
-  public getId = () => this.id;
+  @autoSubscribe
+  public getLogged() {
+    return this.logged;
+  }
+
+  @autoSubscribe
+  public getId() {
+    return this.id;
+  }
+
+  @autoSubscribe
+  public getRegistered() {
+    return this.registered;
+  }
 
   public register = (course: string, year: string) => {
     this.registered = true;
     this.logged = true;
     HistoryManager.clearLoginUrl();
-    this.onAuthChanged();
-  };
-
-  public getRegistered = () => this.registered;
-
-  public subscribeToLogged = (fn: FnType) => {
-    const id = String(this.counter) + String(new Date().getTime());
-    this.subscriptionMap[id] = fn;
-    fn(this.logged);
-
-    return () => {
-      delete this.subscriptionMap[id];
-    };
-  };
-
-  private onAuthChanged = () => {
-    const arr = Object.keys(this.subscriptionMap);
-    arr.forEach(key => {
-      const fn = this.subscriptionMap[key];
-      if (fn) {
-        fn(this.logged);
-      }
-    });
+    this.trigger();
   };
 }
 

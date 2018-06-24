@@ -8,29 +8,35 @@ import {
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
+import { ComponentBase } from "resub";
 import Fab from "src/components/Fab";
 import Layout from "src/components/Layout";
+import Loading from "src/components/Loading";
 import Review from "src/components/Review";
 import Averages from "src/pages/Disciplina/Averages";
 import ReviewManager from "src/singletons/ReviewManager";
-import { IClassReview } from "src/utils/types";
+import { IClassReview, IClassType } from "src/utils/types";
 import ClassManager from "../../singletons/ClassManager";
 import { BLOCK } from "../../utils/constants";
 import { AvaliarDisciplinaGo } from "../../utils/routes";
 
 const initialState = {
-  showMore: false
+  showMore: false,
+  reviews: [] as IClassReview[],
+  class: undefined as IClassType | undefined
 };
-
-class Disciplina extends React.Component<
-  WithStyles<DisciplinaClassNames> & RouteComponentProps<{ id: string }>,
-  typeof initialState
-> {
+type IProps = WithStyles<DisciplinaClassNames> &
+  RouteComponentProps<{ id: string }>;
+class Disciplina extends ComponentBase<IProps, typeof initialState> {
   public readonly state = initialState;
+
   public render() {
-    const disciplina = ClassManager.getClass(this.props.match.params.id);
+    const disciplina = this.state.class;
+    if (!disciplina) {
+      return <Loading layout={true} />;
+    }
     const title = disciplina.cod + " - " + disciplina.name;
-    const reviews = ReviewManager.getReviews(disciplina.id);
+    const reviews = this.state.reviews;
 
     return (
       <Layout title={title}>
@@ -47,6 +53,19 @@ class Disciplina extends React.Component<
       </Layout>
     );
   }
+
+  protected _buildState(
+    props: IProps,
+    initialBuild: boolean
+  ): typeof initialState {
+    const id = props.match.params.id;
+    return {
+      ...this.state,
+      reviews: ReviewManager.getReviews(id),
+      class: ClassManager.getClass(id)
+    };
+  }
+
   private renderFirstReviews = (reviews: IClassReview[]) => {
     if (reviews.length === 0) {
       return (
