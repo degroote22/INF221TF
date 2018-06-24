@@ -1,4 +1,4 @@
-import { Divider } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import * as React from "react";

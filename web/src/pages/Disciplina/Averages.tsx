@@ -1,10 +1,10 @@
-import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {
   StyleRulesCallback,
   WithStyles,
   withStyles
 } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Mood from "@material-ui/icons/Mood";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Whatshot from "@material-ui/icons/Whatshot";

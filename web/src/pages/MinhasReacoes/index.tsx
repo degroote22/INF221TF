@@ -1,4 +1,4 @@
-import { CardContent } from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
 import withStyles, {
   StyleRulesCallback,
   WithStyles

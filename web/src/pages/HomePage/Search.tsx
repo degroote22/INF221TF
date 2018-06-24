@@ -1,5 +1,5 @@
-import { Divider } from "@material-ui/core";
 import Collapse from "@material-ui/core/Collapse";
+import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";

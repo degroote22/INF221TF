@@ -1,9 +1,9 @@
-import { Tooltip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import withStyles, {
   StyleRulesCallback,
   WithStyles
 } from "@material-ui/core/styles/withStyles";
+import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Edit";
 import * as React from "react";
 import { Link } from "react-router-dom";

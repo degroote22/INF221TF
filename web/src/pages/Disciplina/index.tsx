@@ -1,11 +1,11 @@
+import Button from "@material-ui/core/Button";
+import CardContent from "@material-ui/core/CardContent";
 import {
-  Button,
-  CardContent,
   StyleRulesCallback,
-  Typography,
   WithStyles,
   withStyles
-} from "@material-ui/core";
+} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import Fab from "src/components/Fab";

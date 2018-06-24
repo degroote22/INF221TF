@@ -1,21 +1,21 @@
-import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  FormControlLabel,
-  List,
-  ListItem,
-  ListItemText,
-  StyleRulesCallback,
-  Switch,
-  TextField,
-  Typography,
-  withStyles,
-  WithStyles
-} from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import {
+  StyleRulesCallback,
+  WithStyles,
+  withStyles
+} from "@material-ui/core/styles";
+import Switch from "@material-ui/core/Switch";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Mood from "@material-ui/icons/Mood";
 import ThumbUp from "@material-ui/icons/ThumbUp";
