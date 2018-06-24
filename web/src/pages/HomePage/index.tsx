@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core/styles";
 import * as React from "react";
 import CardHeaderAction from "src/components/CardHeaderAction";
-import Fab from "src/pages/HomePage/Fab";
+import Fab from "src/components/Fab";
+import { AvaliarDisciplinaNoParam } from "src/utils/routes";
 import Menu from "../../components/Menu";
 import { BLOCK } from "../../utils/constants";
 import Search from "./Search";
@@ -60,7 +61,11 @@ class RecipeReviewCard extends React.Component<
 
     return (
       <div className={classes.root}>
-        <Fab />
+        <Fab
+          title="Enviar avaliação"
+          to={AvaliarDisciplinaNoParam}
+          zIndex={999}
+        />
         <Card className={classes.card}>
           <CardHeader
             classes={{

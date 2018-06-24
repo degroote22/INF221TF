@@ -8,14 +8,17 @@ import {
   withStyles
 } from "@material-ui/core/styles";
 import * as React from "react";
-import ClassManager from "../../singletons/ClassManager";
-import { BLOCK } from "../../utils/constants";
 
-class SearchSuggestion extends React.Component<
+class AutoComplete<T> extends React.Component<
   WithStyles<SearchSuggestionClassnames> & {
     search: string;
-    onChange: (cod: string) => void;
+    onChange: (primary: string, id: string) => void;
     open: boolean;
+    getPrimary: (obj: T) => string;
+    getId: (obj: T) => string;
+    getSecondary: (obj: T) => string;
+    getResult: (search: string) => T[];
+    top: number;
   }
 > {
   public render() {
@@ -23,19 +26,29 @@ class SearchSuggestion extends React.Component<
     if (!open || search === "") {
       return null;
     }
-    const result = ClassManager.getClasses(search);
+    const result = this.props.getResult(search);
 
     return (
-      <Paper className={classes.paper} square={false} elevation={1}>
+      <Paper
+        className={classes.paper}
+        style={{
+          top: this.props.top
+        }}
+        square={false}
+        elevation={1}
+      >
         <List component="nav" style={{ padding: 0 }}>
           {result.map(c => {
+            const primary = this.props.getPrimary(c);
+            const id = this.props.getId(c);
+            const secondary = this.props.getSecondary(c);
             return (
               <ListItem
                 button={true}
-                onClick={this.onClick(c.item.cod)}
-                key={c.item.id}
+                onClick={this.onClick(primary, id)}
+                key={id}
               >
-                <ListItemText primary={c.item.cod} secondary={c.item.name} />
+                <ListItemText primary={primary} secondary={secondary} />
               </ListItem>
             );
           })}
@@ -44,17 +57,16 @@ class SearchSuggestion extends React.Component<
     );
   }
 
-  private onClick = (cod: string) => () => {
-    this.props.onChange(cod);
+  private onClick = (primary: string, id: string) => () => {
+    this.props.onChange(primary, id);
   };
 }
 type SearchSuggestionClassnames = "paper";
 const styles: StyleRulesCallback<SearchSuggestionClassnames> = theme => ({
   paper: {
     position: "absolute",
-    zIndex: 9999,
-    top: BLOCK * 2.5
+    zIndex: 9999
   }
 });
 
-export default withStyles(styles)(SearchSuggestion);
+export default withStyles(styles)(AutoComplete);

@@ -20,15 +20,17 @@ export interface IClassBase {
   useful: number;
   easy: number;
   recommended: number;
+  optional: boolean;
 }
 
 export interface IClassReview extends IClassReviewBase {
   id: string;
-  classId: string;
+  userId: string;
+  score: number;
 }
 
 export interface IClassReviewBase {
-  cod: string;
+  classId: string;
   useful: "0" | "1" | "2" | "3" | "4" | "5";
   easy: "0" | "1" | "2" | "3" | "4" | "5";
   description: string;
@@ -36,7 +38,17 @@ export interface IClassReviewBase {
   recommended: boolean;
 }
 
-export enum RateEnum {
+export interface IClassResult {
+  item: IClassType;
+  score: number;
+}
+
+export interface IClassReview extends IClassReviewBase {
+  id: string;
+  score: number;
+}
+
+export enum UserRateEnum {
   iniciante,
   confiavel
 }
@@ -44,5 +56,15 @@ export enum RateEnum {
 export interface IUser {
   name: string;
   id: string;
-  rate: RateEnum;
+  rate: UserRateEnum;
 }
+export enum Votes {
+  agree = "agree",
+  disagree = "disagree"
+}
+
+// export interface IReview {
+//   classId: string,
+//   userId: string,
+
+// }

@@ -13,9 +13,10 @@ import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
+import AutoComplete from "src/components/AutoComplete";
 import Layout from "src/components/Layout";
-import SearchSuggestion from "src/pages/AvaliarDisciplina/SearchSuggestion";
 import { BLOCK } from "src/utils/constants";
+import { IClassResult } from "src/utils/types";
 import ClassManager from "../../singletons/ClassManager";
 import SelectFiveScale, { ISelectFiveScaleValues } from "./SelectFiveScale";
 
@@ -67,10 +68,15 @@ class AvaliarDisciplinasBase extends React.Component<
               onBlur={this.onCodBlur}
               onFocus={this.onCodFocus}
             />
-            <SearchSuggestion
+            <AutoComplete
               search={this.state.cod}
               onChange={this.handleCodSelect}
               open={this.state.codFocus}
+              getPrimary={this.getPrimary as any}
+              getSecondary={this.getSecondary as any}
+              getId={this.getId as any}
+              top={BLOCK * 2.5}
+              getResult={this.getResult}
             />
             <FormControl className={classes.paddingTop}>
               <FormLabel component="legend">Utilidade</FormLabel>
@@ -125,6 +131,16 @@ class AvaliarDisciplinasBase extends React.Component<
       </Layout>
     );
   }
+
+  private getPrimary = (result: IClassResult) => result.item.cod;
+  private getSecondary = (result: IClassResult) => result.item.name;
+  private getId = (result: IClassResult) => result.item.id;
+
+  private getResult = (search: string) => {
+    const result = ClassManager.getClasses(search);
+
+    return result;
+  };
 
   private handleCodSelect = (cod: string) => {
     this.setState({ cod });

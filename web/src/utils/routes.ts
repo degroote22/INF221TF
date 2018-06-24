@@ -5,8 +5,11 @@ export const MinhasReacoes = "/mreacoes";
 export const MinhaConta = "/minhaconta";
 export const MinhasAvaliacoes = "/mavaliacoes";
 export const AvaliarDisciplina = "/avaliardisciplina/:id";
+export const AvaliarDisciplinaGo = (id: string) =>
+  AvaliarDisciplinaNoParam + "/" + id;
 export const AvaliarDisciplinaNoParam = "/avaliardisciplina";
 export const Logoff = "/logoff";
+export const Cadastro = "/cadastro";
 export const Login = "/login";
 export const LoginGo = () => {
   return {

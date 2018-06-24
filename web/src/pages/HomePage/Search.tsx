@@ -61,7 +61,8 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
   cssFocused: {}
 });
 const initialState = {
-  inputValue: ""
+  inputValue: "",
+  inputFocused: false
 };
 class HomeSearch extends React.Component<
   WithStyles<ClassNames>,
@@ -80,6 +81,8 @@ class HomeSearch extends React.Component<
                 label="Busca"
                 placeholder="Procure matéria ou usuário"
                 onChange={this.handleInputChange}
+                onFocus={this.onInputFocus}
+                onBlur={this.onInputBlur}
                 InputProps={{
                   classes: {
                     root: classes.cssLabel,
@@ -101,13 +104,19 @@ class HomeSearch extends React.Component<
     return (
       <React.Fragment>
         <Paper className={classes.paper} square={false} elevation={0}>
-          <Collapse in={result.length !== 0}>
+          <Collapse in={this.state.inputFocused && result.length !== 0}>
             {result.map(r => {
               return this.renderResult(r);
             })}
           </Collapse>
 
-          <Collapse in={this.state.inputValue !== "" && result.length === 0}>
+          <Collapse
+            in={
+              this.state.inputFocused &&
+              this.state.inputValue !== "" &&
+              result.length === 0
+            }
+          >
             <ListItem button={false}>
               <ListItemText primary={"Nenhum resultado"} />
             </ListItem>
@@ -147,12 +156,12 @@ class HomeSearch extends React.Component<
     );
   };
 
-  // private onInputFocus = () => {
-  //   this.setState({ inputFocused: true });
-  // };
-  // private onInputBlur = () => {
-  //   this.setState({ inputFocused: false });
-  // };
+  private onInputFocus = () => {
+    this.setState({ inputFocused: true });
+  };
+  private onInputBlur = () => {
+    this.setState({ inputFocused: false });
+  };
 
   private handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ inputValue: event.target.value });

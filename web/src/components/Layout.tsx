@@ -23,11 +23,17 @@ type ClassNames =
   | "root"
   | "bigHeader"
   | "bigButton"
+  | "title"
   | "appBar"
+  | "cardHeaderActionWrapper"
   | "flex"
   | "menuButton";
 
 const styles: StyleRulesCallback<ClassNames> = theme => ({
+  cardHeaderActionWrapper: {
+    position: "absolute",
+    right: 0
+  },
   appBar: {
     [theme.breakpoints.up("md")]: {
       display: "none"
@@ -52,6 +58,12 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
   },
   flex: {
     flex: 1
+  },
+  title: {
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    maxWidth: "75%"
   },
   innerPaper: {
     height: "100%",
@@ -166,10 +178,12 @@ class Layout extends React.Component<
           >
             <ArrowBack />
           </IconButton>
-          <Typography variant="title" color="inherit" className={classes.flex}>
+          <Typography variant="title" color="inherit" className={classes.title}>
             {this.props.title}
           </Typography>
-          <CardHeaderAction onPopopverClick={this.onPopopverClick} />
+          <div className={classes.cardHeaderActionWrapper}>
+            <CardHeaderAction onPopopverClick={this.onPopopverClick} />
+          </div>
           <Menu
             onClose={this.handlePopoverClose}
             anchorEl={this.state.anchorEl}

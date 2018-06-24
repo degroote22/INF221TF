@@ -1,5 +1,5 @@
 import { createBrowserHistory } from "history";
-import { Home } from "src/utils/routes";
+import { Home, Login } from "src/utils/routes";
 
 class HistoryManager {
   private history = createBrowserHistory();
@@ -8,6 +8,7 @@ class HistoryManager {
 
   public goHome = () => this.history.push(Home);
   public goBack = () => this.history.goBack();
+  public goToLogin = () => this.history.push(Login);
 
   public getRoute = () => this.history.location.pathname;
   public clearLoginUrl = () => {
