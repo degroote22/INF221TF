@@ -123,6 +123,7 @@ ccpopt${index}: createUfvClass(
     optional: true
     useful: 0
     easy: 0
+    department: CCE
     recommended: 0
     reviews: {}
     }
@@ -139,6 +140,7 @@ ccpobr${index}: createUfvClass(
     cod: "${x.cod}"
     name: "${x.name}"
     optional: false
+    department: CCE
     useful: 0
     easy: 0
     recommended: 0
@@ -157,6 +159,6 @@ mutation CreateClasses {
 `;
 };
 fs.writeFileSync(
-  "seed2.graphql",
+  "./database/seed.graphql",
   finalize([_optativas, _obrigatorias].join("\n"))
 );

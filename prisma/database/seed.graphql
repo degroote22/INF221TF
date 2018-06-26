@@ -6,6 +6,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -20,6 +21,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -34,6 +36,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -48,6 +51,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -62,6 +66,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -76,6 +81,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -90,6 +96,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -104,6 +111,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -118,6 +126,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -132,6 +141,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -146,6 +156,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -160,6 +171,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -174,6 +186,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -188,6 +201,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -202,6 +216,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -216,6 +231,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -230,6 +246,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -244,6 +261,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -258,6 +276,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -272,6 +291,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -286,6 +306,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -300,6 +321,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -314,6 +336,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -328,6 +351,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -342,6 +366,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -356,6 +381,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -370,6 +396,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -384,6 +411,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -398,6 +426,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -412,6 +441,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -426,6 +456,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -440,6 +471,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -454,6 +486,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -468,6 +501,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -482,6 +516,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -496,6 +531,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -510,6 +546,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -524,6 +561,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -538,6 +576,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -552,6 +591,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -566,6 +606,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -580,6 +621,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -594,6 +636,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -608,6 +651,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -622,6 +666,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -636,6 +681,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -650,6 +696,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -664,6 +711,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -678,6 +726,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -692,6 +741,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -706,6 +756,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -720,6 +771,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -734,6 +786,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -748,6 +801,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -762,6 +816,7 @@ mutation CreateClasses {
       optional: true
       useful: 0
       easy: 0
+      department: CCE
       recommended: 0
       reviews: {}
     }
@@ -774,6 +829,7 @@ mutation CreateClasses {
       cod: "INF499"
       name: "Seminário II"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -788,6 +844,7 @@ mutation CreateClasses {
       cod: "INF421"
       name: "Sistemas de Informação"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -802,6 +859,7 @@ mutation CreateClasses {
       cod: "INF498"
       name: "Seminário I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -816,6 +874,7 @@ mutation CreateClasses {
       cod: "INF496"
       name: "Projeto Final de Curso"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -830,6 +889,7 @@ mutation CreateClasses {
       cod: "INF452"
       name: "Redes de Computadores"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -844,6 +904,7 @@ mutation CreateClasses {
       cod: "INF322"
       name: "Banco de Dados II"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -858,6 +919,7 @@ mutation CreateClasses {
       cod: "INF451"
       name: "Sistemas Operacionais"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -872,6 +934,7 @@ mutation CreateClasses {
       cod: "INF441"
       name: "Construção de Compiladores"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -886,6 +949,7 @@ mutation CreateClasses {
       cod: "INF390"
       name: "Computação Gráfica"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -900,6 +964,7 @@ mutation CreateClasses {
       cod: "INF323"
       name: "Engenharia de Software II"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -914,6 +979,7 @@ mutation CreateClasses {
       cod: "INF310"
       name: "Programação Concorrente e Distribuída"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -928,6 +994,7 @@ mutation CreateClasses {
       cod: "INF450"
       name: "Organização de Computadores II"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -942,6 +1009,7 @@ mutation CreateClasses {
       cod: "INF420"
       name: "Inteligência Artificial I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -956,6 +1024,7 @@ mutation CreateClasses {
       cod: "INF340"
       name: "Linguagens de Programação"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -970,6 +1039,7 @@ mutation CreateClasses {
       cod: "INF331"
       name: "Linguagens Formais e Autômatos"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -984,6 +1054,7 @@ mutation CreateClasses {
       cod: "INF221"
       name: "Engenharia de Software I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -998,6 +1069,7 @@ mutation CreateClasses {
       cod: "INF332"
       name: "Projeto e Análise de Algoritmos"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1012,6 +1084,7 @@ mutation CreateClasses {
       cod: "INF330"
       name: "Teoria e Modelos de Grafos"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1026,6 +1099,7 @@ mutation CreateClasses {
       cod: "INF251"
       name: "Organização de Computadores I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1040,6 +1114,7 @@ mutation CreateClasses {
       cod: "INF220"
       name: "Banco de Dados I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1054,6 +1129,7 @@ mutation CreateClasses {
       cod: "FIS225"
       name: "Laboratório de Física B"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1068,6 +1144,7 @@ mutation CreateClasses {
       cod: "FIS203"
       name: "Física III"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1082,6 +1159,7 @@ mutation CreateClasses {
       cod: "MAT271"
       name: "Cálculo Numérico"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1096,6 +1174,7 @@ mutation CreateClasses {
       cod: "MAT241"
       name: "Cálculo III"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1110,6 +1189,7 @@ mutation CreateClasses {
       cod: "INF280"
       name: "Pesquisa Operacional I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1124,6 +1204,7 @@ mutation CreateClasses {
       cod: "INF213"
       name: "Estrutura de Dados"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1138,6 +1219,7 @@ mutation CreateClasses {
       cod: "FIS224"
       name: "Laboratório de Física A"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1152,6 +1234,7 @@ mutation CreateClasses {
       cod: "FIS201"
       name: "Física I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1166,6 +1249,7 @@ mutation CreateClasses {
       cod: "MAT147"
       name: "Cálculo II"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1180,6 +1264,7 @@ mutation CreateClasses {
       cod: "MAT135"
       name: "Geometria Analítica e Álgebra Linear"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1194,6 +1279,7 @@ mutation CreateClasses {
       cod: "INF130"
       name: "Teoria da Computação"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1208,6 +1294,7 @@ mutation CreateClasses {
       cod: "INF112"
       name: "Programação II"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1222,6 +1309,7 @@ mutation CreateClasses {
       cod: "EST105"
       name: "Iniciação à Estatística"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1236,6 +1324,7 @@ mutation CreateClasses {
       cod: "MAT140"
       name: "Cálculo I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1250,6 +1339,7 @@ mutation CreateClasses {
       cod: "MAT131"
       name: "Introdução à Álgebra"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1264,6 +1354,7 @@ mutation CreateClasses {
       cod: "LET215"
       name: "Inglês I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1278,6 +1369,7 @@ mutation CreateClasses {
       cod: "INF191"
       name: "Introdução à Ciência da Computação"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0
@@ -1292,6 +1384,7 @@ mutation CreateClasses {
       cod: "INF110"
       name: "Programação I"
       optional: false
+      department: CCE
       useful: 0
       easy: 0
       recommended: 0

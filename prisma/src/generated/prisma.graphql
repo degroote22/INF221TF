@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Tue Jun 26 2018 01:11:15 GMT-0300 (-03)
+# timestamp: Tue Jun 26 2018 01:48:50 GMT-0300 (-03)
 
 type AggregateReview {
   count: Int!
@@ -20,6 +20,13 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+enum Department {
+  CCA
+  CCE
+  CCB
+  CCH
 }
 
 """
@@ -778,6 +785,7 @@ type UfvClass implements Node {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float!
   easy: Float!
   recommended: Int!
@@ -798,6 +806,7 @@ input UfvClassCreateInput {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float
   easy: Float
   recommended: Int
@@ -813,6 +822,7 @@ input UfvClassCreateWithoutReviewsInput {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float
   easy: Float
   recommended: Int
@@ -836,6 +846,8 @@ enum UfvClassOrderByInput {
   name_DESC
   optional_ASC
   optional_DESC
+  department_ASC
+  department_DESC
   useful_ASC
   useful_DESC
   easy_ASC
@@ -853,6 +865,7 @@ type UfvClassPreviousValues {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float!
   easy: Float!
   recommended: Int!
@@ -901,6 +914,7 @@ input UfvClassUpdateInput {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful: Float
   easy: Float
   recommended: Int
@@ -919,6 +933,7 @@ input UfvClassUpdateWithoutReviewsDataInput {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful: Float
   easy: Float
   recommended: Int
@@ -1062,6 +1077,16 @@ input UfvClassWhereInput {
 
   """All values that are not equal to given value."""
   optional_not: Boolean
+  department: Department
+
+  """All values that are not equal to given value."""
+  department_not: Department
+
+  """All values that are contained in given list."""
+  department_in: [Department!]
+
+  """All values that are not contained in given list."""
+  department_not_in: [Department!]
   useful: Float
 
   """All values that are not equal to given value."""

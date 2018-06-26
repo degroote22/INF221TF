@@ -103,6 +103,13 @@ type BatchPayload {
   count: Long!
 }
 
+enum Department {
+  CCA
+  CCE
+  CCB
+  CCH
+}
+
 """
 The \`Long\` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -859,6 +866,7 @@ type UfvClass implements Node {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float!
   easy: Float!
   recommended: Int!
@@ -879,6 +887,7 @@ input UfvClassCreateInput {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float
   easy: Float
   recommended: Int
@@ -894,6 +903,7 @@ input UfvClassCreateWithoutReviewsInput {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float
   easy: Float
   recommended: Int
@@ -917,6 +927,8 @@ enum UfvClassOrderByInput {
   name_DESC
   optional_ASC
   optional_DESC
+  department_ASC
+  department_DESC
   useful_ASC
   useful_DESC
   easy_ASC
@@ -934,6 +946,7 @@ type UfvClassPreviousValues {
   cod: String!
   name: String!
   optional: Boolean!
+  department: Department!
   useful: Float!
   easy: Float!
   recommended: Int!
@@ -982,6 +995,7 @@ input UfvClassUpdateInput {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful: Float
   easy: Float
   recommended: Int
@@ -1000,6 +1014,7 @@ input UfvClassUpdateWithoutReviewsDataInput {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful: Float
   easy: Float
   recommended: Int
@@ -1143,6 +1158,16 @@ input UfvClassWhereInput {
 
   """All values that are not equal to given value."""
   optional_not: Boolean
+  department: Department
+
+  """All values that are not equal to given value."""
+  department_not: Department
+
+  """All values that are contained in given list."""
+  department_in: [Department!]
+
+  """All values that are not contained in given list."""
+  department_not_in: [Department!]
   useful: Float
 
   """All values that are not equal to given value."""
@@ -1756,6 +1781,21 @@ export type ReviewVotesOrderByInput =   'id_ASC' |
 export type ReviewVotesTypes =   'Agree' |
   'Disagree'
 
+export type ReviewUseful =   'U0' |
+  'U1' |
+  'U2' |
+  'U3' |
+  'U4' |
+  'U5'
+
+export type UserRate =   'Iniciante' |
+  'Confiavel'
+
+export type Department =   'CCA' |
+  'CCE' |
+  'CCB' |
+  'CCH'
+
 export type UserOrderByInput =   'id_ASC' |
   'id_DESC' |
   'facebookId_ASC' |
@@ -1799,12 +1839,53 @@ export type ReviewEasy =   'E0' |
   'E4' |
   'E5'
 
-export type ReviewUseful =   'U0' |
-  'U1' |
-  'U2' |
-  'U3' |
-  'U4' |
-  'U5'
+export type UfvCourses =   'Agronegocio' |
+  'Agronomia' |
+  'Cooperativismo' |
+  'Engenharia_Agricola_e_Ambiental' |
+  'Engenharia_Florestal' |
+  'Zootecnia' |
+  'Bioquimica' |
+  'Ciencias_Biologicas__Bacharelado_Licenciatura_' |
+  'Educacao_Fisica__Bacharelado_Licenciatura_' |
+  'Enfermagem' |
+  'Licenciatura_em_Ciencias_Biologicas__Noturno_' |
+  'Medicina' |
+  'Medicina_Veterinaria' |
+  'Nutricao' |
+  'Arquitetura_e_Urbanismo' |
+  'Ciencia_da_Computacaoo' |
+  'Ciencia_e_Tecnologia_de_Laticinios' |
+  'Engenharia_Ambiental' |
+  'Engenharia_Civil' |
+  'Engenharia_de_Agrimensura_e_Cartografica' |
+  'Engenharia_de_Alimentos' |
+  'Engenharia_de_Producao' |
+  'Engenharia_Eletrica' |
+  'Engenharia_Mecanica' |
+  'Engenharia_Quimica' |
+  'Fisica__Bacharelado_Licenciatura_' |
+  'Licenciatura_em_Fisica' |
+  'Licenciatura_em_Matematica' |
+  'Licenciatura_em_Quimica' |
+  'Matematica__Bacharelado_Licenciatura_' |
+  'Quimica__Bacharelado_Licenciatura_' |
+  'Administracao' |
+  'Ciencias_Contabeis' |
+  'Ciencias_Economicas' |
+  'Ciencias_Sociais__Bacharelado_Licenciatura_' |
+  'Comunicacao_Social___Jornalismo' |
+  'Danca__Bacharelado_Licenciatura_' |
+  'Direito' |
+  'Economia_Domestica' |
+  'Educacao_do_Campo' |
+  'Educacao_Infantil' |
+  'Geografia__Bacharelado_Licenciatura_' |
+  'Historia__Bacharelado_Licenciatura_' |
+  'Letras' |
+  'Pedagogia' |
+  'Secretariado_Executivo_Trilingue___Portugues__Frances_e_Ingles' |
+  'Servico_Social'
 
 export type MutationType =   'CREATED' |
   'UPDATED' |
@@ -1818,6 +1899,8 @@ export type UfvClassOrderByInput =   'id_ASC' |
   'name_DESC' |
   'optional_ASC' |
   'optional_DESC' |
+  'department_ASC' |
+  'department_DESC' |
   'useful_ASC' |
   'useful_DESC' |
   'easy_ASC' |
@@ -1929,60 +2012,15 @@ export type UfvYears =   'Y19201' |
   'Y20171' |
   'Y20181'
 
-export type UfvCourses =   'Agronegocio' |
-  'Agronomia' |
-  'Cooperativismo' |
-  'Engenharia_Agricola_e_Ambiental' |
-  'Engenharia_Florestal' |
-  'Zootecnia' |
-  'Bioquimica' |
-  'Ciencias_Biologicas__Bacharelado_Licenciatura_' |
-  'Educacao_Fisica__Bacharelado_Licenciatura_' |
-  'Enfermagem' |
-  'Licenciatura_em_Ciencias_Biologicas__Noturno_' |
-  'Medicina' |
-  'Medicina_Veterinaria' |
-  'Nutricao' |
-  'Arquitetura_e_Urbanismo' |
-  'Ciencia_da_Computacaoo' |
-  'Ciencia_e_Tecnologia_de_Laticinios' |
-  'Engenharia_Ambiental' |
-  'Engenharia_Civil' |
-  'Engenharia_de_Agrimensura_e_Cartografica' |
-  'Engenharia_de_Alimentos' |
-  'Engenharia_de_Producao' |
-  'Engenharia_Eletrica' |
-  'Engenharia_Mecanica' |
-  'Engenharia_Quimica' |
-  'Fisica__Bacharelado_Licenciatura_' |
-  'Licenciatura_em_Fisica' |
-  'Licenciatura_em_Matematica' |
-  'Licenciatura_em_Quimica' |
-  'Matematica__Bacharelado_Licenciatura_' |
-  'Quimica__Bacharelado_Licenciatura_' |
-  'Administracao' |
-  'Ciencias_Contabeis' |
-  'Ciencias_Economicas' |
-  'Ciencias_Sociais__Bacharelado_Licenciatura_' |
-  'Comunicacao_Social___Jornalismo' |
-  'Danca__Bacharelado_Licenciatura_' |
-  'Direito' |
-  'Economia_Domestica' |
-  'Educacao_do_Campo' |
-  'Educacao_Infantil' |
-  'Geografia__Bacharelado_Licenciatura_' |
-  'Historia__Bacharelado_Licenciatura_' |
-  'Letras' |
-  'Pedagogia' |
-  'Secretariado_Executivo_Trilingue___Portugues__Frances_e_Ingles' |
-  'Servico_Social'
-
-export type UserRate =   'Iniciante' |
-  'Confiavel'
-
-export interface UserCreateOneWithoutReviewsInput {
-  create?: UserCreateWithoutReviewsInput
-  connect?: UserWhereUniqueInput
+export interface ReviewCreateWithoutVotesInput {
+  score: Int
+  useful: ReviewUseful
+  easy: ReviewEasy
+  description: String
+  anonymous: Boolean
+  recommended: Boolean
+  classReviewed: UfvClassCreateOneWithoutReviewsInput
+  reviewer: UserCreateOneWithoutReviewsInput
 }
 
 export interface UserWhereInput {
@@ -2146,6 +2184,10 @@ export interface UfvClassWhereInput {
   name_not_ends_with?: String
   optional?: Boolean
   optional_not?: Boolean
+  department?: Department
+  department_not?: Department
+  department_in?: Department[] | Department
+  department_not_in?: Department[] | Department
   useful?: Float
   useful_not?: Float
   useful_in?: Float[] | Float
@@ -2255,15 +2297,12 @@ export interface ReviewWhereUniqueInput {
   id?: ID_Input
 }
 
-export interface ReviewCreateWithoutVotesInput {
-  score: Int
-  useful: ReviewUseful
-  easy: ReviewEasy
-  description: String
-  anonymous: Boolean
-  recommended: Boolean
-  classReviewed: UfvClassCreateOneWithoutReviewsInput
-  reviewer: UserCreateOneWithoutReviewsInput
+export interface ReviewUpdateOneWithoutVotesInput {
+  create?: ReviewCreateWithoutVotesInput
+  connect?: ReviewWhereUniqueInput
+  delete?: Boolean
+  update?: ReviewUpdateWithoutVotesDataInput
+  upsert?: ReviewUpsertWithoutVotesInput
 }
 
 export interface ReviewUpsertWithWhereUniqueWithoutClassReviewedInput {
@@ -2272,12 +2311,9 @@ export interface ReviewUpsertWithWhereUniqueWithoutClassReviewedInput {
   create: ReviewCreateWithoutClassReviewedInput
 }
 
-export interface ReviewUpdateOneWithoutVotesInput {
-  create?: ReviewCreateWithoutVotesInput
-  connect?: ReviewWhereUniqueInput
-  delete?: Boolean
-  update?: ReviewUpdateWithoutVotesDataInput
-  upsert?: ReviewUpsertWithoutVotesInput
+export interface UserCreateOneWithoutReviewsInput {
+  create?: UserCreateWithoutReviewsInput
+  connect?: UserWhereUniqueInput
 }
 
 export interface ReviewUpdateWithWhereUniqueWithoutClassReviewedInput {
@@ -2298,6 +2334,7 @@ export interface UfvClassUpdateInput {
   cod?: String
   name?: String
   optional?: Boolean
+  department?: Department
   useful?: Float
   easy?: Float
   recommended?: Int
@@ -2337,6 +2374,7 @@ export interface UfvClassCreateInput {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful?: Float
   easy?: Float
   recommended?: Int
@@ -2456,6 +2494,7 @@ export interface UfvClassUpdateWithoutReviewsDataInput {
   cod?: String
   name?: String
   optional?: Boolean
+  department?: Department
   useful?: Float
   easy?: Float
   recommended?: Int
@@ -2511,6 +2550,7 @@ export interface UfvClassCreateWithoutReviewsInput {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful?: Float
   easy?: Float
   recommended?: Int
@@ -2681,6 +2721,7 @@ export interface UfvClassPreviousValues {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful: Float
   easy: Float
   recommended: Int
@@ -2702,6 +2743,7 @@ export interface UfvClass extends Node {
   cod: String
   name: String
   optional: Boolean
+  department: Department
   useful: Float
   easy: Float
   recommended: Int
