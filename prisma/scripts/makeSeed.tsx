@@ -1,3 +1,5 @@
+import * as fs from "fs";
+
 const Obrigatorias = [
   { cod: "INF499", name: "Seminário II" },
   { cod: "INF421", name: "Sistemas de Informação" },
@@ -104,10 +106,57 @@ const Optativas = [
   },
   { cod: "ADM345", name: "Sistemas de Informação Gerencial" },
   { cod: "ADM328", name: "Administração da Produção e Materiais" },
-  { cod: "ADM309", name: '"Organização, Sistemas e Métodos"' },
+  { cod: "ADM309", name: "Organização Sistemas e Métodos" },
   { cod: "ADM308", name: "Administração Municipal" },
   { cod: "ADM305", name: "Gestão de Pessoas" },
   { cod: "ADM250", name: "Matemática Financeira" },
   { cod: "ADM101", name: "Teoria Geral da Administração II" },
   { cod: "ADM100", name: "Teoria Geral da Administração I" }
 ];
+
+const _optativas = Optativas.map((x, index) => {
+  return `
+ccpopt${index}: createUfvClass(
+    data: {
+    cod: "${x.cod}"
+    name: "${x.name}"
+    optional: true
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
+    }
+) {
+    id
+}
+`;
+}).join("\n");
+
+const _obrigatorias = Obrigatorias.map((x, index) => {
+  return `
+ccpobr${index}: createUfvClass(
+    data: {
+    cod: "${x.cod}"
+    name: "${x.name}"
+    optional: false
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
+    }
+) {
+    id
+}
+`;
+}).join("\n");
+const finalize = (x: string) => {
+  return `
+mutation CreateClasses {
+    ${x}
+}
+`;
+};
+fs.writeFileSync(
+  "seed2.graphql",
+  finalize([_optativas, _obrigatorias].join("\n"))
+);
