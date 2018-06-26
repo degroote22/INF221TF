@@ -5,6 +5,7 @@ import { CadastroGo, LoginGo } from "../utils/routes";
 class PrivateRoute extends React.Component<{
   component: React.ComponentClass | React.SFC<any>;
   path: string;
+  exact?: boolean;
 }> {
   public render() {
     const { component, path, ...rest } = this.props;

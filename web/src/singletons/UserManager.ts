@@ -61,6 +61,7 @@ interface IUserResult {
   item: IUser;
   score: number;
 }
+
 @AutoSubscribeStore
 class UserManager extends StoreBase {
   private fuse = new Fuse(users, {

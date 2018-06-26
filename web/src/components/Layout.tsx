@@ -68,7 +68,11 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
   innerPaper: {
     height: "100%",
     maxHeight: "calc(100vh - 64px)",
-    overflow: "auto"
+
+    overflowY: "auto",
+    [theme.breakpoints.up("md")]: {
+      minHeight: theme.breakpoints.values.md / 2
+    }
   },
   menuButton: {
     marginLeft: -12,
@@ -83,7 +87,6 @@ const styles: StyleRulesCallback<ClassNames> = theme => ({
 
     [theme.breakpoints.up("md")]: {
       height: "initial",
-      minHeight: theme.breakpoints.values.md / 2,
       width: theme.breakpoints.values.md
     }
   },

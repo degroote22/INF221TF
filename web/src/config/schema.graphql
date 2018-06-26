@@ -1,0 +1,19 @@
+# import Query.* from "../generated/schema.graphql"
+
+type loginResponse {
+  ok: Boolean!
+}
+
+type logoffResponse {
+  ok: Boolean!
+}
+
+type Mutation {
+  login: loginResponse!
+  logoff: logoffResponse!
+}
+
+type Query {
+  logged: Boolean!
+  registered: Boolean!
+}

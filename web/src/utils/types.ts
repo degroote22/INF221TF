@@ -44,19 +44,14 @@ export interface IClassResult {
   score: number;
 }
 
-export interface IClassReview extends IClassReviewBase {
-  id: string;
-  score: number;
-}
-
 export enum UserRateEnum {
   iniciante,
   confiavel
 }
 
 export interface IUser {
-  name: string;
   id: string;
+  name: string;
   rate: UserRateEnum;
   course: string;
   year: string;
@@ -65,4 +60,15 @@ export interface IUser {
 export enum Votes {
   agree = "agree",
   disagree = "disagree"
+}
+
+export interface IAuthResponse {
+  accessToken: string;
+  expiresIn: number;
+  signedRequest: string;
+  userID: string;
+}
+export interface IKindResponse {
+  status: "connected" | "not_authorized" | "unknown";
+  authResponse: IAuthResponse;
 }
