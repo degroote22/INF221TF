@@ -1,0 +1,15 @@
+mutation createClass {
+  createUfvClass(
+    data: {
+      cod: "INF110"
+      name: "Programação I"
+      optional: false
+      useful: 0
+      easy: 0
+      recommended: 0
+      reviews: {}
+    }
+  ) {
+    id
+  }
+}
