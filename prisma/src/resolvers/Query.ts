@@ -1,7 +1,6 @@
 import { Context, getUserData } from "../utils";
 import {
   Query as QueryType,
-  AllClassesQueryArgs,
   ListClassesQueryArgs,
   QueryResolvers,
   User
@@ -17,6 +16,83 @@ export const FUSE_OPT = {
   distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1
+};
+
+const myvote: QueryResolvers.MyvoteResolver = async (
+  _,
+  { where: { reviewId } },
+  ctx: Context,
+  info
+) => {
+  try {
+    const { id } = await getUserData(ctx);
+    return ctx.db.query
+      .reviewVoteses(
+        {
+          where: {
+            review: {
+              id: reviewId
+            },
+            user: {
+              facebookId: id
+            }
+          }
+        },
+        info
+      )
+      .then(x => x[0]);
+  } catch {
+    return null;
+  }
+};
+
+const myvotes: QueryResolvers.MyvotesResolver = async (
+  _,
+  __,
+  ctx: Context,
+  info
+) => {
+  try {
+    const { id } = await getUserData(ctx);
+    return ctx.db.query.reviewVoteses(
+      {
+        where: {
+          user: {
+            facebookId: id
+          }
+        }
+      },
+      info
+    );
+  } catch {
+    return [];
+  }
+};
+
+const reviews: QueryResolvers.ReviewsResolver = async (
+  _,
+  { where: { userId, first } },
+  ctx: Context,
+  info
+) => {
+  return ctx.db.query.reviews(
+    { first, where: { reviewer: { id: userId } } },
+    info
+  );
+};
+
+const myreviews: QueryResolvers.MyreviewsResolver = async (
+  _,
+  __,
+  ctx: Context,
+  info
+) => {
+  const { id } = await getUserData(ctx);
+
+  return ctx.db.query.reviews(
+    { where: { reviewer: { facebookId: id } } },
+    info
+  );
 };
 
 const ufvClass: QueryResolvers.UfvClassResolver = async (
@@ -102,28 +178,14 @@ const searchAll: QueryResolvers.SearchAllResolver = async (
 };
 
 export const Query = {
+  myvote,
+  myreviews,
+  myvotes,
+  reviews,
   ufvClass,
   searchAll,
   me,
   user,
-  allClasses(
-    parent: never,
-    args: AllClassesQueryArgs,
-    ctx: Context,
-    info: never
-  ): Promise<QueryType["allClasses"]> {
-    return ctx.db.query.ufvClasses(
-      {
-        where: {
-          OR: [
-            { name_contains: args.where.searchFor },
-            { cod_contains: args.where.searchFor }
-          ]
-        }
-      },
-      info
-    );
-  },
   listClasses(
     parent: never,
     args: ListClassesQueryArgs,

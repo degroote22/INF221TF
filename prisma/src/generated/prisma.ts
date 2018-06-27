@@ -253,7 +253,7 @@ type ReviewConnection {
 }
 
 input ReviewCreateInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -280,7 +280,7 @@ input ReviewCreateOneWithoutVotesInput {
 }
 
 input ReviewCreateWithoutClassReviewedInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -291,7 +291,7 @@ input ReviewCreateWithoutClassReviewedInput {
 }
 
 input ReviewCreateWithoutReviewerInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -302,7 +302,7 @@ input ReviewCreateWithoutReviewerInput {
 }
 
 input ReviewCreateWithoutVotesInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -2179,7 +2179,7 @@ export type UserRate =   'Iniciante' |
   'Confiavel'
 
 export interface ReviewCreateWithoutVotesInput {
-  score: Int
+  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
@@ -2293,7 +2293,7 @@ export interface UfvClassCreateWithoutReviewsInput {
 }
 
 export interface ReviewCreateWithoutClassReviewedInput {
-  score: Int
+  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
@@ -2525,7 +2525,7 @@ export interface ReviewUpdateWithoutVotesDataInput {
 }
 
 export interface ReviewCreateInput {
-  score: Int
+  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
@@ -2568,7 +2568,7 @@ export interface ReviewCreateManyWithoutClassReviewedInput {
 }
 
 export interface ReviewCreateWithoutReviewerInput {
-  score: Int
+  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String

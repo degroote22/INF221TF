@@ -245,12 +245,12 @@ type ReviewVotes {
 
 type Review {
   id: ID! @unique
-  score: Int!
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  score: Int! @default(value: "0")
   classReviewed: UfvClass! @relation(name: "ReviewFrom", onDelete: SET_NULL)
   reviewer: User! @relation(name: "ReviewAuthor", onDelete: SET_NULL)
   votes: [ReviewVotes!]! @relation(name: "ReviewVotesFrom", onDelete: CASCADE)

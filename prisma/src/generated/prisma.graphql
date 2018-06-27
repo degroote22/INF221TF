@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Jun 27 2018 00:22:22 GMT-0300 (-03)
+# timestamp: Wed Jun 27 2018 03:25:58 GMT-0300 (-03)
 
 type AggregateReview {
   count: Int!
@@ -172,7 +172,7 @@ type ReviewConnection {
 }
 
 input ReviewCreateInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -199,7 +199,7 @@ input ReviewCreateOneWithoutVotesInput {
 }
 
 input ReviewCreateWithoutClassReviewedInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -210,7 +210,7 @@ input ReviewCreateWithoutClassReviewedInput {
 }
 
 input ReviewCreateWithoutReviewerInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -221,7 +221,7 @@ input ReviewCreateWithoutReviewerInput {
 }
 
 input ReviewCreateWithoutVotesInput {
-  score: Int!
+  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!

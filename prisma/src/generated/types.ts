@@ -16,11 +16,14 @@ export interface Node {
 
 export interface Query {
   searchAll: SearchResult[];
-  allClasses: UfvClass[];
   listClasses: UfvClass[];
-  me?: User | null;
   user?: User | null;
   ufvClass?: UfvClass | null;
+  reviews: Review[];
+  me?: User | null;
+  myvote?: ReviewVotes | null;
+  myreviews: Review[];
+  myvotes: ReviewVotes[];
 }
 
 export interface UfvClass extends Node {
@@ -73,16 +76,21 @@ export interface ReviewVotes extends Node {
 export interface Mutation {
   register: User;
   deleteAcc?: User | null;
+  createReview?: Review | null;
+  setVote?: ReviewVotes | null;
 }
 
 export namespace QueryResolvers {
   export interface Resolvers {
     searchAll?: SearchAllResolver;
-    allClasses?: AllClassesResolver;
     listClasses?: ListClassesResolver;
-    me?: MeResolver;
     user?: UserResolver;
     ufvClass?: UfvClassResolver;
+    reviews?: ReviewsResolver;
+    me?: MeResolver;
+    myvote?: MyvoteResolver;
+    myreviews?: MyreviewsResolver;
+    myvotes?: MyvotesResolver;
   }
 
   export type SearchAllResolver = Resolver<SearchResult[], SearchAllArgs>;
@@ -90,17 +98,11 @@ export namespace QueryResolvers {
     where: SearchInput;
   }
 
-  export type AllClassesResolver = Resolver<UfvClass[], AllClassesArgs>;
-  export interface AllClassesArgs {
-    where: UfvClassesInput;
-  }
-
   export type ListClassesResolver = Resolver<UfvClass[], ListClassesArgs>;
   export interface ListClassesArgs {
     where: UfvListClassesInput;
   }
 
-  export type MeResolver = Resolver<User | null>;
   export type UserResolver = Resolver<User | null, UserArgs>;
   export interface UserArgs {
     where: UserInput;
@@ -110,6 +112,20 @@ export namespace QueryResolvers {
   export interface UfvClassArgs {
     where: UfvClassInput;
   }
+
+  export type ReviewsResolver = Resolver<Review[], ReviewsArgs>;
+  export interface ReviewsArgs {
+    where: ReviewsWhereInput;
+  }
+
+  export type MeResolver = Resolver<User | null>;
+  export type MyvoteResolver = Resolver<ReviewVotes | null, MyvoteArgs>;
+  export interface MyvoteArgs {
+    where: VoteWhereInput;
+  }
+
+  export type MyreviewsResolver = Resolver<Review[]>;
+  export type MyvotesResolver = Resolver<ReviewVotes[]>;
 }
 
 export namespace UfvClassResolvers {
@@ -265,6 +281,8 @@ export namespace MutationResolvers {
   export interface Resolvers {
     register?: RegisterResolver;
     deleteAcc?: DeleteAccResolver;
+    createReview?: CreateReviewResolver;
+    setVote?: SetVoteResolver;
   }
 
   export type RegisterResolver = Resolver<User, RegisterArgs>;
@@ -273,6 +291,15 @@ export namespace MutationResolvers {
   }
 
   export type DeleteAccResolver = Resolver<User | null>;
+  export type CreateReviewResolver = Resolver<Review | null, CreateReviewArgs>;
+  export interface CreateReviewArgs {
+    data: CreateReviewData;
+  }
+
+  export type SetVoteResolver = Resolver<ReviewVotes | null, SetVoteArgs>;
+  export interface SetVoteArgs {
+    data: SetVoteData;
+  }
 }
 
 export interface SearchInput {
@@ -777,10 +804,6 @@ export interface ReviewVotesWhereInput {
   user?: UserWhereInput | null;
 }
 
-export interface UfvClassesInput {
-  searchFor: string;
-}
-
 export interface UfvListClassesInput {
   sort: ClassesRanks;
   department?: Department | null;
@@ -795,15 +818,35 @@ export interface UfvClassInput {
   id: string;
 }
 
+export interface ReviewsWhereInput {
+  userId: string;
+  first: number;
+}
+
+export interface VoteWhereInput {
+  reviewId: string;
+}
+
 export interface UserRegisterInput {
   course: UfvCourses;
   year: UfvYears;
 }
+
+export interface CreateReviewData {
+  cod: string;
+  useful: ReviewUseful;
+  easy: ReviewEasy;
+  description: string;
+  anonymous: boolean;
+  recommended: boolean;
+}
+
+export interface SetVoteData {
+  reviewId: string;
+  type: ReviewVotesTypes;
+}
 export interface SearchAllQueryArgs {
   where: SearchInput;
-}
-export interface AllClassesQueryArgs {
-  where: UfvClassesInput;
 }
 export interface ListClassesQueryArgs {
   where: UfvListClassesInput;
@@ -813,6 +856,12 @@ export interface UserQueryArgs {
 }
 export interface UfvClassQueryArgs {
   where: UfvClassInput;
+}
+export interface ReviewsQueryArgs {
+  where: ReviewsWhereInput;
+}
+export interface MyvoteQueryArgs {
+  where: VoteWhereInput;
 }
 export interface ReviewsUfvClassArgs {
   where?: ReviewWhereInput | null;
@@ -864,6 +913,12 @@ export interface UserReviewVotesArgs {
 }
 export interface RegisterMutationArgs {
   user: UserRegisterInput;
+}
+export interface CreateReviewMutationArgs {
+  data: CreateReviewData;
+}
+export interface SetVoteMutationArgs {
+  data: SetVoteData;
 }
 
 export type Department =

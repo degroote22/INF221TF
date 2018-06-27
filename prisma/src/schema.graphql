@@ -1,8 +1,4 @@
-# import UfvClass, Department, User, UfvCourses, UfvYears from "./generated/prisma.graphql"
-
-input UfvClassesInput {
-  searchFor: String!
-}
+# import UfvClass, Department, User, UfvCourses, UfvYears, Review, ReviewVotesKind, ReviewVotes from "./generated/prisma.graphql"
 
 enum ClassesRanks {
   Useful
@@ -30,13 +26,26 @@ input UfvClassInput {
   id: String!
 }
 
+input VoteWhereInput {
+  reviewId: String!
+}
+
+input ReviewsWhereInput {
+  userId: String!
+  first: Int!
+}
+
 type Query {
   searchAll(where: SearchInput!): [SearchResult!]!
-  allClasses(where: UfvClassesInput!): [UfvClass!]!
   listClasses(where: UfvListClassesInput!): [UfvClass!]!
-  me: User
   user(where: UserInput!): User
   ufvClass(where: UfvClassInput!): UfvClass
+  reviews(where: ReviewsWhereInput!): [Review!]!
+
+  me: User
+  myvote(where: VoteWhereInput!): ReviewVotes
+  myreviews: [Review!]!
+  myvotes: [ReviewVotes!]!
 }
 
 input UserRegisterInput {
@@ -44,7 +53,23 @@ input UserRegisterInput {
   year: UfvYears!
 }
 
+input CreateReviewData {
+  cod: String!
+  useful: ReviewUseful!
+  easy: ReviewEasy!
+  description: String!
+  anonymous: Boolean!
+  recommended: Boolean!
+}
+
+input SetVoteData {
+  reviewId: String!
+  type: ReviewVotesTypes!
+}
+
 type Mutation {
   register(user: UserRegisterInput!): User!
   deleteAcc: User
+  createReview(data: CreateReviewData!): Review
+  setVote(data: SetVoteData!): ReviewVotes
 }
