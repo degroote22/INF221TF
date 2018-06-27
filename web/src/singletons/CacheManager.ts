@@ -1,11 +1,7 @@
 import client from "src/config/ApolloClient";
 
 class CacheManager {
-  public setLogged = (
-    fbAccessToken: string,
-    fbUserId: string,
-    fbUserName: string
-  ) => {
+  public login = () => {
     if (client && client.cache) {
       client.cache.writeData({
         data: { logged: true }
@@ -13,7 +9,7 @@ class CacheManager {
     }
   };
 
-  public unsetLogged = () => {
+  public logoff = () => {
     if (client && client.cache) {
       client.cache.writeData({
         data: { logged: false }

@@ -2,17 +2,15 @@ import * as React from "react";
 import { graphql } from "react-apollo";
 import { Redirect } from "react-router";
 import Layout from "src/components/Layout";
-import { LoggedRegisteredQuery } from "src/config/Queries";
-import { LoggedRegistered } from "src/generated/types";
+import { LocalLoggedQuery } from "src/config/Queries";
+import { LocalLogged } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
 import { Cadastro } from "src/utils/routes";
 import FacebookManager from "../../singletons/FacebookManager";
 
-const withData = graphql<
-  {},
-  LoggedRegistered.Query,
-  LoggedRegistered.Variables
->(LoggedRegisteredQuery);
+const withData = graphql<{}, LocalLogged.Query, LocalLogged.Variables>(
+  LocalLoggedQuery
+);
 
 const Login = withData(props => {
   if (props.data && props.data.logged) {

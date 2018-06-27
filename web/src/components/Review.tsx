@@ -64,9 +64,9 @@ class Review extends React.Component<
           }
         />
         <div className={classes.textBlock}>
-          <Typography variant="headline" component="h2">
-            {review.created_at.toLocaleDateString()}
-          </Typography>
+          {/* <Typography variant="headline" component="h2">
+            {new Date(review.createdAt).toLocaleDateString()}
+          </Typography> */}
           <Typography className={classes.pos} color="textSecondary">
             data de criação
           </Typography>

@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"UNION","name":"SearchResult","possibleTypes":[{"name":"UfvClass"},{"name":"User"}]},{"kind":"INTERFACE","name":"Node","possibleTypes":[{"name":"UfvClass"},{"name":"Review"},{"name":"User"},{"name":"ReviewVotes"}]}]}}

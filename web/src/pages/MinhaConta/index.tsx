@@ -9,27 +9,30 @@ import { StyleRulesCallback, WithStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
+import { graphql } from "react-apollo";
 import { ComponentBase } from "resub";
+import Loading from "src/components/Loading";
+import { MeIdQuery } from "src/config/Queries";
+import { MeId } from "src/generated/types";
 import Layout from "../../components/Layout";
 import UserProfile from "../../components/UserProfile";
-import AuthManager from "../../singletons/AuthManager";
 import { BLOCK } from "../../utils/constants";
+import DeleteButton from "./DeleteButton";
 
 const initialState = {
-  open: false,
-  me: ""
+  open: false
 };
-type IProps = WithStyles<ClassesNames>;
+type IProps = WithStyles<ClassesNames> & { id?: string };
+
 class MinhaConta extends ComponentBase<IProps, typeof initialState> {
   public readonly state = initialState;
 
   public render() {
-    const me = this.state.me;
-    const { classes } = this.props;
+    const { classes, id } = this.props;
     return (
       <Layout title="Minha Conta">
         <CardContent>
-          <UserProfile id={me} />
+          {id ? <UserProfile id={id} /> : <Loading layout={false} />}
           <Typography
             variant="title"
             className={classes.marginTop}
@@ -64,27 +67,13 @@ class MinhaConta extends ComponentBase<IProps, typeof initialState> {
               <Button onClick={this.handleClose} color="primary">
                 Cancelar
               </Button>
-              <Button
-                onClick={this.handleClose}
-                color="primary"
-                autoFocus={true}
-              >
-                Confirmar
-              </Button>
+              <DeleteButton />
             </DialogActions>
           </Dialog>
         </CardContent>
       </Layout>
     );
   }
-
-  protected _buildState(props: IProps, initial: boolean) {
-    return {
-      ...this.state,
-      me: AuthManager.getId()
-    };
-  }
-
   private handleClose = () => {
     this.setState({ open: false });
   };
@@ -101,4 +90,15 @@ const styles: StyleRulesCallback<ClassesNames> = theme => ({
   }
 });
 
-export default withStyles(styles)(MinhaConta);
+const Presentation = withStyles(styles)(MinhaConta);
+
+const withData = graphql<{}, MeId.Query, MeId.Variables>(MeIdQuery);
+
+export default withData(props => {
+  const id = props.data
+    ? props.data.me
+      ? props.data.me.id
+      : undefined
+    : undefined;
+  return <Presentation id={id} />;
+});

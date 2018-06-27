@@ -1,34 +1,27 @@
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import {
   StyleRulesCallback,
   WithStyles,
   withStyles
 } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Mood from "@material-ui/icons/Mood";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Whatshot from "@material-ui/icons/Whatshot";
+import { Form, Formik, FormikProps } from "formik";
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { ComponentBase } from "resub";
-import { IClassType, RankTypes } from "src/utils/types";
-import AutoComplete from "../../components/AutoComplete";
-import ClassManager from "../../singletons/ClassManager";
-import { BLOCK } from "../../utils/constants";
-import { DisciplinaGo } from "../../utils/routes";
-import { LinkStyle } from "../../utils/styles";
+import { FormikAutoCompleteSelect } from "src/Formuik/AutocompleteSelect";
+import { FormikSwitch } from "src/Formuik/Switch";
+import { ClassesRanks, Department } from "src/generated/types";
+import UfvDeptos from "src/pages/HomePage/UfvDeptos";
+import TabsList from "./TabsList";
 
 type ButtonClassesNames = "root" | "heading" | "textField" | "options";
 const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
@@ -50,17 +43,20 @@ const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
   }
 });
 
+const initialValues = {
+  optative: false,
+  department: ""
+};
+
 const initialState = {
-  rank: RankTypes.useful,
-  dept: "",
-  deptOpen: false,
-  classes: [] as IClassType[]
+  ...initialValues,
+  rank: "Useful" as ClassesRanks
 };
 
 type IProps = WithStyles<ButtonClassesNames>;
-
-class HomepageTabs extends ComponentBase<IProps, typeof initialState> {
+class HomepageTabs extends React.Component<IProps, typeof initialState> {
   public readonly state = initialState;
+  private formik: Formik | undefined = undefined;
   public render() {
     return (
       <React.Fragment>
@@ -74,11 +70,11 @@ class HomepageTabs extends ComponentBase<IProps, typeof initialState> {
             centered={true}
             className={this.props.classes.root}
           >
-            <Tab label="Uteis" value={RankTypes.useful} icon={<Mood />} />
-            <Tab label="Fáceis" value={RankTypes.easy} icon={<ThumbUp />} />
+            <Tab label="Uteis" value={"Useful"} icon={<Mood />} />
+            <Tab label="Fáceis" value={"Easy"} icon={<ThumbUp />} />
             <Tab
               label="Recomendadas"
-              value={RankTypes.recommended}
+              value={"Recommended"}
               icon={<Whatshot />}
             />
           </Tabs>
@@ -90,124 +86,60 @@ class HomepageTabs extends ComponentBase<IProps, typeof initialState> {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={this.props.classes.options}>
-            <TextField
-              id="code"
-              label="Departamento"
-              className={this.props.classes.textField}
-              fullWidth={true}
-              margin="normal"
-              value={this.state.dept}
-              onChange={this.handleDeptChange}
-              onBlur={this.onDeptBlur}
-              onFocus={this.onDeptFocus}
-            />
-
-            <AutoComplete
-              search={this.state.dept}
-              top={BLOCK * 2}
-              onChange={this.handleDeptSelect}
-              open={this.state.deptOpen}
-              getPrimary={this.getPrimary as any}
-              getSecondary={this.getSecondary as any}
-              getId={this.getId as any}
-              getResult={this.getResult}
-            />
-
-            <FormControlLabel
-              control={<Switch checked={false} value="gilad" color="primary" />}
-              label="Somente optativas"
+            <Formik
+              ref={this.setFormikRef}
+              initialValues={initialValues}
+              onSubmit={this.onSubmit}
+              render={this.renderForm}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        {this.renderList()}
+        <TabsList
+          rank={this.state.rank}
+          optative={this.state.optative}
+          department={this.state.department as Department}
+        />
       </React.Fragment>
     );
   }
 
-  protected _buildState(props: IProps, initial: boolean) {
-    return {
-      ...this.state,
-      classes: ClassManager.getClassesRanked(this.state.rank)
-    };
-  }
-
-  private onDeptBlur = () => {
-    setTimeout(() => {
-      this.setState({ deptOpen: false });
-    }, 1);
+  private setFormikRef = (ref: any) => {
+    this.formik = ref;
   };
 
-  private onDeptFocus = () => {
-    this.setState({ deptOpen: true });
-  };
-
-  private handleDeptChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ dept: event.target.value });
-  };
-
-  private getResult = (search: string) => {
-    return ["DPI", "DEL"];
-  };
-
-  private getId = (item: string) => {
-    return item;
-  };
-
-  private getSecondary = (item: string) => {
-    return "";
-  };
-
-  private getPrimary = (item: string) => {
-    return item;
-  };
-
-  private handleDeptSelect = (dept: string) => {
-    this.setState({ dept });
-  };
-
-  private renderList = () => {
+  private renderForm = (formikBag: FormikProps<typeof initialValues>) => {
     return (
-      <div style={{ overflow: "hidden" }}>
-        <List component="nav" style={{ padding: 0 }}>
-          {this.state.classes.map(c => {
-            return this.renderListItem(c, this.state.rank);
-          })}
-        </List>
-      </div>
+      <Form noValidate={true} autoComplete="off">
+        <FormikAutoCompleteSelect
+          fullWidth={true}
+          label="Departamento"
+          name="department"
+          options={UfvDeptos}
+        />
+        <div style={{ marginTop: 16 }} />
+        <FormikSwitch name="optative" label="Somente optativas" />
+        <div style={{ marginTop: 32 }} />
+        <Button
+          variant="contained"
+          color="secondary"
+          type="submit"
+          disabled={formikBag.isSubmitting}
+        >
+          Confirmar
+        </Button>
+      </Form>
     );
   };
 
-  private getSecondaryText = (c: IClassType, rank: RankTypes) => {
-    if (rank === RankTypes.easy) {
-      return "Facilidade média: " + c.easy.toFixed(2);
+  private onSubmit = (values: typeof initialValues) => {
+    this.setState(values);
+    if (this.formik) {
+      this.formik.resetForm(values);
     }
-    if (rank === RankTypes.recommended) {
-      return "Recomendado por: " + c.recommended + " alunos";
-    }
-    if (rank === RankTypes.useful) {
-      return "Utilidade média: " + c.useful.toFixed(2);
-    }
-
-    throw Error("Não implementado");
   };
 
-  private renderListItem = (c: IClassType, rank: RankTypes) => {
-    const secondary = this.getSecondaryText(c, rank);
-
-    return (
-      <Link to={DisciplinaGo(c.id)} key={c.id} style={LinkStyle}>
-        <ListItem button={true}>
-          <ListItemText
-            primary={c.cod + " - " + c.name}
-            secondary={secondary}
-          />
-        </ListItem>
-      </Link>
-    );
-  };
-
-  private handleChange = (event: React.ChangeEvent<{}>, rank: RankTypes) => {
+  private handleChange = (ev: React.ChangeEvent<{}>, rank: ClassesRanks) => {
     this.setState({ rank });
   };
 }

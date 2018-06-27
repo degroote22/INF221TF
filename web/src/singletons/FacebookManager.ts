@@ -1,8 +1,8 @@
 import client from "src/config/ApolloClient";
 import { FbLoginMutation, LogoffMutation } from "src/config/Mutations";
-import CacheManager from "src/singletons/CacheManager";
 import LocalStorageManager from "src/singletons/LocalStorageManager";
 import { IAuthResponse, IKindResponse } from "src/utils/types";
+import { IsRegisteredQuery, LocalLoggedQuery } from "../config/Queries";
 
 class FacebookManager {
   public init(debug: boolean = false) {
@@ -69,7 +69,10 @@ class FacebookManager {
   public logoff = async () => {
     const logout = (): Promise<{ name: string }> =>
       new Promise((rs, rj) => {
-        (FB as any).logout("/me", rs);
+        if (!(window as any).FB) {
+          rs();
+        }
+        (FB as any).logout(rs);
       });
 
     await logout();
@@ -77,42 +80,45 @@ class FacebookManager {
   };
 
   private handleFBAuth = async (value: IAuthResponse | void) => {
-    const getData = (): Promise<{ name: string }> =>
-      new Promise((rs, rj) => {
-        (FB as any).api("/me", rs);
-      });
-    const { name } = await getData();
     if (value) {
-      this.setLogged(value.accessToken, value.userID, name);
+      this.setLogged(value.accessToken);
     } else {
       this.unsetLogged();
     }
   };
 
-  private setLogged = (
-    fbAccessToken: string,
-    fbUserId: string,
-    fbUserName: string
-  ) => {
+  private setLogged = (fbAccessToken: string) => {
+    // tslint:disable-next-line:no-console
+    console.log(fbAccessToken);
     LocalStorageManager.setToken(fbAccessToken);
-    LocalStorageManager.setUid(fbUserId);
-    LocalStorageManager.setUsername(fbUserName);
-    CacheManager.setLogged(fbAccessToken, fbUserId, fbUserName);
     if (client) {
-      client.mutate({ mutation: FbLoginMutation });
+      client.mutate({
+        mutation: FbLoginMutation,
+        refetchQueries: [
+          { query: IsRegisteredQuery },
+          { query: LocalLoggedQuery }
+        ]
+      });
     }
   };
 
   private unsetLogged = () => {
     LocalStorageManager.removeToken();
-    LocalStorageManager.removeUid();
-    LocalStorageManager.removeUsername();
-    CacheManager.unsetLogged();
     if (client) {
-      client.mutate({ mutation: LogoffMutation });
+      client.mutate({
+        mutation: LogoffMutation,
+
+        refetchQueries: [
+          { query: IsRegisteredQuery },
+          { query: LocalLoggedQuery }
+        ]
+      });
     }
   };
 }
+
+// curl -i -X GET \
+//  "https://graph.facebook.com/v3.0/me?access_token=***"
 
 // tslint:disable-next-line:max-classes-per-file
 declare class FB {}

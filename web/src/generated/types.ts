@@ -8,6 +8,8 @@ type Resolver<Result, Args = any> = (
   info: GraphQLResolveInfo
 ) => Promise<Result> | Result;
 
+export type DateTime = any;
+
 export interface Node {
   id: string;
 }
@@ -15,8 +17,12 @@ export interface Node {
 export interface Query {
   logged: boolean;
   registered: boolean;
+  searchAll: SearchResult[];
   allClasses: UfvClass[];
   listClasses: UfvClass[];
+  me?: User | null;
+  user?: User | null;
+  ufvClass?: UfvClass | null;
 }
 
 export interface UfvClass extends Node {
@@ -42,17 +48,21 @@ export interface Review extends Node {
   classReviewed: UfvClass;
   reviewer: User;
   votes?: ReviewVotes[] | null;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }
 
 export interface User extends Node {
   id: string;
   facebookId: string;
   name: string;
-  rate: UserRate;
   course: UfvCourses;
   year: UfvYears;
+  rate: UserRate;
   reviews?: Review[] | null;
   votes?: ReviewVotes[] | null;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }
 
 export interface ReviewVotes extends Node {
@@ -65,10 +75,8 @@ export interface ReviewVotes extends Node {
 export interface Mutation {
   login: loginResponse;
   logoff: logoffResponse;
-}
-
-export interface loginInput {
-  token: string;
+  register: User;
+  deleteAcc?: User | null;
 }
 
 export interface loginResponse {
@@ -83,12 +91,21 @@ export namespace QueryResolvers {
   export interface Resolvers {
     logged?: LoggedResolver;
     registered?: RegisteredResolver;
+    searchAll?: SearchAllResolver;
     allClasses?: AllClassesResolver;
     listClasses?: ListClassesResolver;
+    me?: MeResolver;
+    user?: UserResolver;
+    ufvClass?: UfvClassResolver;
   }
 
   export type LoggedResolver = Resolver<boolean>;
   export type RegisteredResolver = Resolver<boolean>;
+  export type SearchAllResolver = Resolver<SearchResult[], SearchAllArgs>;
+  export interface SearchAllArgs {
+    where: SearchInput;
+  }
+
   export type AllClassesResolver = Resolver<UfvClass[], AllClassesArgs>;
   export interface AllClassesArgs {
     where: UfvClassesInput;
@@ -97,6 +114,17 @@ export namespace QueryResolvers {
   export type ListClassesResolver = Resolver<UfvClass[], ListClassesArgs>;
   export interface ListClassesArgs {
     where: UfvListClassesInput;
+  }
+
+  export type MeResolver = Resolver<User | null>;
+  export type UserResolver = Resolver<User | null, UserArgs>;
+  export interface UserArgs {
+    where: UserInput;
+  }
+
+  export type UfvClassResolver = Resolver<UfvClass | null, UfvClassArgs>;
+  export interface UfvClassArgs {
+    where: UfvClassInput;
   }
 }
 
@@ -145,6 +173,8 @@ export namespace ReviewResolvers {
     classReviewed?: ClassReviewedResolver;
     reviewer?: ReviewerResolver;
     votes?: VotesResolver;
+    createdAt?: CreatedAtResolver;
+    updatedAt?: UpdatedAtResolver;
   }
 
   export type IdResolver = Resolver<string>;
@@ -174,6 +204,9 @@ export namespace ReviewResolvers {
     first?: number | null;
     last?: number | null;
   }
+
+  export type CreatedAtResolver = Resolver<DateTime>;
+  export type UpdatedAtResolver = Resolver<DateTime>;
 }
 
 export namespace UserResolvers {
@@ -181,19 +214,21 @@ export namespace UserResolvers {
     id?: IdResolver;
     facebookId?: FacebookIdResolver;
     name?: NameResolver;
-    rate?: RateResolver;
     course?: CourseResolver;
     year?: YearResolver;
+    rate?: RateResolver;
     reviews?: ReviewsResolver;
     votes?: VotesResolver;
+    createdAt?: CreatedAtResolver;
+    updatedAt?: UpdatedAtResolver;
   }
 
   export type IdResolver = Resolver<string>;
   export type FacebookIdResolver = Resolver<string>;
   export type NameResolver = Resolver<string>;
-  export type RateResolver = Resolver<UserRate>;
   export type CourseResolver = Resolver<UfvCourses>;
   export type YearResolver = Resolver<UfvYears>;
+  export type RateResolver = Resolver<UserRate>;
   export type ReviewsResolver = Resolver<Review[] | null, ReviewsArgs>;
   export interface ReviewsArgs {
     where?: ReviewWhereInput | null;
@@ -215,6 +250,9 @@ export namespace UserResolvers {
     first?: number | null;
     last?: number | null;
   }
+
+  export type CreatedAtResolver = Resolver<DateTime>;
+  export type UpdatedAtResolver = Resolver<DateTime>;
 }
 
 export namespace ReviewVotesResolvers {
@@ -243,22 +281,18 @@ export namespace MutationResolvers {
   export interface Resolvers {
     login?: LoginResolver;
     logoff?: LogoffResolver;
+    register?: RegisterResolver;
+    deleteAcc?: DeleteAccResolver;
   }
 
-  export type LoginResolver = Resolver<loginResponse, LoginArgs>;
-  export interface LoginArgs {
-    input: loginInput;
-  }
-
+  export type LoginResolver = Resolver<loginResponse>;
   export type LogoffResolver = Resolver<logoffResponse>;
-}
-
-export namespace loginInputResolvers {
-  export interface Resolvers {
-    token?: TokenResolver;
+  export type RegisterResolver = Resolver<User, RegisterArgs>;
+  export interface RegisterArgs {
+    user: UserRegisterInput;
   }
 
-  export type TokenResolver = Resolver<string>;
+  export type DeleteAccResolver = Resolver<User | null>;
 }
 
 export namespace loginResponseResolvers {
@@ -277,8 +311,8 @@ export namespace logoffResponseResolvers {
   export type OkResolver = Resolver<boolean>;
 }
 
-export interface UfvClassesInput {
-  searchFor: string;
+export interface SearchInput {
+  value: string;
 }
 
 export interface ReviewWhereInput {
@@ -333,6 +367,22 @@ export interface ReviewWhereInput {
   anonymous_not?: boolean | null;
   recommended?: boolean | null;
   recommended_not?: boolean | null;
+  createdAt?: DateTime | null;
+  createdAt_not?: DateTime | null;
+  createdAt_in?: DateTime[] | null;
+  createdAt_not_in?: DateTime[] | null;
+  createdAt_lt?: DateTime | null;
+  createdAt_lte?: DateTime | null;
+  createdAt_gt?: DateTime | null;
+  createdAt_gte?: DateTime | null;
+  updatedAt?: DateTime | null;
+  updatedAt_not?: DateTime | null;
+  updatedAt_in?: DateTime[] | null;
+  updatedAt_not_in?: DateTime[] | null;
+  updatedAt_lt?: DateTime | null;
+  updatedAt_lte?: DateTime | null;
+  updatedAt_gt?: DateTime | null;
+  updatedAt_gte?: DateTime | null;
   classReviewed?: UfvClassWhereInput | null;
   reviewer?: UserWhereInput | null;
   votes_every?: ReviewVotesWhereInput | null;
@@ -467,10 +517,6 @@ export interface UserWhereInput {
   name_not_starts_with?: string | null;
   name_ends_with?: string | null;
   name_not_ends_with?: string | null;
-  rate?: UserRate | null;
-  rate_not?: UserRate | null;
-  rate_in?: UserRate[] | null;
-  rate_not_in?: UserRate[] | null;
   course?: UfvCourses | null;
   course_not?: UfvCourses | null;
   course_in?: UfvCourses[] | null;
@@ -479,6 +525,26 @@ export interface UserWhereInput {
   year_not?: UfvYears | null;
   year_in?: UfvYears[] | null;
   year_not_in?: UfvYears[] | null;
+  rate?: UserRate | null;
+  rate_not?: UserRate | null;
+  rate_in?: UserRate[] | null;
+  rate_not_in?: UserRate[] | null;
+  createdAt?: DateTime | null;
+  createdAt_not?: DateTime | null;
+  createdAt_in?: DateTime[] | null;
+  createdAt_not_in?: DateTime[] | null;
+  createdAt_lt?: DateTime | null;
+  createdAt_lte?: DateTime | null;
+  createdAt_gt?: DateTime | null;
+  createdAt_gte?: DateTime | null;
+  updatedAt?: DateTime | null;
+  updatedAt_not?: DateTime | null;
+  updatedAt_in?: DateTime[] | null;
+  updatedAt_not_in?: DateTime[] | null;
+  updatedAt_lt?: DateTime | null;
+  updatedAt_lte?: DateTime | null;
+  updatedAt_gt?: DateTime | null;
+  updatedAt_gte?: DateTime | null;
   reviews_every?: ReviewWhereInput | null;
   reviews_some?: ReviewWhereInput | null;
   reviews_none?: ReviewWhereInput | null;
@@ -513,16 +579,42 @@ export interface ReviewVotesWhereInput {
   user?: UserWhereInput | null;
 }
 
+export interface UfvClassesInput {
+  searchFor: string;
+}
+
 export interface UfvListClassesInput {
   sort: ClassesRanks;
   department?: Department | null;
   optional?: boolean | null;
+}
+
+export interface UserInput {
+  id: string;
+}
+
+export interface UfvClassInput {
+  id: string;
+}
+
+export interface UserRegisterInput {
+  course: UfvCourses;
+  year: UfvYears;
+}
+export interface SearchAllQueryArgs {
+  where: SearchInput;
 }
 export interface AllClassesQueryArgs {
   where: UfvClassesInput;
 }
 export interface ListClassesQueryArgs {
   where: UfvListClassesInput;
+}
+export interface UserQueryArgs {
+  where: UserInput;
+}
+export interface UfvClassQueryArgs {
+  where: UfvClassInput;
 }
 export interface ReviewsUfvClassArgs {
   where?: ReviewWhereInput | null;
@@ -572,17 +664,53 @@ export interface ReviewReviewVotesArgs {
 export interface UserReviewVotesArgs {
   where?: UserWhereInput | null;
 }
-export interface LoginMutationArgs {
-  input: loginInput;
+export interface RegisterMutationArgs {
+  user: UserRegisterInput;
 }
 
-export type Department = "CCA" | "CCE" | "CCB" | "CCH";
+export type Department =
+  | "Depto__de_Economia_Rural"
+  | "Depto__de_Engenharia_Agricola"
+  | "Depto__de_Engenharia_Florestal"
+  | "Depto__de_Fitopatologia"
+  | "Depto__de_Fitotecnia"
+  | "Depto__de_Solos"
+  | "Depto__de_Zootecnia"
+  | "Depto__de_Biologia_Animal"
+  | "Depto__de_Biologia_Geral"
+  | "Depto__de_Biologia_Vegetal"
+  | "Depto__de_Bioquimica_e_Biologia_Molecular"
+  | "Depto__de_Educacao_Fisica"
+  | "Depto__de_Entomologia"
+  | "Depto__de_Microbiologia"
+  | "Depto__de_Medicina_e_Enfermagem"
+  | "Depto__de_Nutricaoo_e_Saude"
+  | "Depto__de_Veterinaria"
+  | "Depto__de_Arquitetura_e_Urbanismo"
+  | "Depto__de_Engenharia_Civil"
+  | "Depto__de_Engenharia_Eletrica"
+  | "Depto__de_Engenharia_de_Producao_e_Mecanica"
+  | "Depto__de_Estatistica"
+  | "Depto__de_Fisica"
+  | "Depto__de_Informatica"
+  | "Depto__de_Matematica"
+  | "Depto__de_Quimica"
+  | "Depto__de_Tecnologia_de_Alimentos"
+  | "Depto__de_Administracao_e_Contabilidade"
+  | "Depto__de_Artes_e_Humanidades"
+  | "Depto__de_Ciencias_Sociais"
+  | "Depto__de_Comunicacao_Social"
+  | "Depto__de_Direito"
+  | "Depto__de_Economia"
+  | "Depto__de_Economia_Domestica"
+  | "Depto__de_Educacao"
+  | "Depto__de_Geografia"
+  | "Depto__de_Historia"
+  | "Depto__de_Letras";
 
 export type ReviewUseful = "U0" | "U1" | "U2" | "U3" | "U4" | "U5";
 
 export type ReviewEasy = "E0" | "E1" | "E2" | "E3" | "E4" | "E5";
-
-export type UserRate = "Iniciante" | "Confiavel";
 
 export type UfvCourses =
   | "Agronegocio"
@@ -734,6 +862,8 @@ export type UfvYears =
   | "Y20171"
   | "Y20181";
 
+export type UserRate = "Iniciante" | "Confiavel";
+
 export type ReviewVotesTypes = "Agree" | "Disagree";
 
 export type ReviewOrderByInput =
@@ -751,10 +881,10 @@ export type ReviewOrderByInput =
   | "anonymous_DESC"
   | "recommended_ASC"
   | "recommended_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type ReviewVotesOrderByInput =
   | "id_ASC"
@@ -767,6 +897,9 @@ export type ReviewVotesOrderByInput =
   | "createdAt_DESC";
 
 export type ClassesRanks = "Useful" | "Easy" | "Recommended";
+
+export type SearchResult = UfvClass | User;
+
 export namespace Logoff {
   export type Variables = {};
 
@@ -780,12 +913,186 @@ export namespace Logoff {
     ok: boolean;
   };
 }
-export namespace LoggedRegistered {
+export namespace Login {
+  export type Variables = {};
+
+  export type Mutation = {
+    __typename?: "Mutation";
+    login: Login;
+  };
+
+  export type Login = {
+    __typename?: "loginResponse";
+    ok: boolean;
+  };
+}
+export namespace Register {
+  export type Variables = {
+    course: UfvCourses;
+    year: UfvYears;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+    register: Register;
+  };
+
+  export type Register = {
+    __typename?: "User";
+    id: string;
+  };
+}
+export namespace DeleteAccount {
+  export type Variables = {};
+
+  export type Mutation = {
+    __typename?: "Mutation";
+    deleteAcc?: DeleteAcc | null;
+  };
+
+  export type DeleteAcc = {
+    __typename?: "User";
+    id: string;
+  };
+}
+export namespace LocalLogged {
   export type Variables = {};
 
   export type Query = {
     __typename?: "Query";
     logged: boolean;
-    registered: boolean;
+  };
+}
+export namespace IsRegistered {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+    logged: boolean;
+    me?: Me | null;
+  };
+
+  export type Me = {
+    __typename?: "User";
+    id: string;
+  };
+}
+export namespace ListByKind {
+  export type Variables = {
+    sort: ClassesRanks;
+    optional?: boolean | null;
+    department?: Department | null;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    listClasses: ListClasses[];
+  };
+
+  export type ListClasses = {
+    __typename?: "UfvClass";
+    id: string;
+    name: string;
+    cod: string;
+    useful: number;
+    easy: number;
+    recommended: number;
+  };
+}
+export namespace SearchHome {
+  export type Variables = {
+    value: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    searchAll: SearchAll[];
+  };
+
+  export type SearchAll = UserInlineFragment | UfvClassInlineFragment;
+
+  export type UserInlineFragment = {
+    __typename?: "User";
+    id: string;
+    name: string;
+  };
+
+  export type UfvClassInlineFragment = {
+    __typename?: "UfvClass";
+    id: string;
+    name: string;
+    cod: string;
+  };
+}
+export namespace UserProfile {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    user?: User | null;
+  };
+
+  export type User = {
+    __typename?: "User";
+    id: string;
+    name: string;
+    createdAt: DateTime;
+    rate: UserRate;
+    course: UfvCourses;
+    year: UfvYears;
+    reviews?: Reviews[] | null;
+  };
+
+  export type Reviews = {
+    __typename?: "Review";
+    id: string;
+    anonymous: boolean;
+    recommended: boolean;
+    createdAt: DateTime;
+    easy: ReviewEasy;
+    useful: ReviewUseful;
+    description: string;
+    reviewer: Reviewer;
+  };
+
+  export type Reviewer = {
+    __typename?: "User";
+    id: string;
+  };
+}
+export namespace MeId {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+    me?: Me | null;
+  };
+
+  export type Me = {
+    __typename?: "User";
+    id: string;
+  };
+}
+export namespace UfvClassDetail {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    ufvClass?: UfvClass | null;
+  };
+
+  export type UfvClass = {
+    __typename?: "UfvClass";
+    id: string;
+    cod: string;
+    name: string;
+    optional: boolean;
+    useful: number;
+    easy: number;
+    recommended: number;
   };
 }

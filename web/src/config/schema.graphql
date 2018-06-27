@@ -1,4 +1,4 @@
-# import Query.* from "../generated/schema.graphql"
+# import Query.* , Mutation.*, User, UfvClass from "../generated/schema.graphql"
 
 type loginResponse {
   ok: Boolean!

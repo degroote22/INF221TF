@@ -4,11 +4,18 @@ export enum SearchState {
   USER
 }
 
-export enum RankTypes {
-  useful,
-  easy,
-  recommended
+export interface IAuthResponse {
+  accessToken: string;
+  expiresIn: number;
+  signedRequest: string;
+  userID: string;
 }
+export interface IKindResponse {
+  status: "connected" | "not_authorized" | "unknown";
+  authResponse: IAuthResponse;
+}
+
+// daqui pra baixo deleta
 
 export interface IClassType extends IClassBase {
   id: string;
@@ -60,15 +67,4 @@ export interface IUser {
 export enum Votes {
   agree = "agree",
   disagree = "disagree"
-}
-
-export interface IAuthResponse {
-  accessToken: string;
-  expiresIn: number;
-  signedRequest: string;
-  userID: string;
-}
-export interface IKindResponse {
-  status: "connected" | "not_authorized" | "unknown";
-  authResponse: IAuthResponse;
 }

@@ -8,27 +8,39 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import { ComponentBase } from "resub";
-import UserManager from "src/singletons/UserManager";
-import { IClassReview, IUser, UserRateEnum } from "src/utils/types";
-import ReviewManager from "../singletons/ReviewManager";
+import { graphql } from "react-apollo";
+import { UserProfileQuery } from "src/config/Queries";
+import {
+  UfvCourses,
+  UfvYears,
+  UserProfile,
+  UserRate
+} from "src/generated/types";
+import CoursesArr from "src/utils/UfvCourses";
+import YearsArr from "src/utils/UfvYears";
 import Loading from "./Loading";
 
-const initialState = {
-  user: undefined as IUser | undefined,
-  reviews: [] as IClassReview[]
+const prettyCourse = (course: UfvCourses): string => {
+  const item = CoursesArr.find(x => x.value === course);
+  return item ? item.label : "";
 };
-type IProps = WithStyles<ClassesNames> & { id: string };
-class UserProfile extends ComponentBase<IProps, typeof initialState> {
-  public readonly state = initialState;
+
+const prettyYear = (year: UfvYears): string => {
+  const item = YearsArr.find(x => x.value === year);
+  return item ? item.label : "";
+};
+
+type IProps = WithStyles<ClassesNames> & { user?: UserProfile.User };
+
+class UserProfile extends React.Component<IProps> {
   public render() {
-    const { user, reviews } = this.state;
+    const { user, classes } = this.props;
     if (!user) {
       return <Loading layout={false} />;
     }
+    const confiavel: UserRate = "Confiavel";
     const userClassification =
-      user.rate === UserRateEnum.confiavel ? "Confiável" : "Iniciante";
-    const { classes } = this.props;
+      user.rate === confiavel ? "Confiável" : "Iniciante";
     return (
       <React.Fragment>
         <CardHeader
@@ -38,7 +50,7 @@ class UserProfile extends ComponentBase<IProps, typeof initialState> {
             </Avatar>
           }
           title={user.name}
-          subheader={user.course + " - " + user.year}
+          subheader={prettyCourse(user.course) + " - " + prettyYear(user.year)}
         />
         <CardContent>
           <Typography variant="headline" component="h2">
@@ -48,14 +60,13 @@ class UserProfile extends ComponentBase<IProps, typeof initialState> {
             classificação
           </Typography>
           <Typography variant="headline" component="h2">
-            {user.created_at.toLocaleDateString()}
+            {new Date(user.createdAt).toLocaleDateString()}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             data de cadastro
           </Typography>
-
           <Typography variant="headline" component="h2">
-            {reviews.length}
+            {user.reviews ? user.reviews.length : 0}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             avaliações
@@ -63,14 +74,6 @@ class UserProfile extends ComponentBase<IProps, typeof initialState> {
         </CardContent>
       </React.Fragment>
     );
-  }
-
-  protected _buildState(props: IProps, initial: boolean) {
-    return {
-      ...this.state,
-      user: UserManager.getUser(props.id),
-      reviews: ReviewManager.getUserReviews(props.id)
-    };
   }
 }
 
@@ -84,4 +87,18 @@ const styles: StyleRulesCallback<ClassesNames> = theme => ({
   }
 });
 
-export default withStyles(styles)(UserProfile);
+const Presentation = withStyles(styles)(UserProfile);
+
+const withData = graphql<
+  { id: string },
+  UserProfile.Query,
+  UserProfile.Variables
+>(UserProfileQuery, { options: props => ({ variables: { id: props.id } }) });
+
+export default withData(props => {
+  return (
+    <Presentation
+      user={props.data ? props.data.user || undefined : undefined}
+    />
+  );
+});

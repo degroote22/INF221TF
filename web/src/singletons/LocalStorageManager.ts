@@ -13,36 +13,6 @@ class LocalStorageManager {
       return "";
     }
   };
-
-  public removeUid = () => {
-    localStorage.removeItem("uid");
-  };
-  public setUid = (uid: string) => {
-    localStorage.setItem("uid", uid);
-  };
-
-  public getUid = () => {
-    try {
-      return localStorage.getItem("uid") || "";
-    } catch {
-      return "";
-    }
-  };
-
-  public removeUsername = () => {
-    localStorage.removeItem("username");
-  };
-  public setUsername = (username: string) => {
-    localStorage.setItem("username", username);
-  };
-
-  public getUsername = () => {
-    try {
-      return localStorage.getItem("username") || "";
-    } catch {
-      return "";
-    }
-  };
 }
 
 export default new LocalStorageManager();

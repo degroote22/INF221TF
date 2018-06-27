@@ -7,36 +7,41 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
+import { ChildProps, graphql } from "react-apollo";
 import { RouteComponentProps } from "react-router";
 import { ComponentBase } from "resub";
 import Fab from "src/components/Fab";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
 import Review from "src/components/Review";
+import { UfvClassDetailQuery } from "src/config/Queries";
+import { UfvClassDetail } from "src/generated/types";
 import Averages from "src/pages/Disciplina/Averages";
-import ReviewManager from "src/singletons/ReviewManager";
-import { IClassReview, IClassType } from "src/utils/types";
-import ClassManager from "../../singletons/ClassManager";
+import { IClassReview } from "src/utils/types";
 import { BLOCK } from "../../utils/constants";
 import { AvaliarDisciplinaGo } from "../../utils/routes";
 
 const initialState = {
-  showMore: false,
-  reviews: [] as IClassReview[],
-  class: undefined as IClassType | undefined
+  showMore: false
 };
 type IProps = WithStyles<DisciplinaClassNames> &
-  RouteComponentProps<{ id: string }>;
+  RouteComponentProps<{ id: string }> &
+  ChildProps<RouteComponentProps<{ id: string }>, UfvClassDetail.Query>;
 class Disciplina extends ComponentBase<IProps, typeof initialState> {
   public readonly state = initialState;
 
   public render() {
-    const disciplina = this.state.class;
-    if (!disciplina) {
+    if (
+      !this.props.data ||
+      this.props.data.loading ||
+      this.props.data.error ||
+      !this.props.data.ufvClass
+    ) {
       return <Loading layout={true} />;
     }
+    const disciplina = this.props.data.ufvClass;
+    const reviews = [] as any[];
     const title = disciplina.cod + " - " + disciplina.name;
-    const reviews = this.state.reviews;
 
     return (
       <Layout title={title}>
@@ -52,18 +57,6 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
         </CardContent>
       </Layout>
     );
-  }
-
-  protected _buildState(
-    props: IProps,
-    initialBuild: boolean
-  ): typeof initialState {
-    const id = props.match.params.id;
-    return {
-      ...this.state,
-      reviews: ReviewManager.getReviews(id),
-      class: ClassManager.getClass(id)
-    };
   }
 
   private renderFirstReviews = (reviews: IClassReview[]) => {
@@ -118,7 +111,7 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
   };
 }
 type DisciplinaClassNames = "center";
-const styles: StyleRulesCallback<DisciplinaClassNames> = theme => ({
+const styles: StyleRulesCallback<DisciplinaClassNames> = () => ({
   center: {
     display: "flex",
     justifyContent: "center",
@@ -126,4 +119,17 @@ const styles: StyleRulesCallback<DisciplinaClassNames> = theme => ({
   }
 });
 
-export default withStyles(styles)(Disciplina);
+const withData = graphql<
+  RouteComponentProps<{ id: string }>,
+  UfvClassDetail.Query,
+  UfvClassDetail.Variables,
+  RouteComponentProps<{ id: string }>
+>(UfvClassDetailQuery, {
+  options: props => ({
+    variables: {
+      id: props.match.params.id
+    }
+  })
+});
+
+export default withData(withStyles(styles)(Disciplina));

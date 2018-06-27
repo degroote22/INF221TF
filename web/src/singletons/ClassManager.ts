@@ -1,6 +1,7 @@
 import * as Fuse from "fuse.js";
 import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
-import { IClassResult, IClassType, RankTypes } from "src/utils/types";
+import { ClassesRanks } from "src/generated/types";
+import { IClassResult, IClassType } from "src/utils/types";
 import { FUSE_OPT } from "../utils/constants";
 
 const classes: IClassType[] = [
@@ -132,18 +133,18 @@ const classes: IClassType[] = [
   }
 ];
 
-const getSortFn = (rank: RankTypes) => {
-  if (rank === RankTypes.easy) {
+const getSortFn = (rank: ClassesRanks) => {
+  if (rank === "Easy") {
     return (a: IClassType, b: IClassType) => {
       return b.easy - a.easy;
     };
   }
-  if (rank === RankTypes.recommended) {
+  if (rank === "Recommended") {
     return (a: IClassType, b: IClassType) => {
       return b.recommended - a.recommended;
     };
   }
-  if (rank === RankTypes.useful) {
+  if (rank === "Useful") {
     return (a: IClassType, b: IClassType) => {
       return b.useful - a.useful;
     };
@@ -152,7 +153,7 @@ const getSortFn = (rank: RankTypes) => {
   throw Error("Não implementado");
 };
 @AutoSubscribeStore
-class ClassManager extends StoreBase {
+class ClassyManager extends StoreBase {
   private classes: IClassType[] = classes;
   private fuse = new Fuse(this.classes, {
     ...FUSE_OPT,
@@ -160,7 +161,7 @@ class ClassManager extends StoreBase {
   });
 
   @autoSubscribe
-  public getClassesRanked(rank: RankTypes) {
+  public getClassesRanked(rank: ClassesRanks) {
     const sortfn = getSortFn(rank);
     return this.classes.sort(sortfn);
   }
@@ -184,4 +185,4 @@ class ClassManager extends StoreBase {
   }
 }
 
-export default new ClassManager();
+export default new ClassyManager();

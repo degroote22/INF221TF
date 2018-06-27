@@ -6,25 +6,34 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import { Form, Formik, FormikProps } from "formik";
 import * as React from "react";
+import { MutationFunc } from "react-apollo";
 import { Redirect } from "react-router";
 import Layout from "src/components/Layout";
 import { FormikAutoCompleteSelect } from "src/Formuik/AutocompleteSelect";
-import UfvCourses from "src/pages/Cadastro/UfvCourses";
-import UfvYears from "src/pages/Cadastro/UfvYears";
+import { Register } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
-import { Home, Login } from "../../utils/routes";
+import { Home } from "src/utils/routes";
+import UfvCourses from "src/utils/UfvCourses";
+import UfvYears from "src/utils/UfvYears";
+import HistoryManager from "../../singletons/HistoryManager";
 
 const initialValues = {
   course: "",
   year: ""
 };
 class Cadastro extends React.Component<
-  { registered: boolean; logged: boolean } & WithStyles<ClassesNames>
+  {
+    registered: boolean;
+    logged: boolean;
+    register?: MutationFunc<Register.Mutation, Register.Variables>;
+  } & WithStyles<ClassesNames>
 > {
   public render() {
     const { classes, registered, logged } = this.props;
     if (!logged) {
-      return <Redirect to={Login} />;
+      // tslint:disable-next-line:no-console
+      console.log("nlogado");
+      return <Redirect to={Home} />;
     }
     if (registered) {
       return <Redirect to={Home} />;
@@ -72,7 +81,11 @@ class Cadastro extends React.Component<
     );
   };
   private onSubmit = (values: typeof initialValues) => {
-    return alert(JSON.stringify(values));
+    if (this.props.register) {
+      this.props.register({ variables: values } as any).then(() => {
+        HistoryManager.clearLoginUrl();
+      });
+    }
   };
 }
 

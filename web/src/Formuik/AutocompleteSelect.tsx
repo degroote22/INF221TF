@@ -44,7 +44,6 @@ export class AutoCompleteSelect<T> extends React.Component<
         InputProps={{
           inputComponent: SelectWrapped,
           inputProps: {
-            multi: true,
             classes,
             name: id,
             instanceId: id,

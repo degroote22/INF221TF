@@ -31,11 +31,6 @@ class ConfiguredRouter extends React.Component {
             component={MinhasAvaliacoes}
           />
           <PrivateRoute
-            exact={true}
-            path={Routes.AvaliarDisciplinaNoParam}
-            component={AvaliarDisciplina}
-          />
-          <PrivateRoute
             path={Routes.AvaliarDisciplina}
             component={AvaliarDisciplina}
           />

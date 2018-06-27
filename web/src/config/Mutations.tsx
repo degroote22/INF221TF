@@ -15,3 +15,19 @@ export const FbLoginMutation = gql`
     }
   }
 `;
+
+export const RegisterMutation = gql`
+  mutation Register($course: UfvCourses!, $year: UfvYears!) {
+    register(user: { course: $course, year: $year }) {
+      id
+    }
+  }
+`;
+
+export const DeleteAccountMutation = gql`
+  mutation DeleteAccount {
+    deleteAcc {
+      id
+    }
+  }
+`;

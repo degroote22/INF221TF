@@ -1,8 +1,16 @@
 import ApolloClient from "apollo-boost";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
 import { LogoffMutation } from "src/config/Mutations";
+import introspectionQueryResultData from "src/generated/fragmentTypes.json";
 import { MutationResolvers } from "src/generated/types";
-import FacebookManager from "../singletons/FacebookManager";
+import CacheManager from "../singletons/CacheManager";
 import LocalStorageManager from "../singletons/LocalStorageManager";
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+const cache = new InMemoryCache({ fragmentMatcher });
 
 const sendToLoggingService = (err: any) => {
   // tslint:disable-next-line:no-console
@@ -10,7 +18,7 @@ const sendToLoggingService = (err: any) => {
 };
 
 const logoffResolver: MutationResolvers.LogoffResolver = () => {
-  FacebookManager.logoff();
+  CacheManager.logoff();
   return {
     __typename: "logoffResponse",
     ok: true
@@ -18,6 +26,7 @@ const logoffResolver: MutationResolvers.LogoffResolver = () => {
 };
 
 const loginResolver: MutationResolvers.LoginResolver = () => {
+  CacheManager.login();
   return {
     __typename: "loginResponse",
     ok: true
@@ -25,12 +34,15 @@ const loginResolver: MutationResolvers.LoginResolver = () => {
 };
 
 const client = new ApolloClient({
+  cache,
   clientState: {
     defaults: {
-      logged: false,
-      registered: false
+      logged: false
     },
     resolvers: {
+      Query: {
+        logged: () => LocalStorageManager.getToken() !== ""
+      },
       Mutation: {
         logoff: logoffResolver,
         login: loginResolver

@@ -1,33 +1,29 @@
 import * as React from "react";
+import { graphql } from "react-apollo";
 import { Redirect } from "react-router-dom";
-import { ComponentBase } from "resub";
 import Layout from "src/components/Layout";
-import AuthManager from "../../singletons/AuthManager";
+import { LocalLoggedQuery } from "src/config/Queries";
+import { LocalLogged } from "src/generated/types";
+import FacebookManager from "../../singletons/FacebookManager";
 
-const initialState = {
-  logged: true
-};
-class Logoff extends ComponentBase<{}, typeof initialState> {
-  public readonly state = initialState;
-
+class Logoff extends React.Component<{ logged: boolean }> {
   public componentDidMount() {
-    AuthManager.logoff();
+    FacebookManager.logoff();
   }
 
   public render() {
-    if (this.state.logged) {
+    if (this.props.logged) {
       return <Layout title="Saindo da sua conta">Saindo...</Layout>;
     } else {
       return <Redirect to="/" />;
     }
   }
-
-  protected _buildState(props: {}, initial: boolean) {
-    return {
-      ...this.state,
-      logged: AuthManager.getLogged()
-    };
-  }
 }
 
-export default Logoff;
+const withData = graphql<{}, LocalLogged.Query, LocalLogged.Variables>(
+  LocalLoggedQuery
+);
+
+export default withData(props => (
+  <Logoff logged={Boolean(props.data && props.data.logged)} />
+));

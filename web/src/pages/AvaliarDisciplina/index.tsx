@@ -11,13 +11,15 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
+import { Form, Formik } from "formik";
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import AutoComplete from "src/components/AutoComplete";
 import Layout from "src/components/Layout";
+import { FormikAutoCompleteSelect } from "src/Formuik/AutocompleteSelect";
 import { BLOCK } from "src/utils/constants";
 import { IClassResult } from "src/utils/types";
-import ClassManager from "../../singletons/ClassManager";
+import ClassyManager from "../../singletons/ClassManager";
 import SelectFiveScale, { ISelectFiveScaleValues } from "./SelectFiveScale";
 
 const descriptionPlaceholder = [
@@ -34,9 +36,13 @@ const getCod = (id: string) => {
   if (!id) {
     return "";
   }
-  const disciplina = ClassManager.getClass(id);
+  const disciplina = ClassyManager.getClass(id);
 
   return disciplina.cod;
+};
+
+const initialValues = {
+  cod: ""
 };
 
 class AvaliarDisciplinasBase extends React.Component<
@@ -53,6 +59,12 @@ class AvaliarDisciplinasBase extends React.Component<
     return (
       <Layout title="Avaliar Disciplina">
         <CardContent>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={this.onSubmit}
+            render={this.renderForm}
+          />
+
           <form
             className={classes.container}
             noValidate={true}
@@ -136,7 +148,7 @@ class AvaliarDisciplinasBase extends React.Component<
   private getPrimary = (result: IClassResult) => result.item.cod;
   private getSecondary = (result: IClassResult) => result.item.name;
   private getId = (result: IClassResult) => result.item.id;
-  private getResult = (search: string) => ClassManager.getClasses(search);
+  private getResult = (search: string) => ClassyManager.getClasses(search);
 
   private handleCodSelect = (cod: string) => {
     this.setState({ cod });
@@ -167,6 +179,20 @@ class AvaliarDisciplinasBase extends React.Component<
   private onChangeUtil = (scale: ISelectFiveScaleValues) => {
     // tslint:disable-next-line:no-console
     console.log(scale);
+  };
+
+  /// formik
+  private renderForm = () => {
+    const { classes } = this.props;
+    return (
+      <Form className={classes.container} noValidate={true} autoComplete="off">
+        <FormikAutoCompleteSelect label="Curso" name="course" options={[]} />
+      </Form>
+    );
+  };
+
+  private onSubmit = (values: typeof initialValues) => {
+    alert(values);
   };
 }
 
