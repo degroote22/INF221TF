@@ -183,22 +183,57 @@ enum ReviewVotesTypes {
 }
 
 enum Department {
-  CCA
-  CCE
-  CCB
-  CCH
+  Depto__de_Economia_Rural
+  Depto__de_Engenharia_Agricola
+  Depto__de_Engenharia_Florestal
+  Depto__de_Fitopatologia
+  Depto__de_Fitotecnia
+  Depto__de_Solos
+  Depto__de_Zootecnia
+  Depto__de_Biologia_Animal
+  Depto__de_Biologia_Geral
+  Depto__de_Biologia_Vegetal
+  Depto__de_Bioquimica_e_Biologia_Molecular
+  Depto__de_Educacao_Fisica
+  Depto__de_Entomologia
+  Depto__de_Microbiologia
+  Depto__de_Medicina_e_Enfermagem
+  Depto__de_Nutricaoo_e_Saude
+  Depto__de_Veterinaria
+  Depto__de_Arquitetura_e_Urbanismo
+  Depto__de_Engenharia_Civil
+  Depto__de_Engenharia_Eletrica
+  Depto__de_Engenharia_de_Producao_e_Mecanica
+  Depto__de_Estatistica
+  Depto__de_Fisica
+  Depto__de_Informatica
+  Depto__de_Matematica
+  Depto__de_Quimica
+  Depto__de_Tecnologia_de_Alimentos
+  Depto__de_Administracao_e_Contabilidade
+  Depto__de_Artes_e_Humanidades
+  Depto__de_Ciencias_Sociais
+  Depto__de_Comunicacao_Social
+  Depto__de_Direito
+  Depto__de_Economia
+  Depto__de_Economia_Domestica
+  Depto__de_Educacao
+  Depto__de_Geografia
+  Depto__de_Historia
+  Depto__de_Letras
 }
 
 type User {
   id: ID! @unique
   facebookId: String! @unique
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate! @default(value: "Iniciante")
   reviews: [Review!]! @relation(name: "ReviewAuthor", onDelete: SET_NULL)
   votes: [ReviewVotes!]! @relation(name: "ReviewVotesAuthor", onDelete: CASCADE)
-  # o prisma já fornece created_at e updated_at
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ReviewVotes {
@@ -219,7 +254,8 @@ type Review {
   classReviewed: UfvClass! @relation(name: "ReviewFrom", onDelete: SET_NULL)
   reviewer: User! @relation(name: "ReviewAuthor", onDelete: SET_NULL)
   votes: [ReviewVotes!]! @relation(name: "ReviewVotesFrom", onDelete: CASCADE)
-  # o prisma já fornece created_at e updated_at
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UfvClass {

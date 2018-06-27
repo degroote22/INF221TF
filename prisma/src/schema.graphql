@@ -1,4 +1,5 @@
-# import UfvClass, Department from "./generated/prisma.graphql"
+# import UfvClass, Department, User, UfvCourses, UfvYears from "./generated/prisma.graphql"
+
 input UfvClassesInput {
   searchFor: String!
 }
@@ -15,7 +16,35 @@ input UfvListClassesInput {
   optional: Boolean
 }
 
+input SearchInput {
+  value: String!
+}
+
+union SearchResult = UfvClass | User
+
+input UserInput {
+  id: String!
+}
+
+input UfvClassInput {
+  id: String!
+}
+
 type Query {
+  searchAll(where: SearchInput!): [SearchResult!]!
   allClasses(where: UfvClassesInput!): [UfvClass!]!
   listClasses(where: UfvListClassesInput!): [UfvClass!]!
+  me: User
+  user(where: UserInput!): User
+  ufvClass(where: UfvClassInput!): UfvClass
+}
+
+input UserRegisterInput {
+  course: UfvCourses!
+  year: UfvYears!
+}
+
+type Mutation {
+  register(user: UserRegisterInput!): User!
+  deleteAcc: User
 }

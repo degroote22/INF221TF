@@ -18,6 +18,4 @@ const server = new GraphQLServer({
   })
 });
 
-server.start(() =>
-  console.log(`Server is running on ${process.env.PRISMA_ENDPOINT}`)
-);
+server.start(() => console.log(`Server is running on 4000`));

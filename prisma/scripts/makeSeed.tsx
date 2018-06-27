@@ -123,7 +123,7 @@ ccpopt${index}: createUfvClass(
     optional: true
     useful: 0
     easy: 0
-    department: CCE
+    department: Depto__de_Informatica
     recommended: 0
     reviews: {}
     }
@@ -140,7 +140,7 @@ ccpobr${index}: createUfvClass(
     cod: "${x.cod}"
     name: "${x.name}"
     optional: false
-    department: CCE
+    department: Depto__de_Informatica
     useful: 0
     easy: 0
     recommended: 0

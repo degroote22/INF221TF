@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Tue Jun 26 2018 01:48:50 GMT-0300 (-03)
+# timestamp: Wed Jun 27 2018 00:22:22 GMT-0300 (-03)
 
 type AggregateReview {
   count: Int!
@@ -22,11 +22,47 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 enum Department {
-  CCA
-  CCE
-  CCB
-  CCH
+  Depto__de_Economia_Rural
+  Depto__de_Engenharia_Agricola
+  Depto__de_Engenharia_Florestal
+  Depto__de_Fitopatologia
+  Depto__de_Fitotecnia
+  Depto__de_Solos
+  Depto__de_Zootecnia
+  Depto__de_Biologia_Animal
+  Depto__de_Biologia_Geral
+  Depto__de_Biologia_Vegetal
+  Depto__de_Bioquimica_e_Biologia_Molecular
+  Depto__de_Educacao_Fisica
+  Depto__de_Entomologia
+  Depto__de_Microbiologia
+  Depto__de_Medicina_e_Enfermagem
+  Depto__de_Nutricaoo_e_Saude
+  Depto__de_Veterinaria
+  Depto__de_Arquitetura_e_Urbanismo
+  Depto__de_Engenharia_Civil
+  Depto__de_Engenharia_Eletrica
+  Depto__de_Engenharia_de_Producao_e_Mecanica
+  Depto__de_Estatistica
+  Depto__de_Fisica
+  Depto__de_Informatica
+  Depto__de_Matematica
+  Depto__de_Quimica
+  Depto__de_Tecnologia_de_Alimentos
+  Depto__de_Administracao_e_Contabilidade
+  Depto__de_Artes_e_Humanidades
+  Depto__de_Ciencias_Sociais
+  Depto__de_Comunicacao_Social
+  Depto__de_Direito
+  Depto__de_Economia
+  Depto__de_Economia_Domestica
+  Depto__de_Educacao
+  Depto__de_Geografia
+  Depto__de_Historia
+  Depto__de_Letras
 }
 
 """
@@ -121,6 +157,8 @@ type Review implements Node {
   classReviewed(where: UfvClassWhereInput): UfvClass!
   reviewer(where: UserWhereInput): User!
   votes(where: ReviewVotesWhereInput, orderBy: ReviewVotesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewVotes!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -226,10 +264,10 @@ enum ReviewOrderByInput {
   anonymous_DESC
   recommended_ASC
   recommended_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ReviewPreviousValues {
@@ -240,6 +278,8 @@ type ReviewPreviousValues {
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ReviewSubscriptionPayload {
@@ -762,6 +802,50 @@ input ReviewWhereInput {
 
   """All values that are not equal to given value."""
   recommended_not: Boolean
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   classReviewed: UfvClassWhereInput
   reviewer: UserWhereInput
   votes_every: ReviewVotesWhereInput
@@ -1319,11 +1403,13 @@ type User implements Node {
   id: ID!
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate!
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   votes(where: ReviewVotesWhereInput, orderBy: ReviewVotesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewVotes!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -1339,9 +1425,9 @@ type UserConnection {
 input UserCreateInput {
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate
   reviews: ReviewCreateManyWithoutReviewerInput
   votes: ReviewVotesCreateManyWithoutUserInput
 }
@@ -1359,18 +1445,18 @@ input UserCreateOneWithoutVotesInput {
 input UserCreateWithoutReviewsInput {
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate
   votes: ReviewVotesCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutVotesInput {
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate
   reviews: ReviewCreateManyWithoutReviewerInput
 }
 
@@ -1390,25 +1476,27 @@ enum UserOrderByInput {
   facebookId_DESC
   name_ASC
   name_DESC
-  rate_ASC
-  rate_DESC
   course_ASC
   course_DESC
   year_ASC
   year_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+  rate_ASC
+  rate_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum UserRate {
@@ -1458,9 +1546,9 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   facebookId: String
   name: String
-  rate: UserRate
   course: UfvCourses
   year: UfvYears
+  rate: UserRate
   reviews: ReviewUpdateManyWithoutReviewerInput
   votes: ReviewVotesUpdateManyWithoutUserInput
 }
@@ -1484,18 +1572,18 @@ input UserUpdateOneWithoutVotesInput {
 input UserUpdateWithoutReviewsDataInput {
   facebookId: String
   name: String
-  rate: UserRate
   course: UfvCourses
   year: UfvYears
+  rate: UserRate
   votes: ReviewVotesUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutVotesDataInput {
   facebookId: String
   name: String
-  rate: UserRate
   course: UfvCourses
   year: UfvYears
+  rate: UserRate
   reviews: ReviewUpdateManyWithoutReviewerInput
 }
 
@@ -1638,16 +1726,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  rate: UserRate
-
-  """All values that are not equal to given value."""
-  rate_not: UserRate
-
-  """All values that are contained in given list."""
-  rate_in: [UserRate!]
-
-  """All values that are not contained in given list."""
-  rate_not_in: [UserRate!]
   course: UfvCourses
 
   """All values that are not equal to given value."""
@@ -1668,6 +1746,60 @@ input UserWhereInput {
 
   """All values that are not contained in given list."""
   year_not_in: [UfvYears!]
+  rate: UserRate
+
+  """All values that are not equal to given value."""
+  rate_not: UserRate
+
+  """All values that are contained in given list."""
+  rate_in: [UserRate!]
+
+  """All values that are not contained in given list."""
+  rate_not_in: [UserRate!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput

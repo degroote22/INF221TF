@@ -8,14 +8,19 @@ type Resolver<Result, Args = any> = (
   info: GraphQLResolveInfo
 ) => Promise<Result> | Result;
 
+export type DateTime = any;
 /** An object with an ID */
 export interface Node {
   id: string /** The id of the object. */;
 }
 
 export interface Query {
+  searchAll: SearchResult[];
   allClasses: UfvClass[];
   listClasses: UfvClass[];
+  me?: User | null;
+  user?: User | null;
+  ufvClass?: UfvClass | null;
 }
 
 export interface UfvClass extends Node {
@@ -41,17 +46,21 @@ export interface Review extends Node {
   classReviewed: UfvClass;
   reviewer: User;
   votes?: ReviewVotes[] | null;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }
 
 export interface User extends Node {
   id: string;
   facebookId: string;
   name: string;
-  rate: UserRate;
   course: UfvCourses;
   year: UfvYears;
+  rate: UserRate;
   reviews?: Review[] | null;
   votes?: ReviewVotes[] | null;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }
 
 export interface ReviewVotes extends Node {
@@ -61,10 +70,24 @@ export interface ReviewVotes extends Node {
   type: ReviewVotesTypes;
 }
 
+export interface Mutation {
+  register: User;
+  deleteAcc?: User | null;
+}
+
 export namespace QueryResolvers {
   export interface Resolvers {
+    searchAll?: SearchAllResolver;
     allClasses?: AllClassesResolver;
     listClasses?: ListClassesResolver;
+    me?: MeResolver;
+    user?: UserResolver;
+    ufvClass?: UfvClassResolver;
+  }
+
+  export type SearchAllResolver = Resolver<SearchResult[], SearchAllArgs>;
+  export interface SearchAllArgs {
+    where: SearchInput;
   }
 
   export type AllClassesResolver = Resolver<UfvClass[], AllClassesArgs>;
@@ -75,6 +98,17 @@ export namespace QueryResolvers {
   export type ListClassesResolver = Resolver<UfvClass[], ListClassesArgs>;
   export interface ListClassesArgs {
     where: UfvListClassesInput;
+  }
+
+  export type MeResolver = Resolver<User | null>;
+  export type UserResolver = Resolver<User | null, UserArgs>;
+  export interface UserArgs {
+    where: UserInput;
+  }
+
+  export type UfvClassResolver = Resolver<UfvClass | null, UfvClassArgs>;
+  export interface UfvClassArgs {
+    where: UfvClassInput;
   }
 }
 
@@ -123,6 +157,8 @@ export namespace ReviewResolvers {
     classReviewed?: ClassReviewedResolver;
     reviewer?: ReviewerResolver;
     votes?: VotesResolver;
+    createdAt?: CreatedAtResolver;
+    updatedAt?: UpdatedAtResolver;
   }
 
   export type IdResolver = Resolver<string>;
@@ -152,6 +188,9 @@ export namespace ReviewResolvers {
     first?: number | null;
     last?: number | null;
   }
+
+  export type CreatedAtResolver = Resolver<DateTime>;
+  export type UpdatedAtResolver = Resolver<DateTime>;
 }
 
 export namespace UserResolvers {
@@ -159,19 +198,21 @@ export namespace UserResolvers {
     id?: IdResolver;
     facebookId?: FacebookIdResolver;
     name?: NameResolver;
-    rate?: RateResolver;
     course?: CourseResolver;
     year?: YearResolver;
+    rate?: RateResolver;
     reviews?: ReviewsResolver;
     votes?: VotesResolver;
+    createdAt?: CreatedAtResolver;
+    updatedAt?: UpdatedAtResolver;
   }
 
   export type IdResolver = Resolver<string>;
   export type FacebookIdResolver = Resolver<string>;
   export type NameResolver = Resolver<string>;
-  export type RateResolver = Resolver<UserRate>;
   export type CourseResolver = Resolver<UfvCourses>;
   export type YearResolver = Resolver<UfvYears>;
+  export type RateResolver = Resolver<UserRate>;
   export type ReviewsResolver = Resolver<Review[] | null, ReviewsArgs>;
   export interface ReviewsArgs {
     where?: ReviewWhereInput | null;
@@ -193,6 +234,9 @@ export namespace UserResolvers {
     first?: number | null;
     last?: number | null;
   }
+
+  export type CreatedAtResolver = Resolver<DateTime>;
+  export type UpdatedAtResolver = Resolver<DateTime>;
 }
 
 export namespace ReviewVotesResolvers {
@@ -217,8 +261,22 @@ export namespace ReviewVotesResolvers {
   export type TypeResolver = Resolver<ReviewVotesTypes>;
 }
 
-export interface UfvClassesInput {
-  searchFor: string;
+export namespace MutationResolvers {
+  export interface Resolvers {
+    register?: RegisterResolver;
+    deleteAcc?: DeleteAccResolver;
+  }
+
+  export type RegisterResolver = Resolver<User, RegisterArgs>;
+  export interface RegisterArgs {
+    user: UserRegisterInput;
+  }
+
+  export type DeleteAccResolver = Resolver<User | null>;
+}
+
+export interface SearchInput {
+  value: string;
 }
 
 export interface ReviewWhereInput {
@@ -333,6 +391,30 @@ export interface ReviewWhereInput {
   recommended_not?:
     | boolean
     | null /** All values that are not equal to given value. */;
+  createdAt?: DateTime | null;
+  createdAt_not?: DateTime | null /** All values that are not equal to given value. */;
+  createdAt_in?:
+    | DateTime[]
+    | null /** All values that are contained in given list. */;
+  createdAt_not_in?:
+    | DateTime[]
+    | null /** All values that are not contained in given list. */;
+  createdAt_lt?: DateTime | null /** All values less than the given value. */;
+  createdAt_lte?: DateTime | null /** All values less than or equal the given value. */;
+  createdAt_gt?: DateTime | null /** All values greater than the given value. */;
+  createdAt_gte?: DateTime | null /** All values greater than or equal the given value. */;
+  updatedAt?: DateTime | null;
+  updatedAt_not?: DateTime | null /** All values that are not equal to given value. */;
+  updatedAt_in?:
+    | DateTime[]
+    | null /** All values that are contained in given list. */;
+  updatedAt_not_in?:
+    | DateTime[]
+    | null /** All values that are not contained in given list. */;
+  updatedAt_lt?: DateTime | null /** All values less than the given value. */;
+  updatedAt_lte?: DateTime | null /** All values less than or equal the given value. */;
+  updatedAt_gt?: DateTime | null /** All values greater than the given value. */;
+  updatedAt_gte?: DateTime | null /** All values greater than or equal the given value. */;
   classReviewed?: UfvClassWhereInput | null;
   reviewer?: UserWhereInput | null;
   votes_every?: ReviewVotesWhereInput | null;
@@ -595,14 +677,6 @@ export interface UserWhereInput {
   name_not_ends_with?:
     | string
     | null /** All values not ending with the given string. */;
-  rate?: UserRate | null;
-  rate_not?: UserRate | null /** All values that are not equal to given value. */;
-  rate_in?:
-    | UserRate[]
-    | null /** All values that are contained in given list. */;
-  rate_not_in?:
-    | UserRate[]
-    | null /** All values that are not contained in given list. */;
   course?: UfvCourses | null;
   course_not?: UfvCourses | null /** All values that are not equal to given value. */;
   course_in?:
@@ -619,6 +693,38 @@ export interface UserWhereInput {
   year_not_in?:
     | UfvYears[]
     | null /** All values that are not contained in given list. */;
+  rate?: UserRate | null;
+  rate_not?: UserRate | null /** All values that are not equal to given value. */;
+  rate_in?:
+    | UserRate[]
+    | null /** All values that are contained in given list. */;
+  rate_not_in?:
+    | UserRate[]
+    | null /** All values that are not contained in given list. */;
+  createdAt?: DateTime | null;
+  createdAt_not?: DateTime | null /** All values that are not equal to given value. */;
+  createdAt_in?:
+    | DateTime[]
+    | null /** All values that are contained in given list. */;
+  createdAt_not_in?:
+    | DateTime[]
+    | null /** All values that are not contained in given list. */;
+  createdAt_lt?: DateTime | null /** All values less than the given value. */;
+  createdAt_lte?: DateTime | null /** All values less than or equal the given value. */;
+  createdAt_gt?: DateTime | null /** All values greater than the given value. */;
+  createdAt_gte?: DateTime | null /** All values greater than or equal the given value. */;
+  updatedAt?: DateTime | null;
+  updatedAt_not?: DateTime | null /** All values that are not equal to given value. */;
+  updatedAt_in?:
+    | DateTime[]
+    | null /** All values that are contained in given list. */;
+  updatedAt_not_in?:
+    | DateTime[]
+    | null /** All values that are not contained in given list. */;
+  updatedAt_lt?: DateTime | null /** All values less than the given value. */;
+  updatedAt_lte?: DateTime | null /** All values less than or equal the given value. */;
+  updatedAt_gt?: DateTime | null /** All values greater than the given value. */;
+  updatedAt_gte?: DateTime | null /** All values greater than or equal the given value. */;
   reviews_every?: ReviewWhereInput | null;
   reviews_some?: ReviewWhereInput | null;
   reviews_none?: ReviewWhereInput | null;
@@ -671,16 +777,42 @@ export interface ReviewVotesWhereInput {
   user?: UserWhereInput | null;
 }
 
+export interface UfvClassesInput {
+  searchFor: string;
+}
+
 export interface UfvListClassesInput {
   sort: ClassesRanks;
   department?: Department | null;
   optional?: boolean | null;
+}
+
+export interface UserInput {
+  id: string;
+}
+
+export interface UfvClassInput {
+  id: string;
+}
+
+export interface UserRegisterInput {
+  course: UfvCourses;
+  year: UfvYears;
+}
+export interface SearchAllQueryArgs {
+  where: SearchInput;
 }
 export interface AllClassesQueryArgs {
   where: UfvClassesInput;
 }
 export interface ListClassesQueryArgs {
   where: UfvListClassesInput;
+}
+export interface UserQueryArgs {
+  where: UserInput;
+}
+export interface UfvClassQueryArgs {
+  where: UfvClassInput;
 }
 export interface ReviewsUfvClassArgs {
   where?: ReviewWhereInput | null;
@@ -730,14 +862,53 @@ export interface ReviewReviewVotesArgs {
 export interface UserReviewVotesArgs {
   where?: UserWhereInput | null;
 }
+export interface RegisterMutationArgs {
+  user: UserRegisterInput;
+}
 
-export type Department = "CCA" | "CCE" | "CCB" | "CCH";
+export type Department =
+  | "Depto__de_Economia_Rural"
+  | "Depto__de_Engenharia_Agricola"
+  | "Depto__de_Engenharia_Florestal"
+  | "Depto__de_Fitopatologia"
+  | "Depto__de_Fitotecnia"
+  | "Depto__de_Solos"
+  | "Depto__de_Zootecnia"
+  | "Depto__de_Biologia_Animal"
+  | "Depto__de_Biologia_Geral"
+  | "Depto__de_Biologia_Vegetal"
+  | "Depto__de_Bioquimica_e_Biologia_Molecular"
+  | "Depto__de_Educacao_Fisica"
+  | "Depto__de_Entomologia"
+  | "Depto__de_Microbiologia"
+  | "Depto__de_Medicina_e_Enfermagem"
+  | "Depto__de_Nutricaoo_e_Saude"
+  | "Depto__de_Veterinaria"
+  | "Depto__de_Arquitetura_e_Urbanismo"
+  | "Depto__de_Engenharia_Civil"
+  | "Depto__de_Engenharia_Eletrica"
+  | "Depto__de_Engenharia_de_Producao_e_Mecanica"
+  | "Depto__de_Estatistica"
+  | "Depto__de_Fisica"
+  | "Depto__de_Informatica"
+  | "Depto__de_Matematica"
+  | "Depto__de_Quimica"
+  | "Depto__de_Tecnologia_de_Alimentos"
+  | "Depto__de_Administracao_e_Contabilidade"
+  | "Depto__de_Artes_e_Humanidades"
+  | "Depto__de_Ciencias_Sociais"
+  | "Depto__de_Comunicacao_Social"
+  | "Depto__de_Direito"
+  | "Depto__de_Economia"
+  | "Depto__de_Economia_Domestica"
+  | "Depto__de_Educacao"
+  | "Depto__de_Geografia"
+  | "Depto__de_Historia"
+  | "Depto__de_Letras";
 
 export type ReviewUseful = "U0" | "U1" | "U2" | "U3" | "U4" | "U5";
 
 export type ReviewEasy = "E0" | "E1" | "E2" | "E3" | "E4" | "E5";
-
-export type UserRate = "Iniciante" | "Confiavel";
 
 export type UfvCourses =
   | "Agronegocio"
@@ -889,6 +1060,8 @@ export type UfvYears =
   | "Y20171"
   | "Y20181";
 
+export type UserRate = "Iniciante" | "Confiavel";
+
 export type ReviewVotesTypes = "Agree" | "Disagree";
 
 export type ReviewOrderByInput =
@@ -906,10 +1079,10 @@ export type ReviewOrderByInput =
   | "anonymous_DESC"
   | "recommended_ASC"
   | "recommended_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type ReviewVotesOrderByInput =
   | "id_ASC"
@@ -922,3 +1095,5 @@ export type ReviewVotesOrderByInput =
   | "createdAt_DESC";
 
 export type ClassesRanks = "Useful" | "Easy" | "Recommended";
+
+export type SearchResult = UfvClass | User;

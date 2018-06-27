@@ -1,1396 +1,1491 @@
+
 mutation CreateClasses {
-  ccpopt0: createUfvClass(
+    
+ccpopt0: createUfvClass(
     data: {
-      cod: "MAT336"
-      name: "Álgebra Linear I"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "MAT336"
+    name: "Álgebra Linear I"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt1: createUfvClass(
+
+ccpopt1: createUfvClass(
     data: {
-      cod: "MAT152"
-      name: "Geometria Analítica"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "MAT152"
+    name: "Geometria Analítica"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt2: createUfvClass(
+ccpopt2: createUfvClass(
     data: {
-      cod: "LET290"
-      name: "LIBRAS Língua Brasileira de Sinais"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "LET290"
+    name: "LIBRAS Língua Brasileira de Sinais"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt3: createUfvClass(
+
+ccpopt3: createUfvClass(
     data: {
-      cod: "INF495"
-      name: "Informática e Sociedade"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF495"
+    name: "Informática e Sociedade"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt4: createUfvClass(
+
+ccpopt4: createUfvClass(
     data: {
-      cod: "INF494"
-      name: "Tópicos Especiais IV"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF494"
+    name: "Tópicos Especiais IV"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt5: createUfvClass(
+ccpopt5: createUfvClass(
     data: {
-      cod: "INF493"
-      name: "Tópicos Especiais III"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF493"
+    name: "Tópicos Especiais III"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt6: createUfvClass(
+
+ccpopt6: createUfvClass(
     data: {
-      cod: "INF492"
-      name: "Tópicos Especiais II"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF492"
+    name: "Tópicos Especiais II"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt7: createUfvClass(
+
+ccpopt7: createUfvClass(
     data: {
-      cod: "INF491"
-      name: "Tópicos Especiais I"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF491"
+    name: "Tópicos Especiais I"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt8: createUfvClass(
+ccpopt8: createUfvClass(
     data: {
-      cod: "INF490"
-      name: "Empreendimentos em Tecnologia da Informação"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF490"
+    name: "Empreendimentos em Tecnologia da Informação"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt9: createUfvClass(
+
+ccpopt9: createUfvClass(
     data: {
-      cod: "INF485"
-      name: "Simulação"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF485"
+    name: "Simulação"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt10: createUfvClass(
+
+ccpopt10: createUfvClass(
     data: {
-      cod: "INF455"
-      name: "Computação Móvel"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF455"
+    name: "Computação Móvel"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt11: createUfvClass(
+ccpopt11: createUfvClass(
     data: {
-      cod: "INF442"
-      name: "Padrões de Projeto e Programação Orientada a Aspectos"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF442"
+    name: "Padrões de Projeto e Programação Orientada a Aspectos"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt12: createUfvClass(
+
+ccpopt12: createUfvClass(
     data: {
-      cod: "INF430"
-      name: "Gerência de Projetos de Software I"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF430"
+    name: "Gerência de Projetos de Software I"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt13: createUfvClass(
+
+ccpopt13: createUfvClass(
     data: {
-      cod: "INF423"
-      name: "Inteligência Artificial II"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF423"
+    name: "Inteligência Artificial II"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt14: createUfvClass(
+ccpopt14: createUfvClass(
     data: {
-      cod: "INF394"
-      name: "Processamento Digital de Imagens"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF394"
+    name: "Processamento Digital de Imagens"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt15: createUfvClass(
+
+ccpopt15: createUfvClass(
     data: {
-      cod: "INF350"
-      name: "Circuitos Digitais"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF350"
+    name: "Circuitos Digitais"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt16: createUfvClass(
+
+ccpopt16: createUfvClass(
     data: {
-      cod: "INF321"
-      name: "Projeto de Sistemas para a Web"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF321"
+    name: "Projeto de Sistemas para a Web"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt17: createUfvClass(
+ccpopt17: createUfvClass(
     data: {
-      cod: "INF294"
-      name: "Atividades Complementares V"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF294"
+    name: "Atividades Complementares V"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt18: createUfvClass(
+
+ccpopt18: createUfvClass(
     data: {
-      cod: "INF293"
-      name: "Atividades Complementares IV"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF293"
+    name: "Atividades Complementares IV"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt19: createUfvClass(
+
+ccpopt19: createUfvClass(
     data: {
-      cod: "INF292"
-      name: "Atividades Complementares III"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF292"
+    name: "Atividades Complementares III"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt20: createUfvClass(
+ccpopt20: createUfvClass(
     data: {
-      cod: "INF291"
-      name: "Atividades Complementares II"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF291"
+    name: "Atividades Complementares II"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt21: createUfvClass(
+
+ccpopt21: createUfvClass(
     data: {
-      cod: "INF290"
-      name: "Atividades Complementares I"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF290"
+    name: "Atividades Complementares I"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt22: createUfvClass(
+
+ccpopt22: createUfvClass(
     data: {
-      cod: "INF282"
-      name: "Pesquisa Operacional III"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF282"
+    name: "Pesquisa Operacional III"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt23: createUfvClass(
+ccpopt23: createUfvClass(
     data: {
-      cod: "INF281"
-      name: "Pesquisa Operacional II"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF281"
+    name: "Pesquisa Operacional II"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt24: createUfvClass(
+
+ccpopt24: createUfvClass(
     data: {
-      cod: "INF216"
-      name: "Projeto e Implementação de Jogos Digitais"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF216"
+    name: "Projeto e Implementação de Jogos Digitais"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt25: createUfvClass(
+ccpopt25: createUfvClass(
     data: {
-      cod: "INF115"
-      name: "Programação Funcional"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "INF115"
+    name: "Programação Funcional"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt26: createUfvClass(
+
+ccpopt26: createUfvClass(
     data: {
-      cod: "FIS391"
-      name: "Eletrônica Instrumental"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "FIS391"
+    name: "Eletrônica Instrumental"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt27: createUfvClass(
+
+ccpopt27: createUfvClass(
     data: {
-      cod: "FIS202"
-      name: "Física II"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "FIS202"
+    name: "Física II"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt28: createUfvClass(
+ccpopt28: createUfvClass(
     data: {
-      cod: "EST411"
-      name: "Inferência"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EST411"
+    name: "Inferência"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt29: createUfvClass(
+
+ccpopt29: createUfvClass(
     data: {
-      cod: "EST410"
-      name: "Probabilidade"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EST410"
+    name: "Probabilidade"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt30: createUfvClass(
+
+ccpopt30: createUfvClass(
     data: {
-      cod: "EST220"
-      name: "Estatística Experimental"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EST220"
+    name: "Estatística Experimental"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt31: createUfvClass(
+ccpopt31: createUfvClass(
     data: {
-      cod: "ERU324"
-      name: "Metodologia de Pesquisa"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ERU324"
+    name: "Metodologia de Pesquisa"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt32: createUfvClass(
+
+ccpopt32: createUfvClass(
     data: {
-      cod: "ELT460"
-      name: "Inteligência Computacional"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ELT460"
+    name: "Inteligência Computacional"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt33: createUfvClass(
+
+ccpopt33: createUfvClass(
     data: {
-      cod: "ELT434"
-      name: "Robótica"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ELT434"
+    name: "Robótica"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt34: createUfvClass(
+ccpopt34: createUfvClass(
     data: {
-      cod: "EDU315"
-      name: "Psicologia e Administração"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EDU315"
+    name: "Psicologia e Administração"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt35: createUfvClass(
+
+ccpopt35: createUfvClass(
     data: {
-      cod: "EDU314"
-      name: "Dinâmica de Grupo"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EDU314"
+    name: "Dinâmica de Grupo"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt36: createUfvClass(
+
+ccpopt36: createUfvClass(
     data: {
-      cod: "EDU127"
-      name: "Filosofia da Ciência"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EDU127"
+    name: "Filosofia da Ciência"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt37: createUfvClass(
+ccpopt37: createUfvClass(
     data: {
-      cod: "EDU110"
-      name: "Psicologia"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EDU110"
+    name: "Psicologia"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt38: createUfvClass(
+
+ccpopt38: createUfvClass(
     data: {
-      cod: "ECO448"
-      name: "Economia Brasileira"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ECO448"
+    name: "Economia Brasileira"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt39: createUfvClass(
+
+ccpopt39: createUfvClass(
     data: {
-      cod: "ECO270"
-      name: "Introdução à Economia"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ECO270"
+    name: "Introdução à Economia"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt40: createUfvClass(
+ccpopt40: createUfvClass(
     data: {
-      cod: "EAM451"
-      name: "Sistema de Informação Geográfica"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EAM451"
+    name: "Sistema de Informação Geográfica"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt41: createUfvClass(
+
+ccpopt41: createUfvClass(
     data: {
-      cod: "EAM432"
-      name: "Organização de Materiais Cartográficos"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "EAM432"
+    name: "Organização de Materiais Cartográficos"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt42: createUfvClass(
+
+ccpopt42: createUfvClass(
     data: {
-      cod: "DIR130"
-      name: "Instituições de Direito"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "DIR130"
+    name: "Instituições de Direito"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt43: createUfvClass(
+ccpopt43: createUfvClass(
     data: {
-      cod: "CCO100"
-      name: "Contabilidade Geral"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "CCO100"
+    name: "Contabilidade Geral"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt44: createUfvClass(
+
+ccpopt44: createUfvClass(
     data: {
-      cod: "BIO131"
-      name: "Ecologia Básica"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "BIO131"
+    name: "Ecologia Básica"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt45: createUfvClass(
+
+ccpopt45: createUfvClass(
     data: {
-      cod: "ARQ301"
-      name: "Sistemas CAD na Arquitetura"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ARQ301"
+    name: "Sistemas CAD na Arquitetura"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt46: createUfvClass(
+ccpopt46: createUfvClass(
     data: {
-      cod: "ADM392"
-      name: "Identificação e Viabilização de Oportunidades de Negócios"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM392"
+    name: "Identificação e Viabilização de Oportunidades de Negócios"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt47: createUfvClass(
+
+ccpopt47: createUfvClass(
     data: {
-      cod: "ADM345"
-      name: "Sistemas de Informação Gerencial"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM345"
+    name: "Sistemas de Informação Gerencial"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt48: createUfvClass(
+ccpopt48: createUfvClass(
     data: {
-      cod: "ADM328"
-      name: "Administração da Produção e Materiais"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM328"
+    name: "Administração da Produção e Materiais"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt49: createUfvClass(
+
+ccpopt49: createUfvClass(
     data: {
-      cod: "ADM309"
-      name: "Organização Sistemas e Métodos"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM309"
+    name: "Organização Sistemas e Métodos"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt50: createUfvClass(
+
+ccpopt50: createUfvClass(
     data: {
-      cod: "ADM308"
-      name: "Administração Municipal"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM308"
+    name: "Administração Municipal"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt51: createUfvClass(
+ccpopt51: createUfvClass(
     data: {
-      cod: "ADM305"
-      name: "Gestão de Pessoas"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM305"
+    name: "Gestão de Pessoas"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt52: createUfvClass(
+
+ccpopt52: createUfvClass(
     data: {
-      cod: "ADM250"
-      name: "Matemática Financeira"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM250"
+    name: "Matemática Financeira"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpopt53: createUfvClass(
+
+ccpopt53: createUfvClass(
     data: {
-      cod: "ADM101"
-      name: "Teoria Geral da Administração II"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM101"
+    name: "Teoria Geral da Administração II"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpopt54: createUfvClass(
+ccpopt54: createUfvClass(
     data: {
-      cod: "ADM100"
-      name: "Teoria Geral da Administração I"
-      optional: true
-      useful: 0
-      easy: 0
-      department: CCE
-      recommended: 0
-      reviews: {}
+    cod: "ADM100"
+    name: "Teoria Geral da Administração I"
+    optional: true
+    useful: 0
+    easy: 0
+    department: Depto__de_Informatica
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr0: createUfvClass(
+
+ccpobr0: createUfvClass(
     data: {
-      cod: "INF499"
-      name: "Seminário II"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF499"
+    name: "Seminário II"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr1: createUfvClass(
+
+ccpobr1: createUfvClass(
     data: {
-      cod: "INF421"
-      name: "Sistemas de Informação"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF421"
+    name: "Sistemas de Informação"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr2: createUfvClass(
+ccpobr2: createUfvClass(
     data: {
-      cod: "INF498"
-      name: "Seminário I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF498"
+    name: "Seminário I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr3: createUfvClass(
+
+ccpobr3: createUfvClass(
     data: {
-      cod: "INF496"
-      name: "Projeto Final de Curso"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF496"
+    name: "Projeto Final de Curso"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr4: createUfvClass(
+
+ccpobr4: createUfvClass(
     data: {
-      cod: "INF452"
-      name: "Redes de Computadores"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF452"
+    name: "Redes de Computadores"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr5: createUfvClass(
+ccpobr5: createUfvClass(
     data: {
-      cod: "INF322"
-      name: "Banco de Dados II"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF322"
+    name: "Banco de Dados II"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr6: createUfvClass(
+
+ccpobr6: createUfvClass(
     data: {
-      cod: "INF451"
-      name: "Sistemas Operacionais"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF451"
+    name: "Sistemas Operacionais"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr7: createUfvClass(
+
+ccpobr7: createUfvClass(
     data: {
-      cod: "INF441"
-      name: "Construção de Compiladores"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF441"
+    name: "Construção de Compiladores"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr8: createUfvClass(
+ccpobr8: createUfvClass(
     data: {
-      cod: "INF390"
-      name: "Computação Gráfica"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF390"
+    name: "Computação Gráfica"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr9: createUfvClass(
+
+ccpobr9: createUfvClass(
     data: {
-      cod: "INF323"
-      name: "Engenharia de Software II"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF323"
+    name: "Engenharia de Software II"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr10: createUfvClass(
+
+ccpobr10: createUfvClass(
     data: {
-      cod: "INF310"
-      name: "Programação Concorrente e Distribuída"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF310"
+    name: "Programação Concorrente e Distribuída"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr11: createUfvClass(
+ccpobr11: createUfvClass(
     data: {
-      cod: "INF450"
-      name: "Organização de Computadores II"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF450"
+    name: "Organização de Computadores II"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr12: createUfvClass(
+
+ccpobr12: createUfvClass(
     data: {
-      cod: "INF420"
-      name: "Inteligência Artificial I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF420"
+    name: "Inteligência Artificial I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr13: createUfvClass(
+
+ccpobr13: createUfvClass(
     data: {
-      cod: "INF340"
-      name: "Linguagens de Programação"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF340"
+    name: "Linguagens de Programação"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr14: createUfvClass(
+ccpobr14: createUfvClass(
     data: {
-      cod: "INF331"
-      name: "Linguagens Formais e Autômatos"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF331"
+    name: "Linguagens Formais e Autômatos"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr15: createUfvClass(
+
+ccpobr15: createUfvClass(
     data: {
-      cod: "INF221"
-      name: "Engenharia de Software I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF221"
+    name: "Engenharia de Software I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr16: createUfvClass(
+
+ccpobr16: createUfvClass(
     data: {
-      cod: "INF332"
-      name: "Projeto e Análise de Algoritmos"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF332"
+    name: "Projeto e Análise de Algoritmos"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr17: createUfvClass(
+ccpobr17: createUfvClass(
     data: {
-      cod: "INF330"
-      name: "Teoria e Modelos de Grafos"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF330"
+    name: "Teoria e Modelos de Grafos"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr18: createUfvClass(
+
+ccpobr18: createUfvClass(
     data: {
-      cod: "INF251"
-      name: "Organização de Computadores I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF251"
+    name: "Organização de Computadores I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr19: createUfvClass(
+
+ccpobr19: createUfvClass(
     data: {
-      cod: "INF220"
-      name: "Banco de Dados I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF220"
+    name: "Banco de Dados I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr20: createUfvClass(
+ccpobr20: createUfvClass(
     data: {
-      cod: "FIS225"
-      name: "Laboratório de Física B"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "FIS225"
+    name: "Laboratório de Física B"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr21: createUfvClass(
+
+ccpobr21: createUfvClass(
     data: {
-      cod: "FIS203"
-      name: "Física III"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "FIS203"
+    name: "Física III"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr22: createUfvClass(
+
+ccpobr22: createUfvClass(
     data: {
-      cod: "MAT271"
-      name: "Cálculo Numérico"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "MAT271"
+    name: "Cálculo Numérico"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr23: createUfvClass(
+ccpobr23: createUfvClass(
     data: {
-      cod: "MAT241"
-      name: "Cálculo III"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "MAT241"
+    name: "Cálculo III"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr24: createUfvClass(
+
+ccpobr24: createUfvClass(
     data: {
-      cod: "INF280"
-      name: "Pesquisa Operacional I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF280"
+    name: "Pesquisa Operacional I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr25: createUfvClass(
+
+ccpobr25: createUfvClass(
     data: {
-      cod: "INF213"
-      name: "Estrutura de Dados"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF213"
+    name: "Estrutura de Dados"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr26: createUfvClass(
+ccpobr26: createUfvClass(
     data: {
-      cod: "FIS224"
-      name: "Laboratório de Física A"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "FIS224"
+    name: "Laboratório de Física A"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr27: createUfvClass(
+
+ccpobr27: createUfvClass(
     data: {
-      cod: "FIS201"
-      name: "Física I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "FIS201"
+    name: "Física I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr28: createUfvClass(
+
+ccpobr28: createUfvClass(
     data: {
-      cod: "MAT147"
-      name: "Cálculo II"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "MAT147"
+    name: "Cálculo II"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr29: createUfvClass(
+ccpobr29: createUfvClass(
     data: {
-      cod: "MAT135"
-      name: "Geometria Analítica e Álgebra Linear"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "MAT135"
+    name: "Geometria Analítica e Álgebra Linear"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr30: createUfvClass(
+
+ccpobr30: createUfvClass(
     data: {
-      cod: "INF130"
-      name: "Teoria da Computação"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF130"
+    name: "Teoria da Computação"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr31: createUfvClass(
+
+ccpobr31: createUfvClass(
     data: {
-      cod: "INF112"
-      name: "Programação II"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF112"
+    name: "Programação II"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr32: createUfvClass(
+ccpobr32: createUfvClass(
     data: {
-      cod: "EST105"
-      name: "Iniciação à Estatística"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "EST105"
+    name: "Iniciação à Estatística"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr33: createUfvClass(
+
+ccpobr33: createUfvClass(
     data: {
-      cod: "MAT140"
-      name: "Cálculo I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "MAT140"
+    name: "Cálculo I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr34: createUfvClass(
+
+ccpobr34: createUfvClass(
     data: {
-      cod: "MAT131"
-      name: "Introdução à Álgebra"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "MAT131"
+    name: "Introdução à Álgebra"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 
-  ccpobr35: createUfvClass(
+ccpobr35: createUfvClass(
     data: {
-      cod: "LET215"
-      name: "Inglês I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "LET215"
+    name: "Inglês I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr36: createUfvClass(
+
+ccpobr36: createUfvClass(
     data: {
-      cod: "INF191"
-      name: "Introdução à Ciência da Computação"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF191"
+    name: "Introdução à Ciência da Computação"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
 
-  ccpobr37: createUfvClass(
+
+ccpobr37: createUfvClass(
     data: {
-      cod: "INF110"
-      name: "Programação I"
-      optional: false
-      department: CCE
-      useful: 0
-      easy: 0
-      recommended: 0
-      reviews: {}
+    cod: "INF110"
+    name: "Programação I"
+    optional: false
+    department: Depto__de_Informatica
+    useful: 0
+    easy: 0
+    recommended: 0
+    reviews: {}
     }
-  ) {
+) {
     id
-  }
+}
+
 }

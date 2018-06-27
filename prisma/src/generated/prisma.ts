@@ -103,11 +103,47 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 enum Department {
-  CCA
-  CCE
-  CCB
-  CCH
+  Depto__de_Economia_Rural
+  Depto__de_Engenharia_Agricola
+  Depto__de_Engenharia_Florestal
+  Depto__de_Fitopatologia
+  Depto__de_Fitotecnia
+  Depto__de_Solos
+  Depto__de_Zootecnia
+  Depto__de_Biologia_Animal
+  Depto__de_Biologia_Geral
+  Depto__de_Biologia_Vegetal
+  Depto__de_Bioquimica_e_Biologia_Molecular
+  Depto__de_Educacao_Fisica
+  Depto__de_Entomologia
+  Depto__de_Microbiologia
+  Depto__de_Medicina_e_Enfermagem
+  Depto__de_Nutricaoo_e_Saude
+  Depto__de_Veterinaria
+  Depto__de_Arquitetura_e_Urbanismo
+  Depto__de_Engenharia_Civil
+  Depto__de_Engenharia_Eletrica
+  Depto__de_Engenharia_de_Producao_e_Mecanica
+  Depto__de_Estatistica
+  Depto__de_Fisica
+  Depto__de_Informatica
+  Depto__de_Matematica
+  Depto__de_Quimica
+  Depto__de_Tecnologia_de_Alimentos
+  Depto__de_Administracao_e_Contabilidade
+  Depto__de_Artes_e_Humanidades
+  Depto__de_Ciencias_Sociais
+  Depto__de_Comunicacao_Social
+  Depto__de_Direito
+  Depto__de_Economia
+  Depto__de_Economia_Domestica
+  Depto__de_Educacao
+  Depto__de_Geografia
+  Depto__de_Historia
+  Depto__de_Letras
 }
 
 """
@@ -202,6 +238,8 @@ type Review implements Node {
   classReviewed(where: UfvClassWhereInput): UfvClass!
   reviewer(where: UserWhereInput): User!
   votes(where: ReviewVotesWhereInput, orderBy: ReviewVotesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewVotes!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -307,10 +345,10 @@ enum ReviewOrderByInput {
   anonymous_DESC
   recommended_ASC
   recommended_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ReviewPreviousValues {
@@ -321,6 +359,8 @@ type ReviewPreviousValues {
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ReviewSubscriptionPayload {
@@ -843,6 +883,50 @@ input ReviewWhereInput {
 
   """All values that are not equal to given value."""
   recommended_not: Boolean
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   classReviewed: UfvClassWhereInput
   reviewer: UserWhereInput
   votes_every: ReviewVotesWhereInput
@@ -1400,11 +1484,13 @@ type User implements Node {
   id: ID!
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate!
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   votes(where: ReviewVotesWhereInput, orderBy: ReviewVotesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewVotes!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -1420,9 +1506,9 @@ type UserConnection {
 input UserCreateInput {
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate
   reviews: ReviewCreateManyWithoutReviewerInput
   votes: ReviewVotesCreateManyWithoutUserInput
 }
@@ -1440,18 +1526,18 @@ input UserCreateOneWithoutVotesInput {
 input UserCreateWithoutReviewsInput {
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate
   votes: ReviewVotesCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutVotesInput {
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate
   reviews: ReviewCreateManyWithoutReviewerInput
 }
 
@@ -1471,25 +1557,27 @@ enum UserOrderByInput {
   facebookId_DESC
   name_ASC
   name_DESC
-  rate_ASC
-  rate_DESC
   course_ASC
   course_DESC
   year_ASC
   year_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+  rate_ASC
+  rate_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   facebookId: String!
   name: String!
-  rate: UserRate!
   course: UfvCourses!
   year: UfvYears!
+  rate: UserRate!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum UserRate {
@@ -1539,9 +1627,9 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   facebookId: String
   name: String
-  rate: UserRate
   course: UfvCourses
   year: UfvYears
+  rate: UserRate
   reviews: ReviewUpdateManyWithoutReviewerInput
   votes: ReviewVotesUpdateManyWithoutUserInput
 }
@@ -1565,18 +1653,18 @@ input UserUpdateOneWithoutVotesInput {
 input UserUpdateWithoutReviewsDataInput {
   facebookId: String
   name: String
-  rate: UserRate
   course: UfvCourses
   year: UfvYears
+  rate: UserRate
   votes: ReviewVotesUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutVotesDataInput {
   facebookId: String
   name: String
-  rate: UserRate
   course: UfvCourses
   year: UfvYears
+  rate: UserRate
   reviews: ReviewUpdateManyWithoutReviewerInput
 }
 
@@ -1719,16 +1807,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  rate: UserRate
-
-  """All values that are not equal to given value."""
-  rate_not: UserRate
-
-  """All values that are contained in given list."""
-  rate_in: [UserRate!]
-
-  """All values that are not contained in given list."""
-  rate_not_in: [UserRate!]
   course: UfvCourses
 
   """All values that are not equal to given value."""
@@ -1749,6 +1827,60 @@ input UserWhereInput {
 
   """All values that are not contained in given list."""
   year_not_in: [UfvYears!]
+  rate: UserRate
+
+  """All values that are not equal to given value."""
+  rate_not: UserRate
+
+  """All values that are contained in given list."""
+  rate_in: [UserRate!]
+
+  """All values that are not contained in given list."""
+  rate_not_in: [UserRate!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
@@ -1778,40 +1910,44 @@ export type ReviewVotesOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type ReviewVotesTypes =   'Agree' |
-  'Disagree'
-
-export type ReviewUseful =   'U0' |
-  'U1' |
-  'U2' |
-  'U3' |
-  'U4' |
-  'U5'
-
-export type UserRate =   'Iniciante' |
-  'Confiavel'
-
-export type Department =   'CCA' |
-  'CCE' |
-  'CCB' |
-  'CCH'
-
-export type UserOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'facebookId_ASC' |
-  'facebookId_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'rate_ASC' |
-  'rate_DESC' |
-  'course_ASC' |
-  'course_DESC' |
-  'year_ASC' |
-  'year_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
+export type Department =   'Depto__de_Economia_Rural' |
+  'Depto__de_Engenharia_Agricola' |
+  'Depto__de_Engenharia_Florestal' |
+  'Depto__de_Fitopatologia' |
+  'Depto__de_Fitotecnia' |
+  'Depto__de_Solos' |
+  'Depto__de_Zootecnia' |
+  'Depto__de_Biologia_Animal' |
+  'Depto__de_Biologia_Geral' |
+  'Depto__de_Biologia_Vegetal' |
+  'Depto__de_Bioquimica_e_Biologia_Molecular' |
+  'Depto__de_Educacao_Fisica' |
+  'Depto__de_Entomologia' |
+  'Depto__de_Microbiologia' |
+  'Depto__de_Medicina_e_Enfermagem' |
+  'Depto__de_Nutricaoo_e_Saude' |
+  'Depto__de_Veterinaria' |
+  'Depto__de_Arquitetura_e_Urbanismo' |
+  'Depto__de_Engenharia_Civil' |
+  'Depto__de_Engenharia_Eletrica' |
+  'Depto__de_Engenharia_de_Producao_e_Mecanica' |
+  'Depto__de_Estatistica' |
+  'Depto__de_Fisica' |
+  'Depto__de_Informatica' |
+  'Depto__de_Matematica' |
+  'Depto__de_Quimica' |
+  'Depto__de_Tecnologia_de_Alimentos' |
+  'Depto__de_Administracao_e_Contabilidade' |
+  'Depto__de_Artes_e_Humanidades' |
+  'Depto__de_Ciencias_Sociais' |
+  'Depto__de_Comunicacao_Social' |
+  'Depto__de_Direito' |
+  'Depto__de_Economia' |
+  'Depto__de_Economia_Domestica' |
+  'Depto__de_Educacao' |
+  'Depto__de_Geografia' |
+  'Depto__de_Historia' |
+  'Depto__de_Letras'
 
 export type ReviewOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -1827,17 +1963,10 @@ export type ReviewOrderByInput =   'id_ASC' |
   'anonymous_DESC' |
   'recommended_ASC' |
   'recommended_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
   'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type ReviewEasy =   'E0' |
-  'E1' |
-  'E2' |
-  'E3' |
-  'E4' |
-  'E5'
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
 
 export type UfvCourses =   'Agronegocio' |
   'Agronomia' |
@@ -1887,30 +2016,39 @@ export type UfvCourses =   'Agronegocio' |
   'Secretariado_Executivo_Trilingue___Portugues__Frances_e_Ingles' |
   'Servico_Social'
 
-export type MutationType =   'CREATED' |
-  'UPDATED' |
-  'DELETED'
+export type ReviewVotesTypes =   'Agree' |
+  'Disagree'
 
-export type UfvClassOrderByInput =   'id_ASC' |
+export type UserOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'cod_ASC' |
-  'cod_DESC' |
+  'facebookId_ASC' |
+  'facebookId_DESC' |
   'name_ASC' |
   'name_DESC' |
-  'optional_ASC' |
-  'optional_DESC' |
-  'department_ASC' |
-  'department_DESC' |
-  'useful_ASC' |
-  'useful_DESC' |
-  'easy_ASC' |
-  'easy_DESC' |
-  'recommended_ASC' |
-  'recommended_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
+  'course_ASC' |
+  'course_DESC' |
+  'year_ASC' |
+  'year_DESC' |
+  'rate_ASC' |
+  'rate_DESC' |
   'createdAt_ASC' |
-  'createdAt_DESC'
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
+export type ReviewEasy =   'E0' |
+  'E1' |
+  'E2' |
+  'E3' |
+  'E4' |
+  'E5'
+
+export type ReviewUseful =   'U0' |
+  'U1' |
+  'U2' |
+  'U3' |
+  'U4' |
+  'U5'
 
 export type UfvYears =   'Y19201' |
   'Y19211' |
@@ -2012,6 +2150,34 @@ export type UfvYears =   'Y19201' |
   'Y20171' |
   'Y20181'
 
+export type MutationType =   'CREATED' |
+  'UPDATED' |
+  'DELETED'
+
+export type UfvClassOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'cod_ASC' |
+  'cod_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'optional_ASC' |
+  'optional_DESC' |
+  'department_ASC' |
+  'department_DESC' |
+  'useful_ASC' |
+  'useful_DESC' |
+  'easy_ASC' |
+  'easy_DESC' |
+  'recommended_ASC' |
+  'recommended_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type UserRate =   'Iniciante' |
+  'Confiavel'
+
 export interface ReviewCreateWithoutVotesInput {
   score: Int
   useful: ReviewUseful
@@ -2069,10 +2235,6 @@ export interface UserWhereInput {
   name_not_starts_with?: String
   name_ends_with?: String
   name_not_ends_with?: String
-  rate?: UserRate
-  rate_not?: UserRate
-  rate_in?: UserRate[] | UserRate
-  rate_not_in?: UserRate[] | UserRate
   course?: UfvCourses
   course_not?: UfvCourses
   course_in?: UfvCourses[] | UfvCourses
@@ -2081,12 +2243,53 @@ export interface UserWhereInput {
   year_not?: UfvYears
   year_in?: UfvYears[] | UfvYears
   year_not_in?: UfvYears[] | UfvYears
+  rate?: UserRate
+  rate_not?: UserRate
+  rate_in?: UserRate[] | UserRate
+  rate_not_in?: UserRate[] | UserRate
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
   reviews_every?: ReviewWhereInput
   reviews_some?: ReviewWhereInput
   reviews_none?: ReviewWhereInput
   votes_every?: ReviewVotesWhereInput
   votes_some?: ReviewVotesWhereInput
   votes_none?: ReviewVotesWhereInput
+}
+
+export interface UfvClassCreateOneWithoutReviewsInput {
+  create?: UfvClassCreateWithoutReviewsInput
+  connect?: UfvClassWhereUniqueInput
+}
+
+export interface ReviewUpsertWithWhereUniqueWithoutReviewerInput {
+  where: ReviewWhereUniqueInput
+  update: ReviewUpdateWithoutReviewerDataInput
+  create: ReviewCreateWithoutReviewerInput
+}
+
+export interface UfvClassCreateWithoutReviewsInput {
+  cod: String
+  name: String
+  optional: Boolean
+  department: Department
+  useful?: Float
+  easy?: Float
+  recommended?: Int
 }
 
 export interface ReviewCreateWithoutClassReviewedInput {
@@ -2097,6 +2300,281 @@ export interface ReviewCreateWithoutClassReviewedInput {
   anonymous: Boolean
   recommended: Boolean
   reviewer: UserCreateOneWithoutReviewsInput
+  votes?: ReviewVotesCreateManyWithoutReviewInput
+}
+
+export interface ReviewVotesCreateManyWithoutReviewInput {
+  create?: ReviewVotesCreateWithoutReviewInput[] | ReviewVotesCreateWithoutReviewInput
+  connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
+}
+
+export interface UfvClassSubscriptionWhereInput {
+  AND?: UfvClassSubscriptionWhereInput[] | UfvClassSubscriptionWhereInput
+  OR?: UfvClassSubscriptionWhereInput[] | UfvClassSubscriptionWhereInput
+  NOT?: UfvClassSubscriptionWhereInput[] | UfvClassSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UfvClassWhereInput
+}
+
+export interface ReviewVotesCreateWithoutReviewInput {
+  type: ReviewVotesTypes
+  user: UserCreateOneWithoutVotesInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface UserCreateOneWithoutVotesInput {
+  create?: UserCreateWithoutVotesInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface ReviewWhereInput {
+  AND?: ReviewWhereInput[] | ReviewWhereInput
+  OR?: ReviewWhereInput[] | ReviewWhereInput
+  NOT?: ReviewWhereInput[] | ReviewWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  score?: Int
+  score_not?: Int
+  score_in?: Int[] | Int
+  score_not_in?: Int[] | Int
+  score_lt?: Int
+  score_lte?: Int
+  score_gt?: Int
+  score_gte?: Int
+  useful?: ReviewUseful
+  useful_not?: ReviewUseful
+  useful_in?: ReviewUseful[] | ReviewUseful
+  useful_not_in?: ReviewUseful[] | ReviewUseful
+  easy?: ReviewEasy
+  easy_not?: ReviewEasy
+  easy_in?: ReviewEasy[] | ReviewEasy
+  easy_not_in?: ReviewEasy[] | ReviewEasy
+  description?: String
+  description_not?: String
+  description_in?: String[] | String
+  description_not_in?: String[] | String
+  description_lt?: String
+  description_lte?: String
+  description_gt?: String
+  description_gte?: String
+  description_contains?: String
+  description_not_contains?: String
+  description_starts_with?: String
+  description_not_starts_with?: String
+  description_ends_with?: String
+  description_not_ends_with?: String
+  anonymous?: Boolean
+  anonymous_not?: Boolean
+  recommended?: Boolean
+  recommended_not?: Boolean
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  classReviewed?: UfvClassWhereInput
+  reviewer?: UserWhereInput
+  votes_every?: ReviewVotesWhereInput
+  votes_some?: ReviewVotesWhereInput
+  votes_none?: ReviewVotesWhereInput
+}
+
+export interface UserCreateWithoutVotesInput {
+  facebookId: String
+  name: String
+  course: UfvCourses
+  year: UfvYears
+  rate?: UserRate
+  reviews?: ReviewCreateManyWithoutReviewerInput
+}
+
+export interface ReviewUpdateWithWhereUniqueWithoutClassReviewedInput {
+  where: ReviewWhereUniqueInput
+  data: ReviewUpdateWithoutClassReviewedDataInput
+}
+
+export interface ReviewVotesCreateManyWithoutUserInput {
+  create?: ReviewVotesCreateWithoutUserInput[] | ReviewVotesCreateWithoutUserInput
+  connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
+}
+
+export interface ReviewVotesWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ReviewVotesCreateWithoutUserInput {
+  type: ReviewVotesTypes
+  review: ReviewCreateOneWithoutVotesInput
+}
+
+export interface UfvClassWhereUniqueInput {
+  id?: ID_Input
+  cod?: String
+}
+
+export interface ReviewCreateOneWithoutVotesInput {
+  create?: ReviewCreateWithoutVotesInput
+  connect?: ReviewWhereUniqueInput
+}
+
+export interface UfvClassUpdateInput {
+  cod?: String
+  name?: String
+  optional?: Boolean
+  department?: Department
+  useful?: Float
+  easy?: Float
+  recommended?: Int
+  reviews?: ReviewUpdateManyWithoutClassReviewedInput
+}
+
+export interface ReviewVotesUpdateManyWithoutUserInput {
+  create?: ReviewVotesCreateWithoutUserInput[] | ReviewVotesCreateWithoutUserInput
+  connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
+  disconnect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
+  delete?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
+  update?: ReviewVotesUpdateWithWhereUniqueWithoutUserInput[] | ReviewVotesUpdateWithWhereUniqueWithoutUserInput
+  upsert?: ReviewVotesUpsertWithWhereUniqueWithoutUserInput[] | ReviewVotesUpsertWithWhereUniqueWithoutUserInput
+}
+
+export interface ReviewVotesUpdateInput {
+  type?: ReviewVotesTypes
+  review?: ReviewUpdateOneWithoutVotesInput
+  user?: UserUpdateOneWithoutVotesInput
+}
+
+export interface UserCreateOneWithoutReviewsInput {
+  create?: UserCreateWithoutReviewsInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface ReviewUpsertWithoutVotesInput {
+  update: ReviewUpdateWithoutVotesDataInput
+  create: ReviewCreateWithoutVotesInput
+}
+
+export interface UserCreateWithoutReviewsInput {
+  facebookId: String
+  name: String
+  course: UfvCourses
+  year: UfvYears
+  rate?: UserRate
+  votes?: ReviewVotesCreateManyWithoutUserInput
+}
+
+export interface UserUpdateWithoutReviewsDataInput {
+  facebookId?: String
+  name?: String
+  course?: UfvCourses
+  year?: UfvYears
+  rate?: UserRate
+  votes?: ReviewVotesUpdateManyWithoutUserInput
+}
+
+export interface ReviewVotesCreateInput {
+  type: ReviewVotesTypes
+  review: ReviewCreateOneWithoutVotesInput
+  user: UserCreateOneWithoutVotesInput
+}
+
+export interface ReviewUpdateWithoutVotesDataInput {
+  score?: Int
+  useful?: ReviewUseful
+  easy?: ReviewEasy
+  description?: String
+  anonymous?: Boolean
+  recommended?: Boolean
+  classReviewed?: UfvClassUpdateOneWithoutReviewsInput
+  reviewer?: UserUpdateOneWithoutReviewsInput
+}
+
+export interface ReviewCreateInput {
+  score: Int
+  useful: ReviewUseful
+  easy: ReviewEasy
+  description: String
+  anonymous: Boolean
+  recommended: Boolean
+  classReviewed: UfvClassCreateOneWithoutReviewsInput
+  reviewer: UserCreateOneWithoutReviewsInput
+  votes?: ReviewVotesCreateManyWithoutReviewInput
+}
+
+export interface ReviewVotesUpdateWithoutUserDataInput {
+  type?: ReviewVotesTypes
+  review?: ReviewUpdateOneWithoutVotesInput
+}
+
+export interface UfvClassCreateInput {
+  cod: String
+  name: String
+  optional: Boolean
+  department: Department
+  useful?: Float
+  easy?: Float
+  recommended?: Int
+  reviews?: ReviewCreateManyWithoutClassReviewedInput
+}
+
+export interface UserCreateInput {
+  facebookId: String
+  name: String
+  course: UfvCourses
+  year: UfvYears
+  rate?: UserRate
+  reviews?: ReviewCreateManyWithoutReviewerInput
+  votes?: ReviewVotesCreateManyWithoutUserInput
+}
+
+export interface ReviewCreateManyWithoutClassReviewedInput {
+  create?: ReviewCreateWithoutClassReviewedInput[] | ReviewCreateWithoutClassReviewedInput
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+}
+
+export interface ReviewCreateWithoutReviewerInput {
+  score: Int
+  useful: ReviewUseful
+  easy: ReviewEasy
+  description: String
+  anonymous: Boolean
+  recommended: Boolean
+  classReviewed: UfvClassCreateOneWithoutReviewsInput
   votes?: ReviewVotesCreateManyWithoutReviewInput
 }
 
@@ -2126,14 +2604,112 @@ export interface ReviewVotesWhereInput {
   user?: UserWhereInput
 }
 
+export interface ReviewSubscriptionWhereInput {
+  AND?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput
+  OR?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput
+  NOT?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ReviewWhereInput
+}
+
 export interface UserUpdateInput {
   facebookId?: String
   name?: String
-  rate?: UserRate
   course?: UfvCourses
   year?: UfvYears
+  rate?: UserRate
   reviews?: ReviewUpdateManyWithoutReviewerInput
   votes?: ReviewVotesUpdateManyWithoutUserInput
+}
+
+export interface ReviewUpsertWithWhereUniqueWithoutClassReviewedInput {
+  where: ReviewWhereUniqueInput
+  update: ReviewUpdateWithoutClassReviewedDataInput
+  create: ReviewCreateWithoutClassReviewedInput
+}
+
+export interface ReviewUpdateManyWithoutReviewerInput {
+  create?: ReviewCreateWithoutReviewerInput[] | ReviewCreateWithoutReviewerInput
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+  update?: ReviewUpdateWithWhereUniqueWithoutReviewerInput[] | ReviewUpdateWithWhereUniqueWithoutReviewerInput
+  upsert?: ReviewUpsertWithWhereUniqueWithoutReviewerInput[] | ReviewUpsertWithWhereUniqueWithoutReviewerInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  facebookId?: String
+}
+
+export interface ReviewUpdateWithWhereUniqueWithoutReviewerInput {
+  where: ReviewWhereUniqueInput
+  data: ReviewUpdateWithoutReviewerDataInput
+}
+
+export interface ReviewUpdateManyWithoutClassReviewedInput {
+  create?: ReviewCreateWithoutClassReviewedInput[] | ReviewCreateWithoutClassReviewedInput
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
+  update?: ReviewUpdateWithWhereUniqueWithoutClassReviewedInput[] | ReviewUpdateWithWhereUniqueWithoutClassReviewedInput
+  upsert?: ReviewUpsertWithWhereUniqueWithoutClassReviewedInput[] | ReviewUpsertWithWhereUniqueWithoutClassReviewedInput
+}
+
+export interface ReviewUpdateWithoutReviewerDataInput {
+  score?: Int
+  useful?: ReviewUseful
+  easy?: ReviewEasy
+  description?: String
+  anonymous?: Boolean
+  recommended?: Boolean
+  classReviewed?: UfvClassUpdateOneWithoutReviewsInput
+  votes?: ReviewVotesUpdateManyWithoutReviewInput
+}
+
+export interface ReviewVotesUpsertWithWhereUniqueWithoutUserInput {
+  where: ReviewVotesWhereUniqueInput
+  update: ReviewVotesUpdateWithoutUserDataInput
+  create: ReviewVotesCreateWithoutUserInput
+}
+
+export interface UfvClassUpdateOneWithoutReviewsInput {
+  create?: UfvClassCreateWithoutReviewsInput
+  connect?: UfvClassWhereUniqueInput
+  delete?: Boolean
+  update?: UfvClassUpdateWithoutReviewsDataInput
+  upsert?: UfvClassUpsertWithoutReviewsInput
+}
+
+export interface UserUpdateOneWithoutReviewsInput {
+  create?: UserCreateWithoutReviewsInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateWithoutReviewsDataInput
+  upsert?: UserUpsertWithoutReviewsInput
+}
+
+export interface UfvClassUpdateWithoutReviewsDataInput {
+  cod?: String
+  name?: String
+  optional?: Boolean
+  department?: Department
+  useful?: Float
+  easy?: Float
+  recommended?: Int
+}
+
+export interface ReviewVotesUpdateWithWhereUniqueWithoutUserInput {
+  where: ReviewVotesWhereUniqueInput
+  data: ReviewVotesUpdateWithoutUserDataInput
+}
+
+export interface UfvClassUpsertWithoutReviewsInput {
+  update: UfvClassUpdateWithoutReviewsDataInput
+  create: UfvClassCreateWithoutReviewsInput
 }
 
 export interface UfvClassWhereInput {
@@ -2217,266 +2793,13 @@ export interface UfvClassWhereInput {
   reviews_none?: ReviewWhereInput
 }
 
-export interface ReviewVotesCreateWithoutReviewInput {
-  type: ReviewVotesTypes
-  user: UserCreateOneWithoutVotesInput
-}
-
-export interface ReviewUpsertWithWhereUniqueWithoutReviewerInput {
-  where: ReviewWhereUniqueInput
-  update: ReviewUpdateWithoutReviewerDataInput
-  create: ReviewCreateWithoutReviewerInput
-}
-
-export interface UserCreateOneWithoutVotesInput {
-  create?: UserCreateWithoutVotesInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface ReviewUpdateManyWithoutReviewerInput {
-  create?: ReviewCreateWithoutReviewerInput[] | ReviewCreateWithoutReviewerInput
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-  update?: ReviewUpdateWithWhereUniqueWithoutReviewerInput[] | ReviewUpdateWithWhereUniqueWithoutReviewerInput
-  upsert?: ReviewUpsertWithWhereUniqueWithoutReviewerInput[] | ReviewUpsertWithWhereUniqueWithoutReviewerInput
-}
-
-export interface UserCreateWithoutVotesInput {
-  facebookId: String
-  name: String
-  rate: UserRate
-  course: UfvCourses
-  year: UfvYears
-  reviews?: ReviewCreateManyWithoutReviewerInput
-}
-
-export interface ReviewSubscriptionWhereInput {
-  AND?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput
-  OR?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput
-  NOT?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ReviewWhereInput
-}
-
-export interface ReviewVotesCreateManyWithoutUserInput {
-  create?: ReviewVotesCreateWithoutUserInput[] | ReviewVotesCreateWithoutUserInput
-  connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface ReviewVotesCreateWithoutUserInput {
-  type: ReviewVotesTypes
-  review: ReviewCreateOneWithoutVotesInput
-}
-
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  facebookId?: String
-}
-
-export interface ReviewCreateOneWithoutVotesInput {
-  create?: ReviewCreateWithoutVotesInput
-  connect?: ReviewWhereUniqueInput
-}
-
-export interface ReviewWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ReviewUpdateOneWithoutVotesInput {
-  create?: ReviewCreateWithoutVotesInput
-  connect?: ReviewWhereUniqueInput
-  delete?: Boolean
-  update?: ReviewUpdateWithoutVotesDataInput
-  upsert?: ReviewUpsertWithoutVotesInput
-}
-
-export interface ReviewUpsertWithWhereUniqueWithoutClassReviewedInput {
-  where: ReviewWhereUniqueInput
-  update: ReviewUpdateWithoutClassReviewedDataInput
-  create: ReviewCreateWithoutClassReviewedInput
-}
-
-export interface UserCreateOneWithoutReviewsInput {
-  create?: UserCreateWithoutReviewsInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface ReviewUpdateWithWhereUniqueWithoutClassReviewedInput {
-  where: ReviewWhereUniqueInput
-  data: ReviewUpdateWithoutClassReviewedDataInput
-}
-
-export interface UserCreateWithoutReviewsInput {
-  facebookId: String
-  name: String
-  rate: UserRate
-  course: UfvCourses
-  year: UfvYears
-  votes?: ReviewVotesCreateManyWithoutUserInput
-}
-
-export interface UfvClassUpdateInput {
-  cod?: String
-  name?: String
-  optional?: Boolean
-  department?: Department
-  useful?: Float
-  easy?: Float
-  recommended?: Int
-  reviews?: ReviewUpdateManyWithoutClassReviewedInput
-}
-
-export interface ReviewVotesCreateInput {
-  type: ReviewVotesTypes
-  review: ReviewCreateOneWithoutVotesInput
-  user: UserCreateOneWithoutVotesInput
-}
-
-export interface ReviewVotesUpdateInput {
-  type?: ReviewVotesTypes
-  review?: ReviewUpdateOneWithoutVotesInput
-  user?: UserUpdateOneWithoutVotesInput
-}
-
-export interface ReviewCreateInput {
-  score: Int
-  useful: ReviewUseful
-  easy: ReviewEasy
-  description: String
-  anonymous: Boolean
-  recommended: Boolean
-  classReviewed: UfvClassCreateOneWithoutReviewsInput
-  reviewer: UserCreateOneWithoutReviewsInput
-  votes?: ReviewVotesCreateManyWithoutReviewInput
-}
-
-export interface ReviewUpsertWithoutVotesInput {
-  update: ReviewUpdateWithoutVotesDataInput
-  create: ReviewCreateWithoutVotesInput
-}
-
-export interface UfvClassCreateInput {
-  cod: String
-  name: String
-  optional: Boolean
-  department: Department
-  useful?: Float
-  easy?: Float
-  recommended?: Int
-  reviews?: ReviewCreateManyWithoutClassReviewedInput
-}
-
-export interface UserUpdateWithoutReviewsDataInput {
-  facebookId?: String
-  name?: String
-  rate?: UserRate
-  course?: UfvCourses
-  year?: UfvYears
-  votes?: ReviewVotesUpdateManyWithoutUserInput
-}
-
-export interface ReviewCreateManyWithoutClassReviewedInput {
-  create?: ReviewCreateWithoutClassReviewedInput[] | ReviewCreateWithoutClassReviewedInput
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-}
-
-export interface ReviewUpdateWithoutVotesDataInput {
-  score?: Int
-  useful?: ReviewUseful
-  easy?: ReviewEasy
-  description?: String
-  anonymous?: Boolean
-  recommended?: Boolean
-  classReviewed?: UfvClassUpdateOneWithoutReviewsInput
-  reviewer?: UserUpdateOneWithoutReviewsInput
-}
-
-export interface ReviewVotesUpdateWithoutUserDataInput {
-  type?: ReviewVotesTypes
-  review?: ReviewUpdateOneWithoutVotesInput
-}
-
-export interface ReviewCreateManyWithoutReviewerInput {
-  create?: ReviewCreateWithoutReviewerInput[] | ReviewCreateWithoutReviewerInput
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-}
-
-export interface ReviewVotesUpdateWithWhereUniqueWithoutUserInput {
-  where: ReviewVotesWhereUniqueInput
-  data: ReviewVotesUpdateWithoutUserDataInput
-}
-
-export interface UfvClassCreateOneWithoutReviewsInput {
-  create?: UfvClassCreateWithoutReviewsInput
-  connect?: UfvClassWhereUniqueInput
-}
-
-export interface ReviewVotesUpdateManyWithoutUserInput {
-  create?: ReviewVotesCreateWithoutUserInput[] | ReviewVotesCreateWithoutUserInput
+export interface ReviewVotesUpdateManyWithoutReviewInput {
+  create?: ReviewVotesCreateWithoutReviewInput[] | ReviewVotesCreateWithoutReviewInput
   connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
   disconnect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
   delete?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
-  update?: ReviewVotesUpdateWithWhereUniqueWithoutUserInput[] | ReviewVotesUpdateWithWhereUniqueWithoutUserInput
-  upsert?: ReviewVotesUpsertWithWhereUniqueWithoutUserInput[] | ReviewVotesUpsertWithWhereUniqueWithoutUserInput
-}
-
-export interface ReviewVotesCreateManyWithoutReviewInput {
-  create?: ReviewVotesCreateWithoutReviewInput[] | ReviewVotesCreateWithoutReviewInput
-  connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
-}
-
-export interface ReviewUpdateWithWhereUniqueWithoutReviewerInput {
-  where: ReviewWhereUniqueInput
-  data: ReviewUpdateWithoutReviewerDataInput
-}
-
-export interface ReviewVotesSubscriptionWhereInput {
-  AND?: ReviewVotesSubscriptionWhereInput[] | ReviewVotesSubscriptionWhereInput
-  OR?: ReviewVotesSubscriptionWhereInput[] | ReviewVotesSubscriptionWhereInput
-  NOT?: ReviewVotesSubscriptionWhereInput[] | ReviewVotesSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ReviewVotesWhereInput
-}
-
-export interface ReviewUpdateWithoutReviewerDataInput {
-  score?: Int
-  useful?: ReviewUseful
-  easy?: ReviewEasy
-  description?: String
-  anonymous?: Boolean
-  recommended?: Boolean
-  classReviewed?: UfvClassUpdateOneWithoutReviewsInput
-  votes?: ReviewVotesUpdateManyWithoutReviewInput
-}
-
-export interface ReviewVotesWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UfvClassUpdateOneWithoutReviewsInput {
-  create?: UfvClassCreateWithoutReviewsInput
-  connect?: UfvClassWhereUniqueInput
-  delete?: Boolean
-  update?: UfvClassUpdateWithoutReviewsDataInput
-  upsert?: UfvClassUpsertWithoutReviewsInput
+  update?: ReviewVotesUpdateWithWhereUniqueWithoutReviewInput[] | ReviewVotesUpdateWithWhereUniqueWithoutReviewInput
+  upsert?: ReviewVotesUpsertWithWhereUniqueWithoutReviewInput[] | ReviewVotesUpsertWithWhereUniqueWithoutReviewInput
 }
 
 export interface ReviewUpdateWithoutClassReviewedDataInput {
@@ -2490,14 +2813,9 @@ export interface ReviewUpdateWithoutClassReviewedDataInput {
   votes?: ReviewVotesUpdateManyWithoutReviewInput
 }
 
-export interface UfvClassUpdateWithoutReviewsDataInput {
-  cod?: String
-  name?: String
-  optional?: Boolean
-  department?: Department
-  useful?: Float
-  easy?: Float
-  recommended?: Int
+export interface ReviewVotesUpdateWithWhereUniqueWithoutReviewInput {
+  where: ReviewVotesWhereUniqueInput
+  data: ReviewVotesUpdateWithoutReviewDataInput
 }
 
 export interface ReviewUpdateInput {
@@ -2512,121 +2830,17 @@ export interface ReviewUpdateInput {
   votes?: ReviewVotesUpdateManyWithoutReviewInput
 }
 
-export interface UfvClassUpsertWithoutReviewsInput {
-  update: UfvClassUpdateWithoutReviewsDataInput
-  create: UfvClassCreateWithoutReviewsInput
-}
-
-export interface UserUpsertWithoutReviewsInput {
-  update: UserUpdateWithoutReviewsDataInput
-  create: UserCreateWithoutReviewsInput
-}
-
-export interface ReviewVotesUpdateManyWithoutReviewInput {
-  create?: ReviewVotesCreateWithoutReviewInput[] | ReviewVotesCreateWithoutReviewInput
-  connect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
-  disconnect?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
-  delete?: ReviewVotesWhereUniqueInput[] | ReviewVotesWhereUniqueInput
-  update?: ReviewVotesUpdateWithWhereUniqueWithoutReviewInput[] | ReviewVotesUpdateWithWhereUniqueWithoutReviewInput
-  upsert?: ReviewVotesUpsertWithWhereUniqueWithoutReviewInput[] | ReviewVotesUpsertWithWhereUniqueWithoutReviewInput
-}
-
-export interface UserCreateInput {
-  facebookId: String
-  name: String
-  rate: UserRate
-  course: UfvCourses
-  year: UfvYears
-  reviews?: ReviewCreateManyWithoutReviewerInput
-  votes?: ReviewVotesCreateManyWithoutUserInput
-}
-
-export interface ReviewVotesUpdateWithWhereUniqueWithoutReviewInput {
-  where: ReviewVotesWhereUniqueInput
-  data: ReviewVotesUpdateWithoutReviewDataInput
-}
-
-export interface UfvClassCreateWithoutReviewsInput {
-  cod: String
-  name: String
-  optional: Boolean
-  department: Department
-  useful?: Float
-  easy?: Float
-  recommended?: Int
-}
-
 export interface ReviewVotesUpdateWithoutReviewDataInput {
   type?: ReviewVotesTypes
   user?: UserUpdateOneWithoutVotesInput
 }
 
-export interface ReviewWhereInput {
-  AND?: ReviewWhereInput[] | ReviewWhereInput
-  OR?: ReviewWhereInput[] | ReviewWhereInput
-  NOT?: ReviewWhereInput[] | ReviewWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  score?: Int
-  score_not?: Int
-  score_in?: Int[] | Int
-  score_not_in?: Int[] | Int
-  score_lt?: Int
-  score_lte?: Int
-  score_gt?: Int
-  score_gte?: Int
-  useful?: ReviewUseful
-  useful_not?: ReviewUseful
-  useful_in?: ReviewUseful[] | ReviewUseful
-  useful_not_in?: ReviewUseful[] | ReviewUseful
-  easy?: ReviewEasy
-  easy_not?: ReviewEasy
-  easy_in?: ReviewEasy[] | ReviewEasy
-  easy_not_in?: ReviewEasy[] | ReviewEasy
-  description?: String
-  description_not?: String
-  description_in?: String[] | String
-  description_not_in?: String[] | String
-  description_lt?: String
-  description_lte?: String
-  description_gt?: String
-  description_gte?: String
-  description_contains?: String
-  description_not_contains?: String
-  description_starts_with?: String
-  description_not_starts_with?: String
-  description_ends_with?: String
-  description_not_ends_with?: String
-  anonymous?: Boolean
-  anonymous_not?: Boolean
-  recommended?: Boolean
-  recommended_not?: Boolean
-  classReviewed?: UfvClassWhereInput
-  reviewer?: UserWhereInput
-  votes_every?: ReviewVotesWhereInput
-  votes_some?: ReviewVotesWhereInput
-  votes_none?: ReviewVotesWhereInput
-}
-
-export interface ReviewUpdateManyWithoutClassReviewedInput {
-  create?: ReviewCreateWithoutClassReviewedInput[] | ReviewCreateWithoutClassReviewedInput
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
-  update?: ReviewUpdateWithWhereUniqueWithoutClassReviewedInput[] | ReviewUpdateWithWhereUniqueWithoutClassReviewedInput
-  upsert?: ReviewUpsertWithWhereUniqueWithoutClassReviewedInput[] | ReviewUpsertWithWhereUniqueWithoutClassReviewedInput
+export interface ReviewUpdateOneWithoutVotesInput {
+  create?: ReviewCreateWithoutVotesInput
+  connect?: ReviewWhereUniqueInput
+  delete?: Boolean
+  update?: ReviewUpdateWithoutVotesDataInput
+  upsert?: ReviewUpsertWithoutVotesInput
 }
 
 export interface ReviewVotesUpsertWithWhereUniqueWithoutReviewInput {
@@ -2643,9 +2857,9 @@ export interface UserUpsertWithoutVotesInput {
 export interface UserUpdateWithoutVotesDataInput {
   facebookId?: String
   name?: String
-  rate?: UserRate
   course?: UfvCourses
   year?: UfvYears
+  rate?: UserRate
   reviews?: ReviewUpdateManyWithoutReviewerInput
 }
 
@@ -2657,45 +2871,29 @@ export interface UserUpdateOneWithoutVotesInput {
   upsert?: UserUpsertWithoutVotesInput
 }
 
-export interface ReviewVotesUpsertWithWhereUniqueWithoutUserInput {
-  where: ReviewVotesWhereUniqueInput
-  update: ReviewVotesUpdateWithoutUserDataInput
-  create: ReviewVotesCreateWithoutUserInput
+export interface ReviewCreateManyWithoutReviewerInput {
+  create?: ReviewCreateWithoutReviewerInput[] | ReviewCreateWithoutReviewerInput
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput
 }
 
-export interface UfvClassWhereUniqueInput {
+export interface UserUpsertWithoutReviewsInput {
+  update: UserUpdateWithoutReviewsDataInput
+  create: UserCreateWithoutReviewsInput
+}
+
+export interface ReviewWhereUniqueInput {
   id?: ID_Input
-  cod?: String
 }
 
-export interface UfvClassSubscriptionWhereInput {
-  AND?: UfvClassSubscriptionWhereInput[] | UfvClassSubscriptionWhereInput
-  OR?: UfvClassSubscriptionWhereInput[] | UfvClassSubscriptionWhereInput
-  NOT?: UfvClassSubscriptionWhereInput[] | UfvClassSubscriptionWhereInput
+export interface ReviewVotesSubscriptionWhereInput {
+  AND?: ReviewVotesSubscriptionWhereInput[] | ReviewVotesSubscriptionWhereInput
+  OR?: ReviewVotesSubscriptionWhereInput[] | ReviewVotesSubscriptionWhereInput
+  NOT?: ReviewVotesSubscriptionWhereInput[] | ReviewVotesSubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: UfvClassWhereInput
-}
-
-export interface ReviewCreateWithoutReviewerInput {
-  score: Int
-  useful: ReviewUseful
-  easy: ReviewEasy
-  description: String
-  anonymous: Boolean
-  recommended: Boolean
-  classReviewed: UfvClassCreateOneWithoutReviewsInput
-  votes?: ReviewVotesCreateManyWithoutReviewInput
-}
-
-export interface UserUpdateOneWithoutReviewsInput {
-  create?: UserCreateWithoutReviewsInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateWithoutReviewsDataInput
-  upsert?: UserUpsertWithoutReviewsInput
+  node?: ReviewVotesWhereInput
 }
 
 /*
@@ -2704,16 +2902,6 @@ export interface UserUpdateOneWithoutReviewsInput {
  */
 export interface Node {
   id: ID_Output
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface UserConnection {
-  pageInfo: PageInfo
-  edges: UserEdge[]
-  aggregate: AggregateUser
 }
 
 export interface UfvClassPreviousValues {
@@ -2728,14 +2916,25 @@ export interface UfvClassPreviousValues {
 }
 
 /*
- * Information about pagination in a connection.
+ * A connection to a list of items.
 
  */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
+}
+
+export interface ReviewVotesPreviousValues {
+  id: ID_Output
+  type: ReviewVotesTypes
+}
+
+export interface UfvClassSubscriptionPayload {
+  mutation: MutationType
+  node?: UfvClass
+  updatedFields?: String[]
+  previousValues?: UfvClassPreviousValues
 }
 
 export interface UfvClass extends Node {
@@ -2750,35 +2949,64 @@ export interface UfvClass extends Node {
   reviews?: Review[]
 }
 
-export interface User extends Node {
+export interface ReviewVotes extends Node {
   id: ID_Output
-  facebookId: String
-  name: String
-  rate: UserRate
-  course: UfvCourses
-  year: UfvYears
-  reviews?: Review[]
-  votes?: ReviewVotes[]
+  review: Review
+  user: User
+  type: ReviewVotesTypes
 }
 
-export interface BatchPayload {
-  count: Long
+/*
+ * A connection to a list of items.
+
+ */
+export interface UfvClassConnection {
+  pageInfo: PageInfo
+  edges: UfvClassEdge[]
+  aggregate: AggregateUfvClass
 }
 
-export interface UfvClassSubscriptionPayload {
-  mutation: MutationType
-  node?: UfvClass
-  updatedFields?: String[]
-  previousValues?: UfvClassPreviousValues
+export interface AggregateUfvClass {
+  count: Int
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface UfvClassEdge {
-  node: UfvClass
+export interface ReviewEdge {
+  node: Review
   cursor: String
+}
+
+export interface BatchPayload {
+  count: Long
+}
+
+export interface AggregateReviewVotes {
+  count: Int
+}
+
+export interface ReviewPreviousValues {
+  id: ID_Output
+  score: Int
+  useful: ReviewUseful
+  easy: ReviewEasy
+  description: String
+  anonymous: Boolean
+  recommended: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ReviewVotesConnection {
+  pageInfo: PageInfo
+  edges: ReviewVotesEdge[]
+  aggregate: AggregateReviewVotes
 }
 
 export interface Review extends Node {
@@ -2792,17 +3020,33 @@ export interface Review extends Node {
   classReviewed: UfvClass
   reviewer: User
   votes?: ReviewVotes[]
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
-export interface AggregateReview {
-  count: Int
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
 }
 
-export interface ReviewVotes extends Node {
-  id: ID_Output
-  review: Review
-  user: User
-  type: ReviewVotesTypes
+export interface ReviewSubscriptionPayload {
+  mutation: MutationType
+  node?: Review
+  updatedFields?: String[]
+  previousValues?: ReviewPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UfvClassEdge {
+  node: UfvClass
+  cursor: String
 }
 
 /*
@@ -2815,14 +3059,42 @@ export interface ReviewConnection {
   aggregate: AggregateReview
 }
 
-export interface ReviewPreviousValues {
+export interface ReviewVotesSubscriptionPayload {
+  mutation: MutationType
+  node?: ReviewVotes
+  updatedFields?: String[]
+  previousValues?: ReviewVotesPreviousValues
+}
+
+export interface User extends Node {
   id: ID_Output
-  score: Int
-  useful: ReviewUseful
-  easy: ReviewEasy
-  description: String
-  anonymous: Boolean
-  recommended: Boolean
+  facebookId: String
+  name: String
+  course: UfvCourses
+  year: UfvYears
+  rate: UserRate
+  reviews?: Review[]
+  votes?: ReviewVotes[]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  facebookId: String
+  name: String
+  course: UfvCourses
+  year: UfvYears
+  rate: UserRate
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
 }
 
 /*
@@ -2834,95 +3106,24 @@ export interface ReviewVotesEdge {
   cursor: String
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
+export interface AggregateReview {
+  count: Int
+}
+
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
 }
 
 export interface AggregateUser {
   count: Int
 }
-
-export interface AggregateUfvClass {
-  count: Int
-}
-
-export interface ReviewVotesPreviousValues {
-  id: ID_Output
-  type: ReviewVotesTypes
-}
-
-export interface ReviewVotesSubscriptionPayload {
-  mutation: MutationType
-  node?: ReviewVotes
-  updatedFields?: String[]
-  previousValues?: ReviewVotesPreviousValues
-}
-
-export interface ReviewSubscriptionPayload {
-  mutation: MutationType
-  node?: Review
-  updatedFields?: String[]
-  previousValues?: ReviewPreviousValues
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  facebookId: String
-  name: String
-  rate: UserRate
-  course: UfvCourses
-  year: UfvYears
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface UfvClassConnection {
-  pageInfo: PageInfo
-  edges: UfvClassEdge[]
-  aggregate: AggregateUfvClass
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface ReviewVotesConnection {
-  pageInfo: PageInfo
-  edges: ReviewVotesEdge[]
-  aggregate: AggregateReviewVotes
-}
-
-export interface AggregateReviewVotes {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface ReviewEdge {
-  node: Review
-  cursor: String
-}
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
@@ -2934,6 +3135,13 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 */
 export type ID_Input = string | number
 export type ID_Output = string
+
+export type DateTime = Date | string
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean
 
 /*
 The `Long` scalar type represents non-fractional signed whole numeric values.
