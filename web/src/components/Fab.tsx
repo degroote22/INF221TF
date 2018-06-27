@@ -14,13 +14,13 @@ const Fab: React.SFC<
 > = props => {
   return (
     <span className={props.classes.base} style={{ zIndex: props.zIndex }}>
-      <Tooltip title={props.title}>
-        <Link to={props.to}>
-          <Button variant="fab" color="secondary">
+      <Link to={props.to}>
+        <Button variant="fab" color="secondary">
+          <Tooltip title={props.title}>
             <AddIcon />
-          </Button>
-        </Link>
-      </Tooltip>
+          </Tooltip>
+        </Button>
+      </Link>
     </span>
   );
 };

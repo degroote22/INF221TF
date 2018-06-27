@@ -1,7 +1,6 @@
 import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
 import { IClassReview, Votes } from "../utils/types";
 import AuthManager from "./AuthManager";
-import HistoryManager from "./HistoryManager";
 
 const reviews: IClassReview[] = [
   {
@@ -103,19 +102,11 @@ class ReviewManager extends StoreBase {
   }
 
   public downvote = (reviewId: string) => {
-    const logged = AuthManager.getLogged();
-    if (!logged) {
-      HistoryManager.goToLogin();
-    }
     return null;
   };
 
   // tslint:disable-next-line:no-identical-functions
   public upvote = (reviewId: string) => {
-    const logged = AuthManager.getLogged();
-    if (!logged) {
-      HistoryManager.goToLogin();
-    }
     return null;
   };
 }

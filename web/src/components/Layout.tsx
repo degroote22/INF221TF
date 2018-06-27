@@ -159,7 +159,7 @@ class Layout extends React.Component<
           variant="fab"
           color="primary"
           aria-label="delete"
-          onClick={HistoryManager.goBack}
+          onClick={HistoryManager.goHome}
         >
           <CloseIcon />
         </Button>

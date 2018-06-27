@@ -18,11 +18,13 @@ export interface Query {
   logged: boolean;
   registered: boolean;
   searchAll: SearchResult[];
-  allClasses: UfvClass[];
   listClasses: UfvClass[];
-  me?: User | null;
   user?: User | null;
   ufvClass?: UfvClass | null;
+  reviews: Review[];
+  me?: User | null;
+  myvote?: ReviewVotes | null;
+  myreviews: Review[];
 }
 
 export interface UfvClass extends Node {
@@ -77,6 +79,7 @@ export interface Mutation {
   logoff: logoffResponse;
   register: User;
   deleteAcc?: User | null;
+  createReview?: Review | null;
 }
 
 export interface loginResponse {
@@ -92,11 +95,13 @@ export namespace QueryResolvers {
     logged?: LoggedResolver;
     registered?: RegisteredResolver;
     searchAll?: SearchAllResolver;
-    allClasses?: AllClassesResolver;
     listClasses?: ListClassesResolver;
-    me?: MeResolver;
     user?: UserResolver;
     ufvClass?: UfvClassResolver;
+    reviews?: ReviewsResolver;
+    me?: MeResolver;
+    myvote?: MyvoteResolver;
+    myreviews?: MyreviewsResolver;
   }
 
   export type LoggedResolver = Resolver<boolean>;
@@ -106,17 +111,11 @@ export namespace QueryResolvers {
     where: SearchInput;
   }
 
-  export type AllClassesResolver = Resolver<UfvClass[], AllClassesArgs>;
-  export interface AllClassesArgs {
-    where: UfvClassesInput;
-  }
-
   export type ListClassesResolver = Resolver<UfvClass[], ListClassesArgs>;
   export interface ListClassesArgs {
     where: UfvListClassesInput;
   }
 
-  export type MeResolver = Resolver<User | null>;
   export type UserResolver = Resolver<User | null, UserArgs>;
   export interface UserArgs {
     where: UserInput;
@@ -126,6 +125,19 @@ export namespace QueryResolvers {
   export interface UfvClassArgs {
     where: UfvClassInput;
   }
+
+  export type ReviewsResolver = Resolver<Review[], ReviewsArgs>;
+  export interface ReviewsArgs {
+    where: ReviewsWhereInput;
+  }
+
+  export type MeResolver = Resolver<User | null>;
+  export type MyvoteResolver = Resolver<ReviewVotes | null, MyvoteArgs>;
+  export interface MyvoteArgs {
+    where: VoteWhereInput;
+  }
+
+  export type MyreviewsResolver = Resolver<Review[]>;
 }
 
 export namespace UfvClassResolvers {
@@ -283,6 +295,7 @@ export namespace MutationResolvers {
     logoff?: LogoffResolver;
     register?: RegisterResolver;
     deleteAcc?: DeleteAccResolver;
+    createReview?: CreateReviewResolver;
   }
 
   export type LoginResolver = Resolver<loginResponse>;
@@ -293,6 +306,10 @@ export namespace MutationResolvers {
   }
 
   export type DeleteAccResolver = Resolver<User | null>;
+  export type CreateReviewResolver = Resolver<Review | null, CreateReviewArgs>;
+  export interface CreateReviewArgs {
+    data: CreateReviewData;
+  }
 }
 
 export namespace loginResponseResolvers {
@@ -579,10 +596,6 @@ export interface ReviewVotesWhereInput {
   user?: UserWhereInput | null;
 }
 
-export interface UfvClassesInput {
-  searchFor: string;
-}
-
 export interface UfvListClassesInput {
   sort: ClassesRanks;
   department?: Department | null;
@@ -597,15 +610,30 @@ export interface UfvClassInput {
   id: string;
 }
 
+export interface ReviewsWhereInput {
+  userId: string;
+  first: number;
+}
+
+export interface VoteWhereInput {
+  reviewId: string;
+}
+
 export interface UserRegisterInput {
   course: UfvCourses;
   year: UfvYears;
 }
+
+export interface CreateReviewData {
+  cod: string;
+  useful: ReviewUseful;
+  easy: ReviewEasy;
+  description: string;
+  anonymous: boolean;
+  recommended: boolean;
+}
 export interface SearchAllQueryArgs {
   where: SearchInput;
-}
-export interface AllClassesQueryArgs {
-  where: UfvClassesInput;
 }
 export interface ListClassesQueryArgs {
   where: UfvListClassesInput;
@@ -615,6 +643,12 @@ export interface UserQueryArgs {
 }
 export interface UfvClassQueryArgs {
   where: UfvClassInput;
+}
+export interface ReviewsQueryArgs {
+  where: ReviewsWhereInput;
+}
+export interface MyvoteQueryArgs {
+  where: VoteWhereInput;
 }
 export interface ReviewsUfvClassArgs {
   where?: ReviewWhereInput | null;
@@ -666,6 +700,9 @@ export interface UserReviewVotesArgs {
 }
 export interface RegisterMutationArgs {
   user: UserRegisterInput;
+}
+export interface CreateReviewMutationArgs {
+  data: CreateReviewData;
 }
 
 export type Department =
@@ -955,6 +992,26 @@ export namespace DeleteAccount {
     id: string;
   };
 }
+export namespace WriteReview {
+  export type Variables = {
+    cod: string;
+    useful: ReviewUseful;
+    easy: ReviewEasy;
+    description: string;
+    anonymous: boolean;
+    recommended: boolean;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+    createReview?: CreateReview | null;
+  };
+
+  export type CreateReview = {
+    __typename?: "Review";
+    id: string;
+  };
+}
 export namespace LocalLogged {
   export type Variables = {};
 
@@ -1094,5 +1151,113 @@ export namespace UfvClassDetail {
     useful: number;
     easy: number;
     recommended: number;
+    reviews?: Reviews[] | null;
+  };
+
+  export type Reviews = {
+    __typename?: "Review";
+    id: string;
+    createdAt: DateTime;
+    useful: ReviewUseful;
+    easy: ReviewEasy;
+    description: string;
+    recommended: boolean;
+    anonymous: boolean;
+    reviewer: Reviewer;
+  };
+
+  export type Reviewer = {
+    __typename?: "User";
+    id: string;
+    name: string;
+    rate: UserRate;
+  };
+}
+export namespace UfvClassName {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    ufvClass?: UfvClass | null;
+  };
+
+  export type UfvClass = {
+    __typename?: "UfvClass";
+    cod: string;
+    name: string;
+  };
+}
+export namespace MyVoteInReview {
+  export type Variables = {
+    reviewId: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    myvote?: Myvote | null;
+  };
+
+  export type Myvote = {
+    __typename?: "ReviewVotes";
+    type: ReviewVotesTypes;
+  };
+}
+export namespace ReviewsFromUser {
+  export type Variables = {
+    userId: string;
+    first: number;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    reviews: Reviews[];
+  };
+
+  export type Reviews = {
+    __typename?: "Review";
+    id: string;
+    createdAt: DateTime;
+    useful: ReviewUseful;
+    easy: ReviewEasy;
+    description: string;
+    recommended: boolean;
+    anonymous: boolean;
+    reviewer: Reviewer;
+  };
+
+  export type Reviewer = {
+    __typename?: "User";
+    id: string;
+    name: string;
+    rate: UserRate;
+  };
+}
+export namespace MyOwnReviews {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+    myreviews: Myreviews[];
+  };
+
+  export type Myreviews = {
+    __typename?: "Review";
+    id: string;
+    createdAt: DateTime;
+    useful: ReviewUseful;
+    easy: ReviewEasy;
+    description: string;
+    recommended: boolean;
+    anonymous: boolean;
+    reviewer: Reviewer;
+  };
+
+  export type Reviewer = {
+    __typename?: "User";
+    id: string;
+    name: string;
+    rate: UserRate;
   };
 }

@@ -1,61 +1,53 @@
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import FormLabel from "@material-ui/core/FormLabel";
 import withStyles, {
   StyleRulesCallback,
   WithStyles
 } from "@material-ui/core/styles/withStyles";
-import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikProps } from "formik";
 import * as React from "react";
+import { ChildProps, graphql } from "react-apollo";
 import { RouteComponentProps, withRouter } from "react-router";
-import AutoComplete from "src/components/AutoComplete";
 import Layout from "src/components/Layout";
-import { FormikAutoCompleteSelect } from "src/Formuik/AutocompleteSelect";
+import client from "src/config/ApolloClient";
+import { WriteReviewMutation } from "src/config/Mutations";
+import { UfvClassDetailQuery, UfvClassNameQuery } from "src/config/Queries";
+import FormikRadioLine from "src/Formuik/RadioLine";
+import { UfvClassName } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
-import { IClassResult } from "src/utils/types";
-import ClassyManager from "../../singletons/ClassManager";
-import SelectFiveScale, { ISelectFiveScaleValues } from "./SelectFiveScale";
+import { FormikCheckbox } from "../../Formuik/CheckBox";
+import { FormikSwitch } from "../../Formuik/Switch";
+import { FormikTextField } from "../../Formuik/TextField";
+import HistoryManager from "../../singletons/HistoryManager";
 
 const descriptionPlaceholder = [
   "Informe o que você achou sobre os métodos de avaliação da disciplina, ",
   "cobrança de presença e quaisquer outros dados relevantes."
 ].join("");
 
-const initialState = {
-  cod: "",
-  codFocus: false
-};
-
-const getCod = (id: string) => {
-  if (!id) {
-    return "";
-  }
-  const disciplina = ClassyManager.getClass(id);
-
-  return disciplina.cod;
-};
-
 const initialValues = {
-  cod: ""
+  cod: "",
+  useful: "",
+  easy: "",
+  description: "",
+  recommended: false,
+  anonymous: false
 };
+
+const FiveScaleOptions = [0, 1, 2, 3, 4, 5]
+  .map(value => String(value))
+  .map(value => ({ value, label: value }));
+
+const Spacing: React.SFC = props => <div style={{ marginTop: BLOCK / 2 }} />;
 
 class AvaliarDisciplinasBase extends React.Component<
-  WithStyles<ButtonClassesNames> & RouteComponentProps<{ id: string }>,
-  typeof initialState
+  ChildProps<RouteComponentProps<{ id: string }>, UfvClassName.Query> &
+    WithStyles<ButtonClassesNames> &
+    RouteComponentProps<{ id: string }>
 > {
-  public readonly state = {
-    ...initialState,
-    cod: getCod(this.props.match.params.id) || ""
-  };
   public render() {
-    const { classes } = this.props;
-
     return (
       <Layout title="Avaliar Disciplina">
         <CardContent>
@@ -64,140 +56,101 @@ class AvaliarDisciplinasBase extends React.Component<
             onSubmit={this.onSubmit}
             render={this.renderForm}
           />
-
-          <form
-            className={classes.container}
-            noValidate={true}
-            autoComplete="off"
-          >
-            <TextField
-              id="code"
-              label="Código da disciplina"
-              className={classes.textField}
-              fullWidth={true}
-              margin="normal"
-              value={this.state.cod}
-              onChange={this.handleCodChange}
-              onBlur={this.onCodBlur}
-              onFocus={this.onCodFocus}
-            />
-            <AutoComplete
-              search={this.state.cod}
-              onChange={this.handleCodSelect}
-              open={this.state.codFocus}
-              getPrimary={this.getPrimary as any}
-              getSecondary={this.getSecondary as any}
-              getId={this.getId as any}
-              top={BLOCK * 2.5}
-              getResult={this.getResult}
-            />
-            <FormControl className={classes.paddingTop}>
-              <FormLabel component="legend">Utilidade</FormLabel>
-              <SelectFiveScale selected="5" onChange={this.onChangeUtil} />
-            </FormControl>
-            <FormControl className={classes.paddingTop}>
-              <FormLabel component="legend">Facilidade</FormLabel>
-              <SelectFiveScale selected="1" onChange={this.onChangeUtil} />
-            </FormControl>
-            <TextField
-              id="description"
-              label="Fale um pouco sobre a disciplina"
-              className={classes.textField}
-              fullWidth={true}
-              multiline={true}
-              rows={4}
-              margin="normal"
-              placeholder={descriptionPlaceholder}
-            />
-            <FormHelperText>{5000} caracteres restantes</FormHelperText>
-            <FormControlLabel
-              className={classes.paddingTop}
-              control={
-                <Checkbox
-                  checked={false}
-                  onChange={this.onChangeSwitch}
-                  value="gilad"
-                  color="primary"
-                />
-              }
-              label="Recomendar matéria"
-            />
-            <FormControlLabel
-              className={classes.paddingTop}
-              control={
-                <Switch
-                  checked={true}
-                  onChange={this.onChangeSwitch}
-                  value="gilad"
-                  color="primary"
-                />
-              }
-              label="Avaliação anônima"
-            />
-            <span className={classes.paddingTop}>
-              <Button variant="contained" color="secondary">
-                Salvar avaliação
-              </Button>
-            </span>
-          </form>
         </CardContent>
       </Layout>
     );
   }
 
-  private getPrimary = (result: IClassResult) => result.item.cod;
-  private getSecondary = (result: IClassResult) => result.item.name;
-  private getId = (result: IClassResult) => result.item.id;
-  private getResult = (search: string) => ClassyManager.getClasses(search);
-
-  private handleCodSelect = (cod: string) => {
-    this.setState({ cod });
-    this.onCodBlur();
-  };
-
-  private handleCodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ cod: event.target.value });
-  };
-
-  private onCodBlur = () => {
-    setTimeout(() => {
-      this.setState({ codFocus: false });
-    }, 1);
-  };
-
-  private onCodFocus = () => {
-    this.setState({ codFocus: true });
-  };
-
-  private onChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-
-    // tslint:disable-next-line:no-console
-    console.log(value);
-  };
-
-  private onChangeUtil = (scale: ISelectFiveScaleValues) => {
-    // tslint:disable-next-line:no-console
-    console.log(scale);
-  };
-
-  /// formik
-  private renderForm = () => {
+  private renderForm = (formikBag: FormikProps<typeof initialValues>) => {
     const { classes } = this.props;
+    const remaining = 5000 - formikBag.values.description.length;
     return (
       <Form className={classes.container} noValidate={true} autoComplete="off">
-        <FormikAutoCompleteSelect label="Curso" name="course" options={[]} />
+        <TextField
+          id="code"
+          label="Código da disciplina"
+          className={classes.textField}
+          fullWidth={true}
+          margin="normal"
+          disabled={true}
+          value={this.getCod()}
+        />
+        <Spacing />
+        <FormikRadioLine
+          label="Utilidade"
+          name="useful"
+          options={FiveScaleOptions}
+        />
+        <Spacing />
+
+        <FormikRadioLine
+          label="Facilidade"
+          name="easy"
+          options={FiveScaleOptions}
+        />
+        <FormikTextField
+          name="description"
+          label="Fale um pouco sobre a disciplina"
+          className={classes.textField}
+          fullWidth={true}
+          multiline={true}
+          rows={4}
+          margin="normal"
+          placeholder={descriptionPlaceholder}
+        />
+        <FormHelperText>{remaining} caracteres restantes</FormHelperText>
+        <Spacing />
+
+        <FormikCheckbox label="Recomendar matéria" name="recommended" />
+        <Spacing />
+
+        <FormikSwitch label="Avaliação anônima" name="anonymous" />
+        <Spacing />
+
+        <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            disabled={formikBag.isSubmitting}
+          >
+            Salvar avaliação
+          </Button>
+        </div>
       </Form>
     );
   };
 
+  private getCod = () => {
+    return this.props.data
+      ? this.props.data.ufvClass
+        ? this.props.data.ufvClass.cod
+        : ""
+      : "";
+  };
+
   private onSubmit = (values: typeof initialValues) => {
-    alert(values);
+    const finalValues = {
+      ...values,
+      cod: this.getCod(),
+      useful: "U" + values.useful,
+      easy: "E" + values.easy
+    };
+
+    client
+      .mutate({
+        mutation: WriteReviewMutation,
+        variables: finalValues,
+        refetchQueries: [{ query: UfvClassDetailQuery }]
+      })
+      .then(() => {
+        HistoryManager.goToClass(this.props.match.params.id);
+      });
   };
 }
 
 type ButtonClassesNames = "container" | "textField" | "paddingTop";
-const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
+const styles: StyleRulesCallback<ButtonClassesNames> = () => ({
   container: {
     display: "flex",
     flexDirection: "column",
@@ -211,4 +164,17 @@ const styles: StyleRulesCallback<ButtonClassesNames> = theme => ({
   }
 });
 
-export default withStyles(styles)(withRouter(AvaliarDisciplinasBase));
+const withData = graphql<
+  RouteComponentProps<{ id: string }>,
+  UfvClassName.Query,
+  UfvClassName.Variables,
+  RouteComponentProps<{ id: string }>
+>(UfvClassNameQuery, {
+  options: props => ({
+    variables: {
+      id: props.match.params.id
+    }
+  })
+});
+
+export default withRouter(withData(withStyles(styles)(AvaliarDisciplinasBase)));

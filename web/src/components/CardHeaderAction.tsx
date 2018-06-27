@@ -4,7 +4,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
 import { graphql } from "react-apollo";
 import { Link } from "react-router-dom";
-import { LoginGo } from "src/utils/routes";
+import HistoryManager from "src/singletons/HistoryManager";
 import { LinkStyle } from "src/utils/styles";
 import { IsRegisteredQuery } from "../config/Queries";
 import { IsRegistered } from "../generated/types";
@@ -27,7 +27,7 @@ export default withData(({ data, onPopopverClick }) => {
     );
   } else {
     return (
-      <Link to={LoginGo()} style={LinkStyle}>
+      <Link to={HistoryManager.loginRoute()} style={LinkStyle}>
         <Button color="secondary">Entrar</Button>
       </Link>
     );

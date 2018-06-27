@@ -3,7 +3,8 @@ import { graphql } from "react-apollo";
 import { Redirect, Route, RouteComponentProps } from "react-router-dom";
 import { IsRegisteredQuery } from "src/config/Queries";
 import { IsRegistered } from "src/generated/types";
-import { CadastroGo, LoginGo } from "../utils/routes";
+import HistoryManager from "src/singletons/HistoryManager";
+
 class PrivateRoute extends React.Component<{
   component: React.ComponentClass | React.SFC<any>;
   path: string;
@@ -38,10 +39,10 @@ const RenderSafe = withData(props => {
     registered ? (
       <Component {...props.routeProps} />
     ) : (
-      <Redirect to={CadastroGo()} />
+      <Redirect to={HistoryManager.cadastroRoute()} />
     )
   ) : (
-    <Redirect to={LoginGo()} />
+    <Redirect to={HistoryManager.loginRoute()} />
   );
 });
 

@@ -31,12 +31,10 @@ class Cadastro extends React.Component<
   public render() {
     const { classes, registered, logged } = this.props;
     if (!logged) {
-      // tslint:disable-next-line:no-console
-      console.log("nlogado");
       return <Redirect to={Home} />;
     }
     if (registered) {
-      return <Redirect to={Home} />;
+      return <Redirect to={HistoryManager.lastRoute()} />;
     }
     return (
       <Layout title="Cadastro">

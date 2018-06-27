@@ -5,8 +5,8 @@ import Layout from "src/components/Layout";
 import { LocalLoggedQuery } from "src/config/Queries";
 import { LocalLogged } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
-import { Cadastro } from "src/utils/routes";
 import FacebookManager from "../../singletons/FacebookManager";
+import HistoryManager from "../../singletons/HistoryManager";
 
 const withData = graphql<{}, LocalLogged.Query, LocalLogged.Variables>(
   LocalLoggedQuery
@@ -14,7 +14,7 @@ const withData = graphql<{}, LocalLogged.Query, LocalLogged.Variables>(
 
 const Login = withData(props => {
   if (props.data && props.data.logged) {
-    return <Redirect to={Cadastro} />;
+    return <Redirect to={HistoryManager.cadastroRoute()} />;
   }
   return (
     <Layout title="Entre na sua conta">

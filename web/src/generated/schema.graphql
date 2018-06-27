@@ -4,6 +4,15 @@ enum ClassesRanks {
   Recommended
 }
 
+input CreateReviewData {
+  cod: String!
+  useful: ReviewUseful!
+  easy: ReviewEasy!
+  description: String!
+  anonymous: Boolean!
+  recommended: Boolean!
+}
+
 scalar DateTime
 
 enum Department {
@@ -50,6 +59,7 @@ enum Department {
 type Mutation {
   register(user: UserRegisterInput!): User!
   deleteAcc: User
+  createReview(data: CreateReviewData!): Review
 }
 
 # An object with an ID
@@ -60,11 +70,13 @@ interface Node {
 
 type Query {
   searchAll(where: SearchInput!): [SearchResult!]!
-  allClasses(where: UfvClassesInput!): [UfvClass!]!
   listClasses(where: UfvListClassesInput!): [UfvClass!]!
-  me: User
   user(where: UserInput!): User
   ufvClass(where: UfvClassInput!): UfvClass
+  reviews(where: ReviewsWhereInput!): [Review!]!
+  me: User
+  myvote(where: VoteWhereInput!): ReviewVotes
+  myreviews: [Review!]!
 }
 
 type Review implements Node {
@@ -110,6 +122,11 @@ enum ReviewOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+}
+
+input ReviewsWhereInput {
+  userId: String!
+  first: Int!
 }
 
 enum ReviewUseful {
@@ -413,10 +430,6 @@ type UfvClass implements Node {
   easy: Float!
   recommended: Int!
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
-}
-
-input UfvClassesInput {
-  searchFor: String!
 }
 
 input UfvClassInput {
@@ -1031,5 +1044,9 @@ input UserWhereInput {
   votes_every: ReviewVotesWhereInput
   votes_some: ReviewVotesWhereInput
   votes_none: ReviewVotesWhereInput
+}
+
+input VoteWhereInput {
+  reviewId: String!
 }
 

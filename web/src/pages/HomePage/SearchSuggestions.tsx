@@ -9,6 +9,7 @@ import School from "@material-ui/icons/School";
 import * as React from "react";
 import { DataProps, graphql } from "react-apollo";
 import { Link } from "react-router-dom";
+import Loading from "src/components/Loading";
 import { SearchHomeQuery } from "src/config/Queries";
 import { SearchHome } from "src/generated/types";
 import Tabs from "src/pages/HomePage/Tabs";
@@ -42,6 +43,7 @@ class SearchSuggestions extends React.Component<IRename> {
           square={false}
           elevation={0}
         >
+          {this.props.result.loading && <Loading layout={false} />}
           <Collapse in={this.props.inputFocused && list.length !== 0}>
             {list.map(r => {
               return this.renderResult(r);
@@ -50,6 +52,7 @@ class SearchSuggestions extends React.Component<IRename> {
 
           <Collapse
             in={
+              !this.props.result.loading &&
               this.props.inputFocused &&
               this.props.search !== "" &&
               list.length === 0

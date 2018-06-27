@@ -31,3 +31,27 @@ export const DeleteAccountMutation = gql`
     }
   }
 `;
+
+export const WriteReviewMutation = gql`
+  mutation WriteReview(
+    $cod: String!
+    $useful: ReviewUseful!
+    $easy: ReviewEasy!
+    $description: String!
+    $anonymous: Boolean!
+    $recommended: Boolean!
+  ) {
+    createReview(
+      data: {
+        cod: $cod
+        useful: $useful
+        easy: $easy
+        description: $description
+        anonymous: $anonymous
+        recommended: $recommended
+      }
+    ) {
+      id
+    }
+  }
+`;

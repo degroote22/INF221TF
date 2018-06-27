@@ -1,5 +1,4 @@
 import { autoSubscribe, AutoSubscribeStore, StoreBase } from "resub";
-import HistoryManager from "./HistoryManager";
 
 @AutoSubscribeStore
 class AuthManager extends StoreBase {
@@ -9,7 +8,7 @@ class AuthManager extends StoreBase {
 
   public login = () => {
     this.id = "1";
-    HistoryManager.goToCadastro();
+    // HistoryManager.goToCadastro();
   };
 
   public logoff = () => {
@@ -37,7 +36,7 @@ class AuthManager extends StoreBase {
   public register = (course: string, year: string) => {
     this.registered = true;
     this.logged = true;
-    HistoryManager.clearLoginUrl();
+    // HistoryManager.clearLoginUrl();
     this.trigger();
   };
 }

@@ -94,6 +94,75 @@ export const UfvClassDetailQuery = gql`
       useful
       easy
       recommended
+      reviews {
+        id
+        createdAt
+        useful
+        easy
+        description
+        recommended
+        anonymous
+        reviewer {
+          id
+          name
+          rate
+        }
+      }
+    }
+  }
+`;
+
+export const UfvClassNameQuery = gql`
+  query UfvClassName($id: String!) {
+    ufvClass(where: { id: $id }) {
+      cod
+      name
+    }
+  }
+`;
+
+export const MyVoteInReviewQuery = gql`
+  query MyVoteInReview($reviewId: String!) {
+    myvote(where: { reviewId: $reviewId }) {
+      type
+    }
+  }
+`;
+
+export const ReviewsFromUserQuery = gql`
+  query ReviewsFromUser($userId: String!, $first: Int!) {
+    reviews(where: { userId: $userId, first: $first }) {
+      id
+      createdAt
+      useful
+      easy
+      description
+      recommended
+      anonymous
+      reviewer {
+        id
+        name
+        rate
+      }
+    }
+  }
+`;
+
+export const MyOwnReviewsQuery = gql`
+  query MyOwnReviews {
+    myreviews {
+      id
+      createdAt
+      useful
+      easy
+      description
+      recommended
+      anonymous
+      reviewer {
+        id
+        name
+        rate
+      }
     }
   }
 `;

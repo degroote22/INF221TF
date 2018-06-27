@@ -88,8 +88,6 @@ class FacebookManager {
   };
 
   private setLogged = (fbAccessToken: string) => {
-    // tslint:disable-next-line:no-console
-    console.log(fbAccessToken);
     LocalStorageManager.setToken(fbAccessToken);
     if (client) {
       client.mutate({

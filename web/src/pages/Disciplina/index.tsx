@@ -17,7 +17,6 @@ import Review from "src/components/Review";
 import { UfvClassDetailQuery } from "src/config/Queries";
 import { UfvClassDetail } from "src/generated/types";
 import Averages from "src/pages/Disciplina/Averages";
-import { IClassReview } from "src/utils/types";
 import { BLOCK } from "../../utils/constants";
 import { AvaliarDisciplinaGo } from "../../utils/routes";
 
@@ -40,7 +39,11 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
       return <Loading layout={true} />;
     }
     const disciplina = this.props.data.ufvClass;
-    const reviews = [] as any[];
+    const reviews = disciplina
+      ? disciplina.reviews
+        ? disciplina.reviews
+        : []
+      : [];
     const title = disciplina.cod + " - " + disciplina.name;
 
     return (
@@ -59,7 +62,7 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
     );
   }
 
-  private renderFirstReviews = (reviews: IClassReview[]) => {
+  private renderFirstReviews = (reviews: UfvClassDetail.Reviews[]) => {
     if (reviews.length === 0) {
       return (
         <div className={this.props.classes.center}>
@@ -82,7 +85,7 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
       );
     }
   };
-  private renderShowMore = (reviews: IClassReview[]) => {
+  private renderShowMore = (reviews: UfvClassDetail.Reviews[]) => {
     if (reviews.length <= 3) {
       return null;
     }

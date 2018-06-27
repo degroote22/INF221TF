@@ -12,27 +12,27 @@ import Star from "@material-ui/icons/Star";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import * as React from "react";
+import { UfvClassDetail } from "src/generated/types";
 import AuthManager from "src/singletons/AuthManager";
 import HistoryManager from "src/singletons/HistoryManager";
 import ReviewManager from "src/singletons/ReviewManager";
-import UserManager from "src/singletons/UserManager";
 import { BLOCK } from "src/utils/constants";
-import { IClassReview, UserRateEnum, Votes } from "src/utils/types";
+import { Votes } from "src/utils/types";
 
 type IPosition = "first" | "second" | "third" | "other";
 
 class Review extends React.Component<
   WithStyles<ButtonClassesNames> & {
-    review: IClassReview;
+    review: UfvClassDetail.Reviews;
     position: IPosition;
   }
 > {
   public render() {
     const { classes, review, position } = this.props;
-    const user = UserManager.getUser(review.userId);
+    const user = review.reviewer;
     const userName = review.anonymous ? "Usuário Anônimo" : user.name;
     const userClassification =
-      user.rate === UserRateEnum.confiavel ? "Confiável" : "Iniciante";
+      user.rate === "Confiavel" ? "Confiável" : "Iniciante";
 
     const userRecomendation = review.recommended
       ? "Recomendou a matéria"
@@ -64,20 +64,20 @@ class Review extends React.Component<
           }
         />
         <div className={classes.textBlock}>
-          {/* <Typography variant="headline" component="h2">
+          <Typography variant="headline" component="h2">
             {new Date(review.createdAt).toLocaleDateString()}
-          </Typography> */}
+          </Typography>
           <Typography className={classes.pos} color="textSecondary">
             data de criação
           </Typography>
           <Typography variant="headline" component="h2">
-            {review.easy}
+            {review.easy[1]}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             facilidade
           </Typography>
           <Typography variant="headline" component="h2">
-            {review.useful}
+            {review.useful[1]}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             utilidade
@@ -102,14 +102,14 @@ class Review extends React.Component<
     );
   }
   private onUserClick = () => {
-    HistoryManager.goToUser(this.props.review.userId);
+    HistoryManager.goToUser(this.props.review.reviewer.id);
   };
   private renderButtons = () => {
     const { classes, review } = this.props;
 
     const me = AuthManager.getId();
 
-    if (review.userId === me) {
+    if (review.reviewer.id === me) {
       return (
         <Button
           onClick={this.onEdit}
@@ -123,7 +123,7 @@ class Review extends React.Component<
       );
     }
 
-    const myVote = ReviewManager.getMyVote(review);
+    const myVote = null;
 
     return (
       <div>

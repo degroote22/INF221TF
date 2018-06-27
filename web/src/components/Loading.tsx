@@ -14,30 +14,43 @@ enum Stages {
   timeout
 }
 
+const LayoutWrapper: React.SFC<{ layout: boolean }> = ({ layout, children }) =>
+  layout ? (
+    <Layout title="Carregando">{children}</Layout>
+  ) : (
+    <span>{children}</span>
+  );
+
 const Inner: React.SFC<{
   classes: { progress: string; wrapper: string };
+  layout: boolean;
   stage: Stages;
 }> = props => {
-  if (props.stage === Stages.loading_hidden) {
+  const { stage, layout, classes } = props;
+  if (stage === Stages.loading_hidden) {
     return null;
   }
-  if (props.stage === Stages.loading) {
+  if (stage === Stages.loading) {
     return (
-      <div className={props.classes.wrapper}>
-        <CircularProgress className={props.classes.progress} />
-      </div>
+      <LayoutWrapper layout={layout}>
+        <div className={classes.wrapper}>
+          <CircularProgress className={classes.progress} />
+        </div>
+      </LayoutWrapper>
     );
   }
   return (
-    <div className={props.classes.wrapper}>
-      <Typography
-        variant="body2"
-        className={props.classes.progress}
-        style={{ color: red[500] }}
-      >
-        Erro na transferência. Confira sua conexão.
-      </Typography>
-    </div>
+    <LayoutWrapper layout={layout}>
+      <div className={classes.wrapper}>
+        <Typography
+          variant="body2"
+          className={classes.progress}
+          style={{ color: red[500] }}
+        >
+          Erro na transferência. Confira sua conexão.
+        </Typography>
+      </div>
+    </LayoutWrapper>
   );
 };
 const initialState = {
@@ -64,14 +77,8 @@ class Loading extends React.Component<
   public render() {
     const { classes, layout } = this.props;
     const { stage } = this.state;
-    if (layout) {
-      return (
-        <Layout title="Carregando">
-          <Inner classes={classes} stage={stage} />
-        </Layout>
-      );
-    }
-    return <Inner classes={classes} stage={stage} />;
+
+    return <Inner classes={classes} stage={stage} layout={layout} />;
   }
 
   private setLoading = () => {

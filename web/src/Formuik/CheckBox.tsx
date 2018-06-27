@@ -1,18 +1,18 @@
+import CheckboxBase from "@material-ui/core/Checkbox";
 import FormControlLabel, {
   FormControlLabelProps
 } from "@material-ui/core/FormControlLabel";
-import SwitchBase from "@material-ui/core/Switch";
 import { Field, FieldProps } from "formik";
 import * as React from "react";
 
-export const FormikSwitch: React.SFC<
+export const FormikCheckbox: React.SFC<
   { name: string } & Partial<FormControlLabelProps>
 > = props => {
   // Props will be passed down to the real component, the cast is safe.
-  return <Field component={Switch} {...props as any} />;
+  return <Field component={Checkbox} {...props as any} />;
 };
 
-export class Switch<T> extends React.Component<
+export class Checkbox<T> extends React.Component<
   FieldProps<T> & FormControlLabelProps
 > {
   public render() {
@@ -25,7 +25,7 @@ export class Switch<T> extends React.Component<
     return (
       <FormControlLabel
         control={
-          <SwitchBase
+          <CheckboxBase
             checked={field.value}
             name={field.name}
             onBlur={field.onBlur}
@@ -40,4 +40,4 @@ export class Switch<T> extends React.Component<
   }
 }
 
-export default FormikSwitch;
+export default FormikCheckbox;
