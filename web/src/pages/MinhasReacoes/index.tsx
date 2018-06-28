@@ -4,20 +4,10 @@ import withStyles, {
   WithStyles
 } from "@material-ui/core/styles/withStyles";
 import * as React from "react";
-import { ComponentBase } from "resub";
 import Layout from "src/components/Layout";
-// import Review from "src/components/Review";
-import ReviewManager from "src/singletons/ReviewManager";
-import { IClassReview } from "../../utils/types";
-const initialState = {
-  reviews: [] as IClassReview[]
-};
-class MinhasAvaliacoes extends ComponentBase<
-  WithStyles<MinhasAvaliacoesClassesNames>,
-  typeof initialState
+class MinhasAvaliacoes extends React.Component<
+  WithStyles<MinhasAvaliacoesClassesNames>
 > {
-  public readonly state = initialState;
-
   public render() {
     // const reviews = this.state.reviews;
 
@@ -28,13 +18,6 @@ class MinhasAvaliacoes extends ComponentBase<
         </CardContent>
       </Layout>
     );
-  }
-
-  protected _buildState(props: {}, initial: boolean) {
-    return {
-      ...this.state,
-      reviews: ReviewManager.getMyVotes()
-    };
   }
 }
 

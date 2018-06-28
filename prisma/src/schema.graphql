@@ -35,12 +35,17 @@ input ReviewsWhereInput {
   first: Int!
 }
 
+input ReviewWhereInput {
+  id: String!
+}
+
 type Query {
   searchAll(where: SearchInput!): [SearchResult!]!
   listClasses(where: UfvListClassesInput!): [UfvClass!]!
   user(where: UserInput!): User
   ufvClass(where: UfvClassInput!): UfvClass
   reviews(where: ReviewsWhereInput!): [Review!]!
+  review(where: ReviewWhereInput!): Review
 
   me: User
   myvote(where: VoteWhereInput!): ReviewVotes

@@ -6,7 +6,8 @@ import { IsRegistered } from "src/generated/types";
 import HistoryManager from "src/singletons/HistoryManager";
 
 class PrivateRoute extends React.Component<{
-  component: React.ComponentClass | React.SFC<any>;
+  component?: React.ComponentClass | React.SFC<any>;
+  render?: ((props: RouteComponentProps<any>) => React.ReactNode);
   path: string;
   exact?: boolean;
 }> {
@@ -16,6 +17,14 @@ class PrivateRoute extends React.Component<{
   }
 
   private renderSafe = (routeProps: RouteComponentProps<{}>) => {
+    if (this.props.render) {
+      const Rendered: any = this.props.render(routeProps);
+
+      return <RenderSafe component={Rendered} routeProps={routeProps} />;
+    }
+    if (!this.props.component) {
+      throw Error("component or render needed");
+    }
     return (
       <RenderSafe component={this.props.component} routeProps={routeProps} />
     );

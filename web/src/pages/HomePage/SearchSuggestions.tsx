@@ -13,7 +13,7 @@ import Loading from "src/components/Loading";
 import { SearchHomeQuery } from "src/config/Queries";
 import { SearchHome } from "src/generated/types";
 import Tabs from "src/pages/HomePage/Tabs";
-import { DisciplinaGo, UsuarioGo } from "src/utils/routes";
+import HistoryManager from "src/singletons/HistoryManager";
 import { LinkStyle } from "src/utils/styles";
 interface IRename {
   result: DataProps<SearchHome.Query, SearchHome.Variables>["data"];
@@ -77,7 +77,7 @@ class SearchSuggestions extends React.Component<IRename> {
       return (
         <Link
           key={"c" + result.id}
-          to={DisciplinaGo(result.id)}
+          to={HistoryManager.disciplinaRoute(result.id)}
           style={LinkStyle}
         >
           <ListItem key={result.cod} button={true}>
@@ -90,7 +90,11 @@ class SearchSuggestions extends React.Component<IRename> {
       );
     }
     return (
-      <Link key={"u" + result.id} to={UsuarioGo(result.id)} style={LinkStyle}>
+      <Link
+        key={"u" + result.id}
+        to={HistoryManager.usuarioRoute(result.id)}
+        style={LinkStyle}
+      >
         <ListItem button={true}>
           <ListItemIcon>
             <Face />

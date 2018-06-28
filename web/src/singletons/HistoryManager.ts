@@ -1,11 +1,5 @@
 import { createBrowserHistory } from "history";
-import {
-  Cadastro,
-  DisciplinaGo,
-  Home,
-  Login,
-  UsuarioGo
-} from "src/utils/routes";
+import { Cadastro, Home, Login } from "src/utils/routes";
 
 class HistoryManager {
   private history = createBrowserHistory();
@@ -13,9 +7,10 @@ class HistoryManager {
   public getHistory = () => this.history;
   public goHome = () => this.history.push(Home);
   public goBack = () => this.history.goBack();
-  public goToUser = (userId: string) => this.history.push(UsuarioGo(userId));
+  public goToUser = (userId: string) =>
+    this.history.push(this.usuarioRoute(userId));
   public goToClass = (classId: string) =>
-    this.history.push(DisciplinaGo(classId));
+    this.history.push(this.disciplinaRoute(classId));
   public getRoute = () => this.history.location.pathname;
   public clearLoginUrl = () => {
     this.history.push(this.lastRoute());
@@ -34,6 +29,11 @@ class HistoryManager {
       return oldState.from;
     }
   };
+
+  // sumir com isso daqui
+  public usuarioRoute = (id: string) => "/usuario/" + id;
+  public disciplinaRoute = (id: string) => "/disciplina/" + id;
+  public avaliarRoute = (id: string) => "/avaliardisciplina/" + id;
 
   public loginRoute = () => {
     const oldFrom = this.lastRoute();

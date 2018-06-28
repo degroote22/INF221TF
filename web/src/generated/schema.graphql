@@ -60,6 +60,7 @@ type Mutation {
   register(user: UserRegisterInput!): User!
   deleteAcc: User
   createReview(data: CreateReviewData!): Review
+  setVote(data: SetVoteData!): ReviewVotes
 }
 
 # An object with an ID
@@ -77,6 +78,7 @@ type Query {
   me: User
   myvote(where: VoteWhereInput!): ReviewVotes
   myreviews: [Review!]!
+  myvotes: [ReviewVotes!]!
 }
 
 type Review implements Node {
@@ -419,6 +421,11 @@ input SearchInput {
 }
 
 union SearchResult = UfvClass | User
+
+input SetVoteData {
+  reviewId: String!
+  type: ReviewVotesTypes!
+}
 
 type UfvClass implements Node {
   id: ID!

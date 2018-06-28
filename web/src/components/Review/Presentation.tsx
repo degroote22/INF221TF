@@ -8,23 +8,27 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import Edit from "@material-ui/icons/Edit";
+import Person from "@material-ui/icons/Person";
 import Star from "@material-ui/icons/Star";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import * as React from "react";
-import { UfvClassDetail } from "src/generated/types";
-import AuthManager from "src/singletons/AuthManager";
+import { MutationFunc } from "react-apollo";
+import {
+  ReviewVotesTypes,
+  SetVoteOnReview,
+  UfvClassDetail
+} from "src/generated/types";
 import HistoryManager from "src/singletons/HistoryManager";
-import ReviewManager from "src/singletons/ReviewManager";
 import { BLOCK } from "src/utils/constants";
-import { Votes } from "src/utils/types";
-
-type IPosition = "first" | "second" | "third" | "other";
+import { IReviewPosition } from "src/utils/types";
 
 class Review extends React.Component<
   WithStyles<ButtonClassesNames> & {
     review: UfvClassDetail.Reviews;
-    position: IPosition;
+    position: IReviewPosition;
+    myVote: ReviewVotesTypes | null;
+    setVote?: MutationFunc<SetVoteOnReview.Mutation, SetVoteOnReview.Variables>;
   }
 > {
   public render() {
@@ -37,11 +41,12 @@ class Review extends React.Component<
     const userRecomendation = review.recommended
       ? "Recomendou a matéria"
       : "Não recomendou a matéria";
+
     return (
       <Paper elevation={1} className={classes.paper}>
         {position !== "other" && (
           <Avatar className={classes.badge}>
-            <Star />
+            {position === "mine" ? <Person /> : <Star />}
           </Avatar>
         )}
         <CardHeader
@@ -105,11 +110,9 @@ class Review extends React.Component<
     HistoryManager.goToUser(this.props.review.reviewer.id);
   };
   private renderButtons = () => {
-    const { classes, review } = this.props;
+    const { classes, position } = this.props;
 
-    const me = AuthManager.getId();
-
-    if (review.reviewer.id === me) {
+    if (position === "mine") {
       return (
         <Button
           onClick={this.onEdit}
@@ -123,7 +126,7 @@ class Review extends React.Component<
       );
     }
 
-    const myVote = null;
+    const myVote = this.props.myVote;
 
     return (
       <div>
@@ -131,8 +134,8 @@ class Review extends React.Component<
           onClick={this.onUpvote}
           variant="contained"
           className={classes.button}
-          color={myVote && myVote === Votes.agree ? "primary" : "default"}
-          disabled={Boolean(myVote && myVote === Votes.disagree)}
+          color={myVote && myVote === "Agree" ? "primary" : "default"}
+          disabled={Boolean(myVote && myVote === "Disagree")}
         >
           <ThumbUp className={classes.leftIcon} />
           Concordo
@@ -141,8 +144,8 @@ class Review extends React.Component<
           variant="contained"
           onClick={this.onDownvote}
           className={classes.button}
-          disabled={Boolean(myVote && myVote === Votes.agree)}
-          color={myVote && myVote === Votes.disagree ? "primary" : "default"}
+          disabled={Boolean(myVote && myVote === "Agree")}
+          color={myVote && myVote === "Disagree" ? "primary" : "default"}
         >
           <ThumbDown className={classes.leftIcon} />
           Discordo
@@ -157,11 +160,19 @@ class Review extends React.Component<
   };
 
   private onUpvote = () => {
-    ReviewManager.upvote(this.props.review.id);
+    if (this.props.setVote) {
+      this.props.setVote({
+        variables: { reviewId: this.props.review.id, type: "Agree" }
+      });
+    }
   };
 
   private onDownvote = () => {
-    ReviewManager.downvote(this.props.review.id);
+    if (this.props.setVote) {
+      this.props.setVote({
+        variables: { reviewId: this.props.review.id, type: "Disagree" }
+      });
+    }
   };
 }
 type ButtonClassesNames =

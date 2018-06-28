@@ -20,6 +20,7 @@ export interface Query {
   user?: User | null;
   ufvClass?: UfvClass | null;
   reviews: Review[];
+  review?: Review | null;
   me?: User | null;
   myvote?: ReviewVotes | null;
   myreviews: Review[];
@@ -87,6 +88,7 @@ export namespace QueryResolvers {
     user?: UserResolver;
     ufvClass?: UfvClassResolver;
     reviews?: ReviewsResolver;
+    review?: ReviewResolver;
     me?: MeResolver;
     myvote?: MyvoteResolver;
     myreviews?: MyreviewsResolver;
@@ -116,6 +118,11 @@ export namespace QueryResolvers {
   export type ReviewsResolver = Resolver<Review[], ReviewsArgs>;
   export interface ReviewsArgs {
     where: ReviewsWhereInput;
+  }
+
+  export type ReviewResolver = Resolver<Review | null, ReviewArgs>;
+  export interface ReviewArgs {
+    where: ReviewWhereInput;
   }
 
   export type MeResolver = Resolver<User | null>;
@@ -307,146 +314,7 @@ export interface SearchInput {
 }
 
 export interface ReviewWhereInput {
-  AND?: ReviewWhereInput[] | null /** Logical AND on all given filters. */;
-  OR?: ReviewWhereInput[] | null /** Logical OR on all given filters. */;
-  NOT?:
-    | ReviewWhereInput[]
-    | null /** Logical NOT on all given filters combined by AND. */;
-  id?: string | null;
-  id_not?: string | null /** All values that are not equal to given value. */;
-  id_in?: string[] | null /** All values that are contained in given list. */;
-  id_not_in?:
-    | string[]
-    | null /** All values that are not contained in given list. */;
-  id_lt?: string | null /** All values less than the given value. */;
-  id_lte?: string | null /** All values less than or equal the given value. */;
-  id_gt?: string | null /** All values greater than the given value. */;
-  id_gte?:
-    | string
-    | null /** All values greater than or equal the given value. */;
-  id_contains?: string | null /** All values containing the given string. */;
-  id_not_contains?:
-    | string
-    | null /** All values not containing the given string. */;
-  id_starts_with?:
-    | string
-    | null /** All values starting with the given string. */;
-  id_not_starts_with?:
-    | string
-    | null /** All values not starting with the given string. */;
-  id_ends_with?: string | null /** All values ending with the given string. */;
-  id_not_ends_with?:
-    | string
-    | null /** All values not ending with the given string. */;
-  score?: number | null;
-  score_not?:
-    | number
-    | null /** All values that are not equal to given value. */;
-  score_in?:
-    | number[]
-    | null /** All values that are contained in given list. */;
-  score_not_in?:
-    | number[]
-    | null /** All values that are not contained in given list. */;
-  score_lt?: number | null /** All values less than the given value. */;
-  score_lte?:
-    | number
-    | null /** All values less than or equal the given value. */;
-  score_gt?: number | null /** All values greater than the given value. */;
-  score_gte?:
-    | number
-    | null /** All values greater than or equal the given value. */;
-  useful?: ReviewUseful | null;
-  useful_not?: ReviewUseful | null /** All values that are not equal to given value. */;
-  useful_in?:
-    | ReviewUseful[]
-    | null /** All values that are contained in given list. */;
-  useful_not_in?:
-    | ReviewUseful[]
-    | null /** All values that are not contained in given list. */;
-  easy?: ReviewEasy | null;
-  easy_not?: ReviewEasy | null /** All values that are not equal to given value. */;
-  easy_in?:
-    | ReviewEasy[]
-    | null /** All values that are contained in given list. */;
-  easy_not_in?:
-    | ReviewEasy[]
-    | null /** All values that are not contained in given list. */;
-  description?: string | null;
-  description_not?:
-    | string
-    | null /** All values that are not equal to given value. */;
-  description_in?:
-    | string[]
-    | null /** All values that are contained in given list. */;
-  description_not_in?:
-    | string[]
-    | null /** All values that are not contained in given list. */;
-  description_lt?: string | null /** All values less than the given value. */;
-  description_lte?:
-    | string
-    | null /** All values less than or equal the given value. */;
-  description_gt?:
-    | string
-    | null /** All values greater than the given value. */;
-  description_gte?:
-    | string
-    | null /** All values greater than or equal the given value. */;
-  description_contains?:
-    | string
-    | null /** All values containing the given string. */;
-  description_not_contains?:
-    | string
-    | null /** All values not containing the given string. */;
-  description_starts_with?:
-    | string
-    | null /** All values starting with the given string. */;
-  description_not_starts_with?:
-    | string
-    | null /** All values not starting with the given string. */;
-  description_ends_with?:
-    | string
-    | null /** All values ending with the given string. */;
-  description_not_ends_with?:
-    | string
-    | null /** All values not ending with the given string. */;
-  anonymous?: boolean | null;
-  anonymous_not?:
-    | boolean
-    | null /** All values that are not equal to given value. */;
-  recommended?: boolean | null;
-  recommended_not?:
-    | boolean
-    | null /** All values that are not equal to given value. */;
-  createdAt?: DateTime | null;
-  createdAt_not?: DateTime | null /** All values that are not equal to given value. */;
-  createdAt_in?:
-    | DateTime[]
-    | null /** All values that are contained in given list. */;
-  createdAt_not_in?:
-    | DateTime[]
-    | null /** All values that are not contained in given list. */;
-  createdAt_lt?: DateTime | null /** All values less than the given value. */;
-  createdAt_lte?: DateTime | null /** All values less than or equal the given value. */;
-  createdAt_gt?: DateTime | null /** All values greater than the given value. */;
-  createdAt_gte?: DateTime | null /** All values greater than or equal the given value. */;
-  updatedAt?: DateTime | null;
-  updatedAt_not?: DateTime | null /** All values that are not equal to given value. */;
-  updatedAt_in?:
-    | DateTime[]
-    | null /** All values that are contained in given list. */;
-  updatedAt_not_in?:
-    | DateTime[]
-    | null /** All values that are not contained in given list. */;
-  updatedAt_lt?: DateTime | null /** All values less than the given value. */;
-  updatedAt_lte?: DateTime | null /** All values less than or equal the given value. */;
-  updatedAt_gt?: DateTime | null /** All values greater than the given value. */;
-  updatedAt_gte?: DateTime | null /** All values greater than or equal the given value. */;
-  classReviewed?: UfvClassWhereInput | null;
-  reviewer?: UserWhereInput | null;
-  votes_every?: ReviewVotesWhereInput | null;
-  votes_some?: ReviewVotesWhereInput | null;
-  votes_none?: ReviewVotesWhereInput | null;
+  id: string;
 }
 
 export interface UfvClassWhereInput {
@@ -860,6 +728,9 @@ export interface UfvClassQueryArgs {
 export interface ReviewsQueryArgs {
   where: ReviewsWhereInput;
 }
+export interface ReviewQueryArgs {
+  where: ReviewWhereInput;
+}
 export interface MyvoteQueryArgs {
   where: VoteWhereInput;
 }
@@ -960,6 +831,26 @@ export type Department =
   | "Depto__de_Geografia"
   | "Depto__de_Historia"
   | "Depto__de_Letras";
+
+export type ReviewOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "score_ASC"
+  | "score_DESC"
+  | "useful_ASC"
+  | "useful_DESC"
+  | "easy_ASC"
+  | "easy_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "anonymous_ASC"
+  | "anonymous_DESC"
+  | "recommended_ASC"
+  | "recommended_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type ReviewUseful = "U0" | "U1" | "U2" | "U3" | "U4" | "U5";
 
@@ -1118,26 +1009,6 @@ export type UfvYears =
 export type UserRate = "Iniciante" | "Confiavel";
 
 export type ReviewVotesTypes = "Agree" | "Disagree";
-
-export type ReviewOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "score_ASC"
-  | "score_DESC"
-  | "useful_ASC"
-  | "useful_DESC"
-  | "easy_ASC"
-  | "easy_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "anonymous_ASC"
-  | "anonymous_DESC"
-  | "recommended_ASC"
-  | "recommended_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
 
 export type ReviewVotesOrderByInput =
   | "id_ASC"

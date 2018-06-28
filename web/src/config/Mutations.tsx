@@ -55,3 +55,12 @@ export const WriteReviewMutation = gql`
     }
   }
 `;
+
+export const SetVoteOnReviewMutation = gql`
+  mutation SetVoteOnReview($reviewId: String!, $type: ReviewVotesTypes!) {
+    setVote(data: { reviewId: $reviewId, type: $type }) {
+      type
+      id
+    }
+  }
+`;

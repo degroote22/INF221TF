@@ -6,8 +6,8 @@ import { graphql } from "react-apollo";
 import { Link } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { ClassesRanks, Department, ListByKind } from "src/generated/types";
+import HistoryManager from "src/singletons/HistoryManager";
 import { ListByKindQuery } from "../../config/Queries";
-import { DisciplinaGo } from "../../utils/routes";
 import { LinkStyle } from "../../utils/styles";
 
 interface IProps {
@@ -38,7 +38,11 @@ const ListItemWrapped: React.SFC<{
   const secondary = getSecondaryText(c, rank);
 
   return (
-    <Link to={DisciplinaGo(c.id)} key={c.id} style={LinkStyle}>
+    <Link
+      to={HistoryManager.disciplinaRoute(c.id)}
+      key={c.id}
+      style={LinkStyle}
+    >
       <ListItem button={true}>
         <ListItemText primary={c.cod + " - " + c.name} secondary={secondary} />
       </ListItem>

@@ -166,3 +166,15 @@ export const MyOwnReviewsQuery = gql`
     }
   }
 `;
+
+export const ReviewExtraDataQuery = gql`
+  query ReviewExtraData($id: String!) {
+    me {
+      id
+    }
+
+    myvote(where: { reviewId: $id }) {
+      type
+    }
+  }
+`;

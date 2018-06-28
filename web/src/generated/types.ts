@@ -25,6 +25,7 @@ export interface Query {
   me?: User | null;
   myvote?: ReviewVotes | null;
   myreviews: Review[];
+  myvotes: ReviewVotes[];
 }
 
 export interface UfvClass extends Node {
@@ -80,6 +81,7 @@ export interface Mutation {
   register: User;
   deleteAcc?: User | null;
   createReview?: Review | null;
+  setVote?: ReviewVotes | null;
 }
 
 export interface loginResponse {
@@ -102,6 +104,7 @@ export namespace QueryResolvers {
     me?: MeResolver;
     myvote?: MyvoteResolver;
     myreviews?: MyreviewsResolver;
+    myvotes?: MyvotesResolver;
   }
 
   export type LoggedResolver = Resolver<boolean>;
@@ -138,6 +141,7 @@ export namespace QueryResolvers {
   }
 
   export type MyreviewsResolver = Resolver<Review[]>;
+  export type MyvotesResolver = Resolver<ReviewVotes[]>;
 }
 
 export namespace UfvClassResolvers {
@@ -296,6 +300,7 @@ export namespace MutationResolvers {
     register?: RegisterResolver;
     deleteAcc?: DeleteAccResolver;
     createReview?: CreateReviewResolver;
+    setVote?: SetVoteResolver;
   }
 
   export type LoginResolver = Resolver<loginResponse>;
@@ -309,6 +314,11 @@ export namespace MutationResolvers {
   export type CreateReviewResolver = Resolver<Review | null, CreateReviewArgs>;
   export interface CreateReviewArgs {
     data: CreateReviewData;
+  }
+
+  export type SetVoteResolver = Resolver<ReviewVotes | null, SetVoteArgs>;
+  export interface SetVoteArgs {
+    data: SetVoteData;
   }
 }
 
@@ -632,6 +642,11 @@ export interface CreateReviewData {
   anonymous: boolean;
   recommended: boolean;
 }
+
+export interface SetVoteData {
+  reviewId: string;
+  type: ReviewVotesTypes;
+}
 export interface SearchAllQueryArgs {
   where: SearchInput;
 }
@@ -703,6 +718,9 @@ export interface RegisterMutationArgs {
 }
 export interface CreateReviewMutationArgs {
   data: CreateReviewData;
+}
+export interface SetVoteMutationArgs {
+  data: SetVoteData;
 }
 
 export type Department =
@@ -1012,6 +1030,23 @@ export namespace WriteReview {
     id: string;
   };
 }
+export namespace SetVoteOnReview {
+  export type Variables = {
+    reviewId: string;
+    type: ReviewVotesTypes;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+    setVote?: SetVote | null;
+  };
+
+  export type SetVote = {
+    __typename?: "ReviewVotes";
+    type: ReviewVotesTypes;
+    id: string;
+  };
+}
 export namespace LocalLogged {
   export type Variables = {};
 
@@ -1259,5 +1294,26 @@ export namespace MyOwnReviews {
     id: string;
     name: string;
     rate: UserRate;
+  };
+}
+export namespace ReviewExtraData {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    me?: Me | null;
+    myvote?: Myvote | null;
+  };
+
+  export type Me = {
+    __typename?: "User";
+    id: string;
+  };
+
+  export type Myvote = {
+    __typename?: "ReviewVotes";
+    type: ReviewVotesTypes;
   };
 }

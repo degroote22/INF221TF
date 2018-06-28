@@ -17,8 +17,8 @@ import Review from "src/components/Review";
 import { UfvClassDetailQuery } from "src/config/Queries";
 import { UfvClassDetail } from "src/generated/types";
 import Averages from "src/pages/Disciplina/Averages";
+import HistoryManager from "src/singletons/HistoryManager";
 import { BLOCK } from "../../utils/constants";
-import { AvaliarDisciplinaGo } from "../../utils/routes";
 
 const initialState = {
   showMore: false
@@ -51,7 +51,7 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
         <CardContent>
           <Fab
             title="Avaliar esta disciplina"
-            to={AvaliarDisciplinaGo(disciplina.id)}
+            to={HistoryManager.avaliarRoute(disciplina.id)}
             zIndex={9999}
           />
           <Averages class={disciplina} />

@@ -13,7 +13,13 @@ export const getUserData = async (ctx: Context) => {
     const extra = await fetch(
       "https://graph.facebook.com/v3.0/me?access_token=" + token
     );
-    return extra.json() as Promise<{ id: string; name: string }>;
+    const data = (await extra.json()) as { id: string; name: string };
+
+    if (!data.id) {
+      throw Error("Usuário não logado");
+    }
+
+    return data;
   }
 
   throw new AuthError();

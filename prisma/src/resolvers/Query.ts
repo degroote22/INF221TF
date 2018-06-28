@@ -111,6 +111,14 @@ const user: QueryResolvers.UserResolver = async (
 ) => {
   return ctx.db.query.user({ where: { id: id } }, info);
 };
+const review: QueryResolvers.ReviewResolver = async (
+  _,
+  { where: { id } },
+  ctx: Context,
+  info
+) => {
+  return ctx.db.query.review({ where: { id: id } }, info);
+};
 
 const me: QueryResolvers.MeResolver = async (_, __, ctx: Context, info) => {
   try {
@@ -178,6 +186,7 @@ const searchAll: QueryResolvers.SearchAllResolver = async (
 };
 
 export const Query = {
+  review,
   myvote,
   myreviews,
   myvotes,

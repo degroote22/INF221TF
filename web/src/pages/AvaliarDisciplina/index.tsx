@@ -11,12 +11,14 @@ import * as React from "react";
 import { ChildProps, graphql } from "react-apollo";
 import { RouteComponentProps, withRouter } from "react-router";
 import Layout from "src/components/Layout";
+import Loading from "src/components/Loading";
 import client from "src/config/ApolloClient";
 import { WriteReviewMutation } from "src/config/Mutations";
 import { UfvClassDetailQuery, UfvClassNameQuery } from "src/config/Queries";
 import FormikRadioLine from "src/Formuik/RadioLine";
 import { UfvClassName } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
+import { AvaliarAction } from "src/utils/types";
 import { FormikCheckbox } from "../../Formuik/CheckBox";
 import { FormikSwitch } from "../../Formuik/Switch";
 import { FormikTextField } from "../../Formuik/TextField";
@@ -45,17 +47,24 @@ const Spacing: React.SFC = props => <div style={{ marginTop: BLOCK / 2 }} />;
 class AvaliarDisciplinasBase extends React.Component<
   ChildProps<RouteComponentProps<{ id: string }>, UfvClassName.Query> &
     WithStyles<ButtonClassesNames> &
-    RouteComponentProps<{ id: string }>
+    RouteComponentProps<{ id: string }> & {
+      action: AvaliarAction;
+    }
 > {
   public render() {
+    const shouldMount = true;
     return (
       <Layout title="Avaliar Disciplina">
         <CardContent>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={this.onSubmit}
-            render={this.renderForm}
-          />
+          {shouldMount ? (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={this.onSubmit}
+              render={this.renderForm}
+            />
+          ) : (
+            <Loading layout={false} />
+          )}
         </CardContent>
       </Layout>
     );
@@ -141,7 +150,12 @@ class AvaliarDisciplinasBase extends React.Component<
       .mutate({
         mutation: WriteReviewMutation,
         variables: finalValues,
-        refetchQueries: [{ query: UfvClassDetailQuery }]
+        refetchQueries: [
+          {
+            query: UfvClassDetailQuery,
+            variables: { id: this.props.match.params.id }
+          }
+        ]
       })
       .then(() => {
         HistoryManager.goToClass(this.props.match.params.id);
@@ -165,10 +179,14 @@ const styles: StyleRulesCallback<ButtonClassesNames> = () => ({
 });
 
 const withData = graphql<
-  RouteComponentProps<{ id: string }>,
+  RouteComponentProps<{ id: string }> & {
+    action: AvaliarAction;
+  },
   UfvClassName.Query,
   UfvClassName.Variables,
-  RouteComponentProps<{ id: string }>
+  RouteComponentProps<{ id: string }> & {
+    action: AvaliarAction;
+  }
 >(UfvClassNameQuery, {
   options: props => ({
     variables: {

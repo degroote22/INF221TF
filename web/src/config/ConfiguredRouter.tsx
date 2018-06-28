@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Route, Router } from "react-router-dom";
+import { ChildProps } from "react-apollo";
+import { Route, RouteComponentProps, Router } from "react-router-dom";
 import PrivateRoute from "src/components/PrivateRoute";
 import AvaliarDisciplina from "src/pages/AvaliarDisciplina";
 import Cadastro from "src/pages/Cadastro";
@@ -13,6 +14,7 @@ import MinhasReacoes from "src/pages/MinhasReacoes";
 import Usuario from "src/pages/Usuario";
 import HistoryManager from "src/singletons/HistoryManager";
 import * as Routes from "src/utils/routes";
+import { AvaliarAction } from "src/utils/types";
 
 class ConfiguredRouter extends React.Component {
   public render() {
@@ -32,13 +34,27 @@ class ConfiguredRouter extends React.Component {
           />
           <PrivateRoute
             path={Routes.AvaliarDisciplina}
-            component={AvaliarDisciplina}
+            render={this.renderAvaliar}
+          />
+          <PrivateRoute
+            path={Routes.AvaliarDisciplina}
+            render={this.renderEditar}
           />
           <HomePage />
         </span>
       </Router>
     );
   }
+  private renderAvaliar = (
+    props: ChildProps<RouteComponentProps<{ id: string }>>
+  ) => {
+    return <AvaliarDisciplina {...props} action={AvaliarAction.create} />;
+  };
+  private renderEditar = (
+    props: ChildProps<RouteComponentProps<{ id: string }>>
+  ) => {
+    return <AvaliarDisciplina {...props} action={AvaliarAction.create} />;
+  };
 }
 
 export default ConfiguredRouter;

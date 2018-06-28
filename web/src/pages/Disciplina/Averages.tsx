@@ -9,7 +9,7 @@ import Mood from "@material-ui/icons/Mood";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Whatshot from "@material-ui/icons/Whatshot";
 import * as React from "react";
-import { IClassType } from "../../utils/types";
+import { UfvClassDetail } from "src/generated/types";
 
 type AverageDisplayerClassNames = "root";
 
@@ -48,7 +48,7 @@ const AverageDisplayer = withStyles(AverageDisplayerStyles)(
 );
 
 class Averages extends React.Component<
-  WithStyles<DisciplinaClassNames> & { class: IClassType }
+  WithStyles<DisciplinaClassNames> & { class: UfvClassDetail.UfvClass }
 > {
   public render() {
     const c = this.props.class;
