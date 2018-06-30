@@ -206,7 +206,6 @@ export const Query = {
     info: never
   ): Promise<QueryType["listClasses"]> {
     const { sort, optional, department } = args.where;
-    console.log(optional);
     const where = {
       optional: optional === null ? undefined : optional,
       department: department === null ? undefined : department

@@ -1,9 +1,10 @@
+endpoint: ${env:PRISMA_ENDPOINT}
+secret: ${env:PRISMA_SECRET}
+
 datamodel: datamodel.graphql
 seed:
   import: seed.graphql
   
-endpoint: ${env:PRISMA_ENDPOINT}
-secret: ${env:PRISMA_SECRET}
 
 
 # Download the GraphQL schema of the Prisma API into
