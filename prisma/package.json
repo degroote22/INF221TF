@@ -16,6 +16,7 @@
     "fuse.js": "^3.2.1",
     "graphql-import": "^0.6.0",
     "graphql-yoga": "1.14.6",
+    "graphqlviz": "^2.0.1",
     "node-fetch": "^2.1.2",
     "prisma": "^1.10.2",
     "prisma-binding": "^2.1.0"
@@ -25,7 +26,6 @@
     "@types/jsonwebtoken": "^7.2.7",
     "@types/node": "^10.3.6",
     "@types/node-fetch": "^2.1.1",
-    "@types/ws": "^5.1.2",
     "dotenv-cli": "1.4.0",
     "graphql-cli": "2.16.1",
     "graphql-code-generator": "^0.9.1",
