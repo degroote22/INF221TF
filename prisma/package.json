@@ -25,6 +25,7 @@
     "@types/jsonwebtoken": "^7.2.7",
     "@types/node": "^10.3.6",
     "@types/node-fetch": "^2.1.1",
+    "@types/ws": "^5.1.2",
     "dotenv-cli": "1.4.0",
     "graphql-cli": "2.16.1",
     "graphql-code-generator": "^0.9.1",

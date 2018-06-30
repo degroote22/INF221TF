@@ -69,7 +69,7 @@ const client = new ApolloClient({
       }
     });
   },
-  uri: "http://localhost:4000"
+  uri: "https://prisma-gnnoqhrnfq.now.sh/"
 });
 
 export default client;

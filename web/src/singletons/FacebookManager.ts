@@ -6,8 +6,6 @@ import { IsRegisteredQuery, LocalLoggedQuery } from "../config/Queries";
 
 class FacebookManager {
   public init(debug: boolean = false) {
-    LocalStorageManager.removeToken();
-
     (window as any).fbAsyncInit = () => {
       (FB as any).init({
         appId: "193675244675446",
