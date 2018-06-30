@@ -32,9 +32,38 @@ export const DeleteAccountMutation = gql`
   }
 `;
 
+export const UpdateReviewMutation = gql`
+  mutation UpdateReview(
+    $cod: String!
+    $id: String!
+    $teacher: String!
+    $useful: ReviewUseful!
+    $easy: ReviewEasy!
+    $description: String!
+    $anonymous: Boolean!
+    $recommended: Boolean!
+  ) {
+    editReview(
+      data: {
+        cod: $cod
+        id: $id
+        teacher: $teacher
+        useful: $useful
+        easy: $easy
+        description: $description
+        anonymous: $anonymous
+        recommended: $recommended
+      }
+    ) {
+      id
+    }
+  }
+`;
+
 export const WriteReviewMutation = gql`
   mutation WriteReview(
     $cod: String!
+    $teacher: String!
     $useful: ReviewUseful!
     $easy: ReviewEasy!
     $description: String!
@@ -44,6 +73,7 @@ export const WriteReviewMutation = gql`
     createReview(
       data: {
         cod: $cod
+        teacher: $teacher
         useful: $useful
         easy: $easy
         description: $description

@@ -3,6 +3,7 @@ export const MinhasReacoes = "/mreacoes";
 export const MinhaConta = "/minhaconta";
 export const MinhasAvaliacoes = "/mavaliacoes";
 export const AvaliarDisciplina = "/avaliardisciplina/:id";
+export const EditarAvaliacao = "/editaravaliacao/:id";
 export const Logoff = "/logoff";
 export const Cadastro = "/cadastro";
 export const Login = "/login";

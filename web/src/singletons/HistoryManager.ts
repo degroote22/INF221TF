@@ -7,6 +7,7 @@ class HistoryManager {
   public getHistory = () => this.history;
   public goHome = () => this.history.push(Home);
   public goBack = () => this.history.goBack();
+  public goToLogin = () => this.history.push(this.loginRoute());
   public goToUser = (userId: string) =>
     this.history.push(this.usuarioRoute(userId));
   public goToClass = (classId: string) =>
@@ -34,6 +35,7 @@ class HistoryManager {
   public usuarioRoute = (id: string) => "/usuario/" + id;
   public disciplinaRoute = (id: string) => "/disciplina/" + id;
   public avaliarRoute = (id: string) => "/avaliardisciplina/" + id;
+  public editarRoute = (id: string) => "/editaravaliacao/" + id;
 
   public loginRoute = () => {
     const oldFrom = this.lastRoute();

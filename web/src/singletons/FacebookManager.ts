@@ -6,6 +6,8 @@ import { IsRegisteredQuery, LocalLoggedQuery } from "../config/Queries";
 
 class FacebookManager {
   public init(debug: boolean = false) {
+    LocalStorageManager.removeToken();
+
     (window as any).fbAsyncInit = () => {
       (FB as any).init({
         appId: "193675244675446",
@@ -87,31 +89,26 @@ class FacebookManager {
     }
   };
 
-  private setLogged = (fbAccessToken: string) => {
+  private setLogged = async (fbAccessToken: string) => {
     LocalStorageManager.setToken(fbAccessToken);
-    if (client) {
-      client.mutate({
-        mutation: FbLoginMutation,
-        refetchQueries: [
-          { query: IsRegisteredQuery },
-          { query: LocalLoggedQuery }
-        ]
-      });
-    }
+    client.mutate({
+      mutation: FbLoginMutation,
+      refetchQueries: [
+        { query: IsRegisteredQuery },
+        { query: LocalLoggedQuery }
+      ]
+    });
   };
 
   private unsetLogged = () => {
     LocalStorageManager.removeToken();
-    if (client) {
-      client.mutate({
-        mutation: LogoffMutation,
-
-        refetchQueries: [
-          { query: IsRegisteredQuery },
-          { query: LocalLoggedQuery }
-        ]
-      });
-    }
+    client.mutate({
+      mutation: LogoffMutation,
+      refetchQueries: [
+        { query: IsRegisteredQuery },
+        { query: LocalLoggedQuery }
+      ]
+    });
   };
 }
 

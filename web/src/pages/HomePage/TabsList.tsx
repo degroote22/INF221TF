@@ -2,10 +2,14 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import * as React from "react";
-import { graphql } from "react-apollo";
 import { Link } from "react-router-dom";
 import Loading from "src/components/Loading";
-import { ClassesRanks, Department, ListByKind } from "src/generated/types";
+import {
+  ClassesRanks,
+  Department,
+  ListByKind,
+  withListByKind
+} from "src/generated/types";
 import HistoryManager from "src/singletons/HistoryManager";
 import { ListByKindQuery } from "../../config/Queries";
 import { LinkStyle } from "../../utils/styles";
@@ -50,22 +54,19 @@ const ListItemWrapped: React.SFC<{
   );
 };
 
-const withData = graphql<IProps, ListByKind.Query, ListByKind.Variables>(
-  ListByKindQuery,
-  {
-    options: props => ({
-      variables: {
-        sort: props.rank,
-        optional: props.optative === true ? true : null,
-        department:
-          props.department === "" ? null : (props.department as Department)
-      }
-    })
-  }
-);
+const withData = withListByKind<IProps>(ListByKindQuery, {
+  options: props => ({
+    variables: {
+      sort: props.rank,
+      optional: props.optative === true ? true : null,
+      department:
+        props.department === "" ? null : (props.department as Department)
+    }
+  })
+});
 
 export default withData(props => {
-  if (!props.data || props.data.loading || !props.data.listClasses) {
+  if (props.data.loading || !props.data.listClasses) {
     return <Loading layout={false} />;
   }
   return (

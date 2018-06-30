@@ -8,13 +8,13 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import { graphql } from "react-apollo";
 import { UserProfileQuery } from "src/config/Queries";
 import {
   UfvCourses,
   UfvYears,
   UserProfile,
-  UserRate
+  UserRate,
+  withUserProfile
 } from "src/generated/types";
 import CoursesArr from "src/utils/UfvCourses";
 import YearsArr from "src/utils/UfvYears";
@@ -89,16 +89,10 @@ const styles: StyleRulesCallback<ClassesNames> = theme => ({
 
 const Presentation = withStyles(styles)(UserProfile);
 
-const withData = graphql<
-  { id: string },
-  UserProfile.Query,
-  UserProfile.Variables
->(UserProfileQuery, { options: props => ({ variables: { id: props.id } }) });
+const withData = withUserProfile<{ id: string }>(UserProfileQuery, {
+  options: props => ({ variables: { id: props.id } })
+});
 
 export default withData(props => {
-  return (
-    <Presentation
-      user={props.data ? props.data.user || undefined : undefined}
-    />
-  );
+  return <Presentation user={props.data.user || undefined} />;
 });

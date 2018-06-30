@@ -1,3 +1,4 @@
+import { FormHelperText } from "@material-ui/core";
 import FormControl, { FormControlProps } from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
@@ -24,18 +25,15 @@ export class RadioLine<T> extends React.Component<
 > {
   public render() {
     const {
-      form: { isSubmitting, touched, errors },
+      form: { isSubmitting, errors },
       field,
       options,
       ...rest
     } = this.props;
+    const name = this.props.field.name;
 
     return (
-      <FormControl
-        error={touched[name] && !!errors[name]}
-        {...rest}
-        disabled={isSubmitting}
-      >
+      <FormControl error={!!errors[name]} {...rest} disabled={isSubmitting}>
         <FormLabel component="legend">{this.props.label}</FormLabel>
         <div>
           {options.map(item => {
@@ -53,6 +51,9 @@ export class RadioLine<T> extends React.Component<
               </React.Fragment>
             );
           })}
+          <FormHelperText error={!!errors[name]}>
+            {errors[name] ? errors[name] : ""}
+          </FormHelperText>
         </div>
       </FormControl>
     );

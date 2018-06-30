@@ -15,6 +15,7 @@
     "get-graphql-schema": "^2.1.1",
     "graphql": "^0.13.2",
     "graphql-code-generator": "^0.9.4",
+    "graphql-codegen-typescript-apollo-template": "0.9.4-7",
     "graphql-codegen-typescript-template": "^0.9.4",
     "graphql-import": "^0.6.0",
     "history": "^4.7.2",
@@ -30,7 +31,7 @@
     "ts-node-dev": "^1.0.0-pre.26"
   },
   "scripts": {
-    "generate:ts": "CODEGEN_ENUMS_AS_TYPES=TRUE gql-gen --require ts-node/register --template typescript --schema ./scripts/importSchema.js --out ./src/generated/ \"./src/**/*.ts*\"",
+    "generate:ts": "CODEGEN_ENUMS_AS_TYPES=TRUE CODEGEN_REACT_APOLLO=true gql-gen --require ts-node/register --template graphql-codegen-typescript-apollo-template --schema ./scripts/importSchema.js --out ./src/generated/ \"./src/**/*.ts*\"",
     "generate:gql": "get-graphql-schema http://localhost:4000 > src/generated/schema.graphql",
     "start": "PORT=3005 HTTPS=true react-scripts-ts start",
     "build": "react-scripts-ts build",

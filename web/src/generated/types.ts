@@ -1,4 +1,71 @@
 /* tslint:disable */
+import {
+  graphql,
+  DataProps,
+  DataValue,
+  MutateProps,
+  ChildMutateProps,
+  ChildDataProps,
+  OperationVariables,
+  ChildProps,
+  MutationOpts,
+  MutationFunc,
+  OperationOption,
+  QueryOpts
+} from "react-apollo";
+import { DocumentNode } from "graphql";
+export interface QueryOptionProps<
+  TProps = any,
+  TData = any,
+  TGraphQLVariables = OperationVariables
+> extends DataProps<TData, TGraphQLVariables> {
+  ownProps: TProps;
+}
+export interface MutationOptionProps<
+  TProps = any,
+  TData = any,
+  TGraphQLVariables = OperationVariables
+> extends MutateProps<TData, TGraphQLVariables> {
+  ownProps: TProps;
+}
+export interface MutationOperationOption<
+  TProps,
+  TData,
+  TGraphQLVariables = OperationVariables,
+  TChildProps = ChildProps<TProps, TData, TGraphQLVariables>
+> {
+  options?:
+    | MutationOpts<TData, TGraphQLVariables>
+    | ((props: TProps) => MutationOpts<TData, TGraphQLVariables>);
+  props?: (
+    props: MutationOptionProps<TProps, TData, TGraphQLVariables>,
+    lastProps?: TChildProps | void
+  ) => TChildProps;
+  skip?: boolean | ((props: any) => boolean);
+  name?: string;
+  withRef?: boolean;
+  shouldResubscribe?: (props: TProps, nextProps: TProps) => boolean;
+  alias?: string;
+}
+export interface QueryOperationOption<
+  TProps,
+  TData,
+  TGraphQLVariables = OperationVariables,
+  TChildProps = ChildProps<TProps, TData, TGraphQLVariables>
+> {
+  options?:
+    | QueryOpts<TGraphQLVariables>
+    | ((props: TProps) => QueryOpts<TGraphQLVariables>);
+  props?: (
+    props: QueryOptionProps<TProps, TData, TGraphQLVariables>,
+    lastProps?: TChildProps | void
+  ) => TChildProps;
+  skip?: boolean | ((props: any) => boolean);
+  name?: string;
+  withRef?: boolean;
+  shouldResubscribe?: (props: TProps, nextProps: TProps) => boolean;
+  alias?: string;
+}
 import { GraphQLResolveInfo } from "graphql";
 
 type Resolver<Result, Args = any> = (
@@ -7,6 +74,755 @@ type Resolver<Result, Args = any> = (
   context: any,
   info: GraphQLResolveInfo
 ) => Promise<Result> | Result;
+
+export type withLogoffMutationFunc = MutationFunc<
+  Logoff.Mutation,
+  Logoff.Variables
+>;
+export type withLogoffChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  Logoff.Mutation,
+  Logoff.Variables
+>;
+export function withLogoff<
+  TProps extends Logoff.Variables | {} = {},
+  TChildProps = MutateProps<Logoff.Mutation, Logoff.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    Logoff.Mutation,
+    Logoff.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, Logoff.Mutation, Logoff.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      Logoff.Mutation,
+      Logoff.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withLoginMutationFunc = MutationFunc<
+  Login.Mutation,
+  Login.Variables
+>;
+export type withLoginChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  Login.Mutation,
+  Login.Variables
+>;
+export function withLogin<
+  TProps extends Login.Variables | {} = {},
+  TChildProps = MutateProps<Login.Mutation, Login.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    Login.Mutation,
+    Login.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, Login.Mutation, Login.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      Login.Mutation,
+      Login.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withRegisterMutationFunc = MutationFunc<
+  Register.Mutation,
+  Register.Variables
+>;
+export type withRegisterChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  Register.Mutation,
+  Register.Variables
+>;
+export function withRegister<
+  TProps extends Register.Variables | {} = {},
+  TChildProps = MutateProps<Register.Mutation, Register.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    Register.Mutation,
+    Register.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, Register.Mutation, Register.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      Register.Mutation,
+      Register.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withDeleteAccountMutationFunc = MutationFunc<
+  DeleteAccount.Mutation,
+  DeleteAccount.Variables
+>;
+export type withDeleteAccountChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  DeleteAccount.Mutation,
+  DeleteAccount.Variables
+>;
+export function withDeleteAccount<
+  TProps extends DeleteAccount.Variables | {} = {},
+  TChildProps = MutateProps<DeleteAccount.Mutation, DeleteAccount.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    DeleteAccount.Mutation,
+    DeleteAccount.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    DeleteAccount.Mutation,
+    DeleteAccount.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    DeleteAccount.Mutation,
+    DeleteAccount.Variables,
+    TChildProps
+  >);
+}
+
+export type withUpdateReviewMutationFunc = MutationFunc<
+  UpdateReview.Mutation,
+  UpdateReview.Variables
+>;
+export type withUpdateReviewChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  UpdateReview.Mutation,
+  UpdateReview.Variables
+>;
+export function withUpdateReview<
+  TProps extends UpdateReview.Variables | {} = {},
+  TChildProps = MutateProps<UpdateReview.Mutation, UpdateReview.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    UpdateReview.Mutation,
+    UpdateReview.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    UpdateReview.Mutation,
+    UpdateReview.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    UpdateReview.Mutation,
+    UpdateReview.Variables,
+    TChildProps
+  >);
+}
+
+export type withWriteReviewMutationFunc = MutationFunc<
+  WriteReview.Mutation,
+  WriteReview.Variables
+>;
+export type withWriteReviewChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  WriteReview.Mutation,
+  WriteReview.Variables
+>;
+export function withWriteReview<
+  TProps extends WriteReview.Variables | {} = {},
+  TChildProps = MutateProps<WriteReview.Mutation, WriteReview.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    WriteReview.Mutation,
+    WriteReview.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    WriteReview.Mutation,
+    WriteReview.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    WriteReview.Mutation,
+    WriteReview.Variables,
+    TChildProps
+  >);
+}
+
+export type withSetVoteOnReviewMutationFunc = MutationFunc<
+  SetVoteOnReview.Mutation,
+  SetVoteOnReview.Variables
+>;
+export type withSetVoteOnReviewChildProps<TProps = {}> = ChildMutateProps<
+  TProps,
+  SetVoteOnReview.Mutation,
+  SetVoteOnReview.Variables
+>;
+export function withSetVoteOnReview<
+  TProps extends SetVoteOnReview.Variables | {} = {},
+  TChildProps = MutateProps<SetVoteOnReview.Mutation, SetVoteOnReview.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: MutationOperationOption<
+    TProps,
+    SetVoteOnReview.Mutation,
+    SetVoteOnReview.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    SetVoteOnReview.Mutation,
+    SetVoteOnReview.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    SetVoteOnReview.Mutation,
+    SetVoteOnReview.Variables,
+    TChildProps
+  >);
+}
+
+export type withLocalLoggedDataValue = DataValue<
+  LocalLogged.Query,
+  LocalLogged.Variables
+>;
+export type withLocalLoggedChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  LocalLogged.Query,
+  LocalLogged.Variables
+>;
+
+export function withLocalLogged<
+  TProps extends LocalLogged.Variables | {} = {},
+  TChildProps = DataProps<LocalLogged.Query, LocalLogged.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    LocalLogged.Query,
+    LocalLogged.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, LocalLogged.Query, LocalLogged.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      LocalLogged.Query,
+      LocalLogged.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withIsRegisteredDataValue = DataValue<
+  IsRegistered.Query,
+  IsRegistered.Variables
+>;
+export type withIsRegisteredChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  IsRegistered.Query,
+  IsRegistered.Variables
+>;
+
+export function withIsRegistered<
+  TProps extends IsRegistered.Variables | {} = {},
+  TChildProps = DataProps<IsRegistered.Query, IsRegistered.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    IsRegistered.Query,
+    IsRegistered.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    IsRegistered.Query,
+    IsRegistered.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    IsRegistered.Query,
+    IsRegistered.Variables,
+    TChildProps
+  >);
+}
+
+export type withListByKindDataValue = DataValue<
+  ListByKind.Query,
+  ListByKind.Variables
+>;
+export type withListByKindChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  ListByKind.Query,
+  ListByKind.Variables
+>;
+
+export function withListByKind<
+  TProps extends ListByKind.Variables | {} = {},
+  TChildProps = DataProps<ListByKind.Query, ListByKind.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    ListByKind.Query,
+    ListByKind.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, ListByKind.Query, ListByKind.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      ListByKind.Query,
+      ListByKind.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withSearchHomeDataValue = DataValue<
+  SearchHome.Query,
+  SearchHome.Variables
+>;
+export type withSearchHomeChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  SearchHome.Query,
+  SearchHome.Variables
+>;
+
+export function withSearchHome<
+  TProps extends SearchHome.Variables | {} = {},
+  TChildProps = DataProps<SearchHome.Query, SearchHome.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    SearchHome.Query,
+    SearchHome.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, SearchHome.Query, SearchHome.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      SearchHome.Query,
+      SearchHome.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withUserProfileDataValue = DataValue<
+  UserProfile.Query,
+  UserProfile.Variables
+>;
+export type withUserProfileChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  UserProfile.Query,
+  UserProfile.Variables
+>;
+
+export function withUserProfile<
+  TProps extends UserProfile.Variables | {} = {},
+  TChildProps = DataProps<UserProfile.Query, UserProfile.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    UserProfile.Query,
+    UserProfile.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, UserProfile.Query, UserProfile.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      UserProfile.Query,
+      UserProfile.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withMeIdDataValue = DataValue<MeId.Query, MeId.Variables>;
+export type withMeIdChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  MeId.Query,
+  MeId.Variables
+>;
+
+export function withMeId<
+  TProps extends MeId.Variables | {} = {},
+  TChildProps = DataProps<MeId.Query, MeId.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    MeId.Query,
+    MeId.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, MeId.Query, MeId.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      MeId.Query,
+      MeId.Variables,
+      TChildProps
+    >
+  );
+}
+
+export type withUfvClassDetailDataValue = DataValue<
+  UfvClassDetail.Query,
+  UfvClassDetail.Variables
+>;
+export type withUfvClassDetailChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  UfvClassDetail.Query,
+  UfvClassDetail.Variables
+>;
+
+export function withUfvClassDetail<
+  TProps extends UfvClassDetail.Variables | {} = {},
+  TChildProps = DataProps<UfvClassDetail.Query, UfvClassDetail.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    UfvClassDetail.Query,
+    UfvClassDetail.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    UfvClassDetail.Query,
+    UfvClassDetail.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    UfvClassDetail.Query,
+    UfvClassDetail.Variables,
+    TChildProps
+  >);
+}
+
+export type withUfvClassNameDataValue = DataValue<
+  UfvClassName.Query,
+  UfvClassName.Variables
+>;
+export type withUfvClassNameChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  UfvClassName.Query,
+  UfvClassName.Variables
+>;
+
+export function withUfvClassName<
+  TProps extends UfvClassName.Variables | {} = {},
+  TChildProps = DataProps<UfvClassName.Query, UfvClassName.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    UfvClassName.Query,
+    UfvClassName.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    UfvClassName.Query,
+    UfvClassName.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    UfvClassName.Query,
+    UfvClassName.Variables,
+    TChildProps
+  >);
+}
+
+export type withMyVoteInReviewDataValue = DataValue<
+  MyVoteInReview.Query,
+  MyVoteInReview.Variables
+>;
+export type withMyVoteInReviewChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  MyVoteInReview.Query,
+  MyVoteInReview.Variables
+>;
+
+export function withMyVoteInReview<
+  TProps extends MyVoteInReview.Variables | {} = {},
+  TChildProps = DataProps<MyVoteInReview.Query, MyVoteInReview.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    MyVoteInReview.Query,
+    MyVoteInReview.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    MyVoteInReview.Query,
+    MyVoteInReview.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    MyVoteInReview.Query,
+    MyVoteInReview.Variables,
+    TChildProps
+  >);
+}
+
+export type withReviewsFromUserDataValue = DataValue<
+  ReviewsFromUser.Query,
+  ReviewsFromUser.Variables
+>;
+export type withReviewsFromUserChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  ReviewsFromUser.Query,
+  ReviewsFromUser.Variables
+>;
+
+export function withReviewsFromUser<
+  TProps extends ReviewsFromUser.Variables | {} = {},
+  TChildProps = DataProps<ReviewsFromUser.Query, ReviewsFromUser.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    ReviewsFromUser.Query,
+    ReviewsFromUser.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    ReviewsFromUser.Query,
+    ReviewsFromUser.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    ReviewsFromUser.Query,
+    ReviewsFromUser.Variables,
+    TChildProps
+  >);
+}
+
+export type withMyOwnReviewsDataValue = DataValue<
+  MyOwnReviews.Query,
+  MyOwnReviews.Variables
+>;
+export type withMyOwnReviewsChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  MyOwnReviews.Query,
+  MyOwnReviews.Variables
+>;
+
+export function withMyOwnReviews<
+  TProps extends MyOwnReviews.Variables | {} = {},
+  TChildProps = DataProps<MyOwnReviews.Query, MyOwnReviews.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    MyOwnReviews.Query,
+    MyOwnReviews.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    MyOwnReviews.Query,
+    MyOwnReviews.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    MyOwnReviews.Query,
+    MyOwnReviews.Variables,
+    TChildProps
+  >);
+}
+
+export type withReviewExtraDataDataValue = DataValue<
+  ReviewExtraData.Query,
+  ReviewExtraData.Variables
+>;
+export type withReviewExtraDataChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  ReviewExtraData.Query,
+  ReviewExtraData.Variables
+>;
+
+export function withReviewExtraData<
+  TProps extends ReviewExtraData.Variables | {} = {},
+  TChildProps = DataProps<ReviewExtraData.Query, ReviewExtraData.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    ReviewExtraData.Query,
+    ReviewExtraData.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    ReviewExtraData.Query,
+    ReviewExtraData.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    ReviewExtraData.Query,
+    ReviewExtraData.Variables,
+    TChildProps
+  >);
+}
+
+export type withReviewDataToEditDataValue = DataValue<
+  ReviewDataToEdit.Query,
+  ReviewDataToEdit.Variables
+>;
+export type withReviewDataToEditChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  ReviewDataToEdit.Query,
+  ReviewDataToEdit.Variables
+>;
+
+export function withReviewDataToEdit<
+  TProps extends ReviewDataToEdit.Variables | {} = {},
+  TChildProps = DataProps<ReviewDataToEdit.Query, ReviewDataToEdit.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    ReviewDataToEdit.Query,
+    ReviewDataToEdit.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<
+    TProps,
+    ReviewDataToEdit.Query,
+    ReviewDataToEdit.Variables,
+    TChildProps
+  >(document, operationOptions as OperationOption<
+    TProps,
+    ReviewDataToEdit.Query,
+    ReviewDataToEdit.Variables,
+    TChildProps
+  >);
+}
+
+export type withAllMyVotesDataValue = DataValue<
+  AllMyVotes.Query,
+  AllMyVotes.Variables
+>;
+export type withAllMyVotesChildProps<TProps = {}> = ChildDataProps<
+  TProps,
+  AllMyVotes.Query,
+  AllMyVotes.Variables
+>;
+
+export function withAllMyVotes<
+  TProps extends AllMyVotes.Variables | {} = {},
+  TChildProps = DataProps<AllMyVotes.Query, AllMyVotes.Variables>
+>(
+  document: DocumentNode,
+  operationOptions?: QueryOperationOption<
+    TProps,
+    AllMyVotes.Query,
+    AllMyVotes.Variables,
+    TChildProps
+  >
+): ((
+  WrappedComponent: React.ComponentType<TChildProps & TProps>
+) => React.ComponentClass<TProps>) {
+  return graphql<TProps, AllMyVotes.Query, AllMyVotes.Variables, TChildProps>(
+    document,
+    operationOptions as OperationOption<
+      TProps,
+      AllMyVotes.Query,
+      AllMyVotes.Variables,
+      TChildProps
+    >
+  );
+}
 
 export type DateTime = any;
 
@@ -22,6 +838,7 @@ export interface Query {
   user?: User | null;
   ufvClass?: UfvClass | null;
   reviews: Review[];
+  review?: Review | null;
   me?: User | null;
   myvote?: ReviewVotes | null;
   myreviews: Review[];
@@ -42,12 +859,13 @@ export interface UfvClass extends Node {
 
 export interface Review extends Node {
   id: string;
-  score: number;
   useful: ReviewUseful;
   easy: ReviewEasy;
   description: string;
   anonymous: boolean;
   recommended: boolean;
+  teacher: string;
+  score: number;
   classReviewed: UfvClass;
   reviewer: User;
   votes?: ReviewVotes[] | null;
@@ -81,6 +899,7 @@ export interface Mutation {
   register: User;
   deleteAcc?: User | null;
   createReview?: Review | null;
+  editReview?: Review | null;
   setVote?: ReviewVotes | null;
 }
 
@@ -101,6 +920,7 @@ export namespace QueryResolvers {
     user?: UserResolver;
     ufvClass?: UfvClassResolver;
     reviews?: ReviewsResolver;
+    review?: ReviewResolver;
     me?: MeResolver;
     myvote?: MyvoteResolver;
     myreviews?: MyreviewsResolver;
@@ -132,6 +952,11 @@ export namespace QueryResolvers {
   export type ReviewsResolver = Resolver<Review[], ReviewsArgs>;
   export interface ReviewsArgs {
     where: ReviewsWhereInput;
+  }
+
+  export type ReviewResolver = Resolver<Review | null, ReviewArgs>;
+  export interface ReviewArgs {
+    where: ReviewWhereInput;
   }
 
   export type MeResolver = Resolver<User | null>;
@@ -180,12 +1005,13 @@ export namespace UfvClassResolvers {
 export namespace ReviewResolvers {
   export interface Resolvers {
     id?: IdResolver;
-    score?: ScoreResolver;
     useful?: UsefulResolver;
     easy?: EasyResolver;
     description?: DescriptionResolver;
     anonymous?: AnonymousResolver;
     recommended?: RecommendedResolver;
+    teacher?: TeacherResolver;
+    score?: ScoreResolver;
     classReviewed?: ClassReviewedResolver;
     reviewer?: ReviewerResolver;
     votes?: VotesResolver;
@@ -194,12 +1020,13 @@ export namespace ReviewResolvers {
   }
 
   export type IdResolver = Resolver<string>;
-  export type ScoreResolver = Resolver<number>;
   export type UsefulResolver = Resolver<ReviewUseful>;
   export type EasyResolver = Resolver<ReviewEasy>;
   export type DescriptionResolver = Resolver<string>;
   export type AnonymousResolver = Resolver<boolean>;
   export type RecommendedResolver = Resolver<boolean>;
+  export type TeacherResolver = Resolver<string>;
+  export type ScoreResolver = Resolver<number>;
   export type ClassReviewedResolver = Resolver<UfvClass, ClassReviewedArgs>;
   export interface ClassReviewedArgs {
     where?: UfvClassWhereInput | null;
@@ -300,6 +1127,7 @@ export namespace MutationResolvers {
     register?: RegisterResolver;
     deleteAcc?: DeleteAccResolver;
     createReview?: CreateReviewResolver;
+    editReview?: EditReviewResolver;
     setVote?: SetVoteResolver;
   }
 
@@ -314,6 +1142,11 @@ export namespace MutationResolvers {
   export type CreateReviewResolver = Resolver<Review | null, CreateReviewArgs>;
   export interface CreateReviewArgs {
     data: CreateReviewData;
+  }
+
+  export type EditReviewResolver = Resolver<Review | null, EditReviewArgs>;
+  export interface EditReviewArgs {
+    data: EditReviewData;
   }
 
   export type SetVoteResolver = Resolver<ReviewVotes | null, SetVoteArgs>;
@@ -343,78 +1176,7 @@ export interface SearchInput {
 }
 
 export interface ReviewWhereInput {
-  AND?: ReviewWhereInput[] | null;
-  OR?: ReviewWhereInput[] | null;
-  NOT?: ReviewWhereInput[] | null;
-  id?: string | null;
-  id_not?: string | null;
-  id_in?: string[] | null;
-  id_not_in?: string[] | null;
-  id_lt?: string | null;
-  id_lte?: string | null;
-  id_gt?: string | null;
-  id_gte?: string | null;
-  id_contains?: string | null;
-  id_not_contains?: string | null;
-  id_starts_with?: string | null;
-  id_not_starts_with?: string | null;
-  id_ends_with?: string | null;
-  id_not_ends_with?: string | null;
-  score?: number | null;
-  score_not?: number | null;
-  score_in?: number[] | null;
-  score_not_in?: number[] | null;
-  score_lt?: number | null;
-  score_lte?: number | null;
-  score_gt?: number | null;
-  score_gte?: number | null;
-  useful?: ReviewUseful | null;
-  useful_not?: ReviewUseful | null;
-  useful_in?: ReviewUseful[] | null;
-  useful_not_in?: ReviewUseful[] | null;
-  easy?: ReviewEasy | null;
-  easy_not?: ReviewEasy | null;
-  easy_in?: ReviewEasy[] | null;
-  easy_not_in?: ReviewEasy[] | null;
-  description?: string | null;
-  description_not?: string | null;
-  description_in?: string[] | null;
-  description_not_in?: string[] | null;
-  description_lt?: string | null;
-  description_lte?: string | null;
-  description_gt?: string | null;
-  description_gte?: string | null;
-  description_contains?: string | null;
-  description_not_contains?: string | null;
-  description_starts_with?: string | null;
-  description_not_starts_with?: string | null;
-  description_ends_with?: string | null;
-  description_not_ends_with?: string | null;
-  anonymous?: boolean | null;
-  anonymous_not?: boolean | null;
-  recommended?: boolean | null;
-  recommended_not?: boolean | null;
-  createdAt?: DateTime | null;
-  createdAt_not?: DateTime | null;
-  createdAt_in?: DateTime[] | null;
-  createdAt_not_in?: DateTime[] | null;
-  createdAt_lt?: DateTime | null;
-  createdAt_lte?: DateTime | null;
-  createdAt_gt?: DateTime | null;
-  createdAt_gte?: DateTime | null;
-  updatedAt?: DateTime | null;
-  updatedAt_not?: DateTime | null;
-  updatedAt_in?: DateTime[] | null;
-  updatedAt_not_in?: DateTime[] | null;
-  updatedAt_lt?: DateTime | null;
-  updatedAt_lte?: DateTime | null;
-  updatedAt_gt?: DateTime | null;
-  updatedAt_gte?: DateTime | null;
-  classReviewed?: UfvClassWhereInput | null;
-  reviewer?: UserWhereInput | null;
-  votes_every?: ReviewVotesWhereInput | null;
-  votes_some?: ReviewVotesWhereInput | null;
-  votes_none?: ReviewVotesWhereInput | null;
+  id: string;
 }
 
 export interface UfvClassWhereInput {
@@ -617,7 +1379,8 @@ export interface UserInput {
 }
 
 export interface UfvClassInput {
-  id: string;
+  id?: string | null;
+  cod?: string | null;
 }
 
 export interface ReviewsWhereInput {
@@ -636,6 +1399,18 @@ export interface UserRegisterInput {
 
 export interface CreateReviewData {
   cod: string;
+  teacher: string;
+  useful: ReviewUseful;
+  easy: ReviewEasy;
+  description: string;
+  anonymous: boolean;
+  recommended: boolean;
+}
+
+export interface EditReviewData {
+  id: string;
+  cod: string;
+  teacher: string;
   useful: ReviewUseful;
   easy: ReviewEasy;
   description: string;
@@ -661,6 +1436,9 @@ export interface UfvClassQueryArgs {
 }
 export interface ReviewsQueryArgs {
   where: ReviewsWhereInput;
+}
+export interface ReviewQueryArgs {
+  where: ReviewWhereInput;
 }
 export interface MyvoteQueryArgs {
   where: VoteWhereInput;
@@ -719,6 +1497,9 @@ export interface RegisterMutationArgs {
 export interface CreateReviewMutationArgs {
   data: CreateReviewData;
 }
+export interface EditReviewMutationArgs {
+  data: EditReviewData;
+}
 export interface SetVoteMutationArgs {
   data: SetVoteData;
 }
@@ -762,6 +1543,28 @@ export type Department =
   | "Depto__de_Geografia"
   | "Depto__de_Historia"
   | "Depto__de_Letras";
+
+export type ReviewOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "useful_ASC"
+  | "useful_DESC"
+  | "easy_ASC"
+  | "easy_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "anonymous_ASC"
+  | "anonymous_DESC"
+  | "recommended_ASC"
+  | "recommended_DESC"
+  | "teacher_ASC"
+  | "teacher_DESC"
+  | "score_ASC"
+  | "score_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type ReviewUseful = "U0" | "U1" | "U2" | "U3" | "U4" | "U5";
 
@@ -921,26 +1724,6 @@ export type UserRate = "Iniciante" | "Confiavel";
 
 export type ReviewVotesTypes = "Agree" | "Disagree";
 
-export type ReviewOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "score_ASC"
-  | "score_DESC"
-  | "useful_ASC"
-  | "useful_DESC"
-  | "easy_ASC"
-  | "easy_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "anonymous_ASC"
-  | "anonymous_DESC"
-  | "recommended_ASC"
-  | "recommended_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
 export type ReviewVotesOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -1010,9 +1793,32 @@ export namespace DeleteAccount {
     id: string;
   };
 }
+export namespace UpdateReview {
+  export type Variables = {
+    cod: string;
+    id: string;
+    teacher: string;
+    useful: ReviewUseful;
+    easy: ReviewEasy;
+    description: string;
+    anonymous: boolean;
+    recommended: boolean;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+    editReview?: EditReview | null;
+  };
+
+  export type EditReview = {
+    __typename?: "Review";
+    id: string;
+  };
+}
 export namespace WriteReview {
   export type Variables = {
     cod: string;
+    teacher: string;
     useful: ReviewUseful;
     easy: ReviewEasy;
     description: string;
@@ -1194,6 +2000,7 @@ export namespace UfvClassDetail {
     id: string;
     createdAt: DateTime;
     useful: ReviewUseful;
+    score: number;
     easy: ReviewEasy;
     description: string;
     recommended: boolean;
@@ -1254,6 +2061,7 @@ export namespace ReviewsFromUser {
     __typename?: "Review";
     id: string;
     createdAt: DateTime;
+    score: number;
     useful: ReviewUseful;
     easy: ReviewEasy;
     description: string;
@@ -1280,6 +2088,7 @@ export namespace MyOwnReviews {
   export type Myreviews = {
     __typename?: "Review";
     id: string;
+    score: number;
     createdAt: DateTime;
     useful: ReviewUseful;
     easy: ReviewEasy;
@@ -1315,5 +2124,65 @@ export namespace ReviewExtraData {
   export type Myvote = {
     __typename?: "ReviewVotes";
     type: ReviewVotesTypes;
+  };
+}
+export namespace ReviewDataToEdit {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+    review?: Review | null;
+  };
+
+  export type Review = {
+    __typename?: "Review";
+    classReviewed: ClassReviewed;
+    description: string;
+    easy: ReviewEasy;
+    useful: ReviewUseful;
+    anonymous: boolean;
+    recommended: boolean;
+    teacher: string;
+  };
+
+  export type ClassReviewed = {
+    __typename?: "UfvClass";
+    cod: string;
+    id: string;
+  };
+}
+export namespace AllMyVotes {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+    myvotes: Myvotes[];
+  };
+
+  export type Myvotes = {
+    __typename?: "ReviewVotes";
+    review: Review;
+  };
+
+  export type Review = {
+    __typename?: "Review";
+    id: string;
+    score: number;
+    createdAt: DateTime;
+    useful: ReviewUseful;
+    easy: ReviewEasy;
+    description: string;
+    recommended: boolean;
+    anonymous: boolean;
+    reviewer: Reviewer;
+  };
+
+  export type Reviewer = {
+    __typename?: "User";
+    id: string;
+    name: string;
+    rate: UserRate;
   };
 }

@@ -3480,6 +3480,10 @@ graphql-codegen-core@0.9.4:
     graphql-tools "3.0.2"
     winston "2.4.3"
 
+graphql-codegen-typescript-apollo-template@0.9.4-7:
+  version "0.9.4-7"
+  resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-apollo-template/-/graphql-codegen-typescript-apollo-template-0.9.4-7.tgz#f34a6bd85e35b21f21a40b7a83443baccfe6d676"
+
 graphql-codegen-typescript-template@^0.9.4:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-template/-/graphql-codegen-typescript-template-0.9.4.tgz#f6e441388a42346991e59465bb43e685c2ea8594"

@@ -1,28 +1,19 @@
 import CardContent from "@material-ui/core/CardContent";
-import withStyles, {
-  StyleRulesCallback,
-  WithStyles
-} from "@material-ui/core/styles/withStyles";
 import * as React from "react";
 import Layout from "src/components/Layout";
-class MinhasAvaliacoes extends React.Component<
-  WithStyles<MinhasAvaliacoesClassesNames>
-> {
-  public render() {
-    // const reviews = this.state.reviews;
+import Review from "src/components/Review";
+import { AllMyVotesQuery } from "src/config/Queries";
+import { withAllMyVotes } from "src/generated/types";
 
-    return (
-      <Layout title="Minhas Reações">
-        <CardContent>
-          {/* {reviews.map(r => <Review review={r} position="other" key={r.id} />)} */}
-        </CardContent>
-      </Layout>
-    );
-  }
-}
-
-type MinhasAvaliacoesClassesNames = "base";
-const styles: StyleRulesCallback<MinhasAvaliacoesClassesNames> = theme => ({
-  base: {}
+export default withAllMyVotes(AllMyVotesQuery)(props => {
+  const reviews = props.data.myvotes
+    ? props.data.myvotes.map(x => x.review)
+    : [];
+  return (
+    <Layout title="Minhas Reações">
+      <CardContent>
+        {reviews.map(r => <Review review={r} position="other" key={r.id} />)}
+      </CardContent>
+    </Layout>
+  );
 });
-export default withStyles(styles)(MinhasAvaliacoes);

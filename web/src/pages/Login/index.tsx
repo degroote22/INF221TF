@@ -1,19 +1,14 @@
 import * as React from "react";
-import { graphql } from "react-apollo";
 import { Redirect } from "react-router";
 import Layout from "src/components/Layout";
 import { LocalLoggedQuery } from "src/config/Queries";
-import { LocalLogged } from "src/generated/types";
+import { withLocalLogged } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
 import FacebookManager from "../../singletons/FacebookManager";
 import HistoryManager from "../../singletons/HistoryManager";
 
-const withData = graphql<{}, LocalLogged.Query, LocalLogged.Variables>(
-  LocalLoggedQuery
-);
-
-const Login = withData(props => {
-  if (props.data && props.data.logged) {
+const Login = withLocalLogged(LocalLoggedQuery)(props => {
+  if (Boolean(props.data.logged)) {
     return <Redirect to={HistoryManager.cadastroRoute()} />;
   }
   return (

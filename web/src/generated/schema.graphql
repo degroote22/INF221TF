@@ -6,6 +6,7 @@ enum ClassesRanks {
 
 input CreateReviewData {
   cod: String!
+  teacher: String!
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -56,10 +57,22 @@ enum Department {
   Depto__de_Letras
 }
 
+input EditReviewData {
+  id: String!
+  cod: String!
+  teacher: String!
+  useful: ReviewUseful!
+  easy: ReviewEasy!
+  description: String!
+  anonymous: Boolean!
+  recommended: Boolean!
+}
+
 type Mutation {
   register(user: UserRegisterInput!): User!
   deleteAcc: User
   createReview(data: CreateReviewData!): Review
+  editReview(data: EditReviewData!): Review
   setVote(data: SetVoteData!): ReviewVotes
 }
 
@@ -75,6 +88,7 @@ type Query {
   user(where: UserInput!): User
   ufvClass(where: UfvClassInput!): UfvClass
   reviews(where: ReviewsWhereInput!): [Review!]!
+  review(where: ReviewWhereInput!): Review
   me: User
   myvote(where: VoteWhereInput!): ReviewVotes
   myreviews: [Review!]!
@@ -83,12 +97,13 @@ type Query {
 
 type Review implements Node {
   id: ID!
-  score: Int!
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int!
   classReviewed(where: UfvClassWhereInput): UfvClass!
   reviewer(where: UserWhereInput): User!
   votes(where: ReviewVotesWhereInput, orderBy: ReviewVotesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewVotes!]
@@ -108,8 +123,6 @@ enum ReviewEasy {
 enum ReviewOrderByInput {
   id_ASC
   id_DESC
-  score_ASC
-  score_DESC
   useful_ASC
   useful_DESC
   easy_ASC
@@ -120,6 +133,10 @@ enum ReviewOrderByInput {
   anonymous_DESC
   recommended_ASC
   recommended_DESC
+  teacher_ASC
+  teacher_DESC
+  score_ASC
+  score_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -227,193 +244,7 @@ input ReviewVotesWhereInput {
 }
 
 input ReviewWhereInput {
-  # Logical AND on all given filters.
-  AND: [ReviewWhereInput!]
-
-  # Logical OR on all given filters.
-  OR: [ReviewWhereInput!]
-
-  # Logical NOT on all given filters combined by AND.
-  NOT: [ReviewWhereInput!]
-  id: ID
-
-  # All values that are not equal to given value.
-  id_not: ID
-
-  # All values that are contained in given list.
-  id_in: [ID!]
-
-  # All values that are not contained in given list.
-  id_not_in: [ID!]
-
-  # All values less than the given value.
-  id_lt: ID
-
-  # All values less than or equal the given value.
-  id_lte: ID
-
-  # All values greater than the given value.
-  id_gt: ID
-
-  # All values greater than or equal the given value.
-  id_gte: ID
-
-  # All values containing the given string.
-  id_contains: ID
-
-  # All values not containing the given string.
-  id_not_contains: ID
-
-  # All values starting with the given string.
-  id_starts_with: ID
-
-  # All values not starting with the given string.
-  id_not_starts_with: ID
-
-  # All values ending with the given string.
-  id_ends_with: ID
-
-  # All values not ending with the given string.
-  id_not_ends_with: ID
-  score: Int
-
-  # All values that are not equal to given value.
-  score_not: Int
-
-  # All values that are contained in given list.
-  score_in: [Int!]
-
-  # All values that are not contained in given list.
-  score_not_in: [Int!]
-
-  # All values less than the given value.
-  score_lt: Int
-
-  # All values less than or equal the given value.
-  score_lte: Int
-
-  # All values greater than the given value.
-  score_gt: Int
-
-  # All values greater than or equal the given value.
-  score_gte: Int
-  useful: ReviewUseful
-
-  # All values that are not equal to given value.
-  useful_not: ReviewUseful
-
-  # All values that are contained in given list.
-  useful_in: [ReviewUseful!]
-
-  # All values that are not contained in given list.
-  useful_not_in: [ReviewUseful!]
-  easy: ReviewEasy
-
-  # All values that are not equal to given value.
-  easy_not: ReviewEasy
-
-  # All values that are contained in given list.
-  easy_in: [ReviewEasy!]
-
-  # All values that are not contained in given list.
-  easy_not_in: [ReviewEasy!]
-  description: String
-
-  # All values that are not equal to given value.
-  description_not: String
-
-  # All values that are contained in given list.
-  description_in: [String!]
-
-  # All values that are not contained in given list.
-  description_not_in: [String!]
-
-  # All values less than the given value.
-  description_lt: String
-
-  # All values less than or equal the given value.
-  description_lte: String
-
-  # All values greater than the given value.
-  description_gt: String
-
-  # All values greater than or equal the given value.
-  description_gte: String
-
-  # All values containing the given string.
-  description_contains: String
-
-  # All values not containing the given string.
-  description_not_contains: String
-
-  # All values starting with the given string.
-  description_starts_with: String
-
-  # All values not starting with the given string.
-  description_not_starts_with: String
-
-  # All values ending with the given string.
-  description_ends_with: String
-
-  # All values not ending with the given string.
-  description_not_ends_with: String
-  anonymous: Boolean
-
-  # All values that are not equal to given value.
-  anonymous_not: Boolean
-  recommended: Boolean
-
-  # All values that are not equal to given value.
-  recommended_not: Boolean
-  createdAt: DateTime
-
-  # All values that are not equal to given value.
-  createdAt_not: DateTime
-
-  # All values that are contained in given list.
-  createdAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  createdAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  createdAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  createdAt_lte: DateTime
-
-  # All values greater than the given value.
-  createdAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  # All values that are not equal to given value.
-  updatedAt_not: DateTime
-
-  # All values that are contained in given list.
-  updatedAt_in: [DateTime!]
-
-  # All values that are not contained in given list.
-  updatedAt_not_in: [DateTime!]
-
-  # All values less than the given value.
-  updatedAt_lt: DateTime
-
-  # All values less than or equal the given value.
-  updatedAt_lte: DateTime
-
-  # All values greater than the given value.
-  updatedAt_gt: DateTime
-
-  # All values greater than or equal the given value.
-  updatedAt_gte: DateTime
-  classReviewed: UfvClassWhereInput
-  reviewer: UserWhereInput
-  votes_every: ReviewVotesWhereInput
-  votes_some: ReviewVotesWhereInput
-  votes_none: ReviewVotesWhereInput
+  id: String!
 }
 
 input SearchInput {
@@ -440,7 +271,8 @@ type UfvClass implements Node {
 }
 
 input UfvClassInput {
-  id: String!
+  id: String
+  cod: String
 }
 
 input UfvClassWhereInput {

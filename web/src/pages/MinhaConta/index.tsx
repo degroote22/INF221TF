@@ -9,11 +9,10 @@ import { StyleRulesCallback, WithStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import { graphql } from "react-apollo";
 import { ComponentBase } from "resub";
 import Loading from "src/components/Loading";
 import { MeIdQuery } from "src/config/Queries";
-import { MeId } from "src/generated/types";
+import { withMeId } from "src/generated/types";
 import Layout from "../../components/Layout";
 import UserProfile from "../../components/UserProfile";
 import { BLOCK } from "../../utils/constants";
@@ -92,13 +91,9 @@ const styles: StyleRulesCallback<ClassesNames> = theme => ({
 
 const Presentation = withStyles(styles)(MinhaConta);
 
-const withData = graphql<{}, MeId.Query, MeId.Variables>(MeIdQuery);
+const withData = withMeId(MeIdQuery);
 
 export default withData(props => {
-  const id = props.data
-    ? props.data.me
-      ? props.data.me.id
-      : undefined
-    : undefined;
+  const id = props.data.me ? props.data.me.id : undefined;
   return <Presentation id={id} />;
 });

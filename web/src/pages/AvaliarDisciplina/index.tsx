@@ -6,17 +6,31 @@ import withStyles, {
   WithStyles
 } from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
-import { Form, Formik, FormikProps } from "formik";
+import { Form, Formik, FormikErrors, FormikProps } from "formik";
 import * as React from "react";
-import { ChildProps, graphql } from "react-apollo";
 import { RouteComponentProps, withRouter } from "react-router";
 import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
 import client from "src/config/ApolloClient";
-import { WriteReviewMutation } from "src/config/Mutations";
-import { UfvClassDetailQuery, UfvClassNameQuery } from "src/config/Queries";
+import {
+  UpdateReviewMutation,
+  WriteReviewMutation
+} from "src/config/Mutations";
+import {
+  ReviewDataToEditQuery,
+  UfvClassDetailQuery,
+  UfvClassNameQuery
+} from "src/config/Queries";
 import FormikRadioLine from "src/Formuik/RadioLine";
-import { UfvClassName } from "src/generated/types";
+import {
+  ReviewDataToEdit,
+  ReviewEasy,
+  ReviewUseful,
+  UpdateReview,
+  withUfvClassName,
+  withUfvClassNameChildProps,
+  WriteReview
+} from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
 import { AvaliarAction } from "src/utils/types";
 import { FormikCheckbox } from "../../Formuik/CheckBox";
@@ -30,12 +44,18 @@ const descriptionPlaceholder = [
 ].join("");
 
 const initialValues = {
-  cod: "",
+  teacher: "",
   useful: "",
   easy: "",
   description: "",
   recommended: false,
   anonymous: false
+};
+
+const initialState = {
+  cod: "",
+  classId: "",
+  values: undefined as typeof initialValues | undefined
 };
 
 const FiveScaleOptions = [0, 1, 2, 3, 4, 5]
@@ -44,21 +64,73 @@ const FiveScaleOptions = [0, 1, 2, 3, 4, 5]
 
 const Spacing: React.SFC = props => <div style={{ marginTop: BLOCK / 2 }} />;
 
+interface IProps {
+  action: AvaliarAction;
+}
 class AvaliarDisciplinasBase extends React.Component<
-  ChildProps<RouteComponentProps<{ id: string }>, UfvClassName.Query> &
+  IProps &
+    RouteComponentProps<{ id: string }> &
     WithStyles<ButtonClassesNames> &
-    RouteComponentProps<{ id: string }> & {
-      action: AvaliarAction;
-    }
+    withUfvClassNameChildProps,
+  typeof initialState
 > {
+  public readonly state = initialState;
+
+  public async componentDidMount() {
+    const response = await client.query<ReviewDataToEdit.Query>({
+      query: ReviewDataToEditQuery,
+      variables: { id: this.props.match.params.id }
+    });
+
+    const review = response.data.review;
+    if (review) {
+      const {
+        easy,
+        useful,
+        recommended,
+        description,
+        anonymous,
+        teacher
+      } = review;
+      const values = {
+        // Easy e useful sao enum do tipo UX onde X é o numero.
+        // Isso é recebido como string e aqui é convertido só para X para exibição.
+        easy: easy[1],
+        useful: useful[1],
+        teacher,
+        anonymous,
+        recommended,
+        description
+      };
+      this.setState({
+        values,
+        cod: review.classReviewed.cod,
+        classId: review.classReviewed.id
+      });
+    }
+  }
+
   public render() {
-    const shouldMount = true;
+    const hasData = !!this.state.values;
+
+    const shouldMount =
+      this.props.action === AvaliarAction.edit ? hasData : true;
+
+    const init =
+      this.props.action === AvaliarAction.edit
+        ? this.state.values // Isso sempre vai dar verdade na hora de mandar msm
+          ? this.state.values
+          : initialValues
+        : initialValues;
+
     return (
       <Layout title="Avaliar Disciplina">
         <CardContent>
           {shouldMount ? (
             <Formik
-              initialValues={initialValues}
+              isInitialValid={this.props.action === AvaliarAction.edit}
+              validate={this.validate}
+              initialValues={init}
               onSubmit={this.onSubmit}
               render={this.renderForm}
             />
@@ -69,6 +141,30 @@ class AvaliarDisciplinasBase extends React.Component<
       </Layout>
     );
   }
+
+  private validate = (
+    values: typeof initialValues
+  ): FormikErrors<typeof initialValues> => {
+    const errors: FormikErrors<typeof initialValues> = {};
+
+    if (values.teacher === "") {
+      errors.teacher = "Não pode estar em branco";
+    }
+
+    if (values.useful === "") {
+      errors.useful = "Precisa estar marcado";
+    }
+
+    if (values.easy === "") {
+      errors.easy = "Precisa estar marcado";
+    }
+
+    if (values.description === "") {
+      errors.description = "Não pode estar em branco";
+    }
+
+    return errors;
+  };
 
   private renderForm = (formikBag: FormikProps<typeof initialValues>) => {
     const { classes } = this.props;
@@ -83,6 +179,14 @@ class AvaliarDisciplinasBase extends React.Component<
           margin="normal"
           disabled={true}
           value={this.getCod()}
+        />
+        <FormikTextField
+          name="teacher"
+          label="Nome do professor"
+          className={classes.textField}
+          fullWidth={true}
+          margin="normal"
+          placeholder={descriptionPlaceholder}
         />
         <Spacing />
         <FormikRadioLine
@@ -121,7 +225,7 @@ class AvaliarDisciplinasBase extends React.Component<
             variant="contained"
             color="secondary"
             type="submit"
-            disabled={formikBag.isSubmitting}
+            disabled={formikBag.isSubmitting || !formikBag.isValid}
           >
             Salvar avaliação
           </Button>
@@ -131,35 +235,60 @@ class AvaliarDisciplinasBase extends React.Component<
   };
 
   private getCod = () => {
-    return this.props.data
-      ? this.props.data.ufvClass
-        ? this.props.data.ufvClass.cod
-        : ""
-      : "";
+    if (this.props.action === AvaliarAction.edit) {
+      return this.state.cod;
+    }
+    return this.props.data.ufvClass ? this.props.data.ufvClass.cod : "";
   };
 
   private onSubmit = (values: typeof initialValues) => {
-    const finalValues = {
+    const finalValues: WriteReview.Variables = {
       ...values,
       cod: this.getCod(),
-      useful: "U" + values.useful,
-      easy: "E" + values.easy
+      useful: ("U" + values.useful) as ReviewUseful,
+      easy: ("E" + values.easy) as ReviewEasy
     };
 
-    client
-      .mutate({
-        mutation: WriteReviewMutation,
-        variables: finalValues,
-        refetchQueries: [
-          {
-            query: UfvClassDetailQuery,
-            variables: { id: this.props.match.params.id }
-          }
-        ]
-      })
-      .then(() => {
-        HistoryManager.goToClass(this.props.match.params.id);
-      });
+    if (this.props.action === AvaliarAction.edit) {
+      const vars: UpdateReview.Variables = {
+        ...finalValues,
+        id: this.props.match.params.id
+      };
+
+      client
+        .mutate({
+          mutation: UpdateReviewMutation,
+          variables: vars,
+          refetchQueries: [
+            {
+              query: UfvClassDetailQuery,
+              variables: { id: this.state.classId }
+            },
+            {
+              query: ReviewDataToEditQuery,
+              variables: { id: this.props.match.params.id }
+            }
+          ]
+        })
+        .then(() => {
+          HistoryManager.goToClass(this.state.classId);
+        });
+    } else {
+      client
+        .mutate({
+          mutation: WriteReviewMutation,
+          variables: finalValues,
+          refetchQueries: [
+            {
+              query: UfvClassDetailQuery,
+              variables: { id: this.props.match.params.id }
+            }
+          ]
+        })
+        .then(() => {
+          HistoryManager.goToClass(this.props.match.params.id);
+        });
+    }
   };
 }
 
@@ -178,21 +307,15 @@ const styles: StyleRulesCallback<ButtonClassesNames> = () => ({
   }
 });
 
-const withData = graphql<
-  RouteComponentProps<{ id: string }> & {
-    action: AvaliarAction;
-  },
-  UfvClassName.Query,
-  UfvClassName.Variables,
-  RouteComponentProps<{ id: string }> & {
-    action: AvaliarAction;
+const withData = withUfvClassName<RouteComponentProps<{ id: string }> & IProps>(
+  UfvClassNameQuery,
+  {
+    options: props => ({
+      variables: {
+        id: props.match.params.id
+      }
+    })
   }
->(UfvClassNameQuery, {
-  options: props => ({
-    variables: {
-      id: props.match.params.id
-    }
-  })
-});
+);
 
 export default withRouter(withData(withStyles(styles)(AvaliarDisciplinasBase)));

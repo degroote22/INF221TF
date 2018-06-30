@@ -37,7 +37,7 @@ class ConfiguredRouter extends React.Component {
             render={this.renderAvaliar}
           />
           <PrivateRoute
-            path={Routes.AvaliarDisciplina}
+            path={Routes.EditarAvaliacao}
             render={this.renderEditar}
           />
           <HomePage />
@@ -53,7 +53,7 @@ class ConfiguredRouter extends React.Component {
   private renderEditar = (
     props: ChildProps<RouteComponentProps<{ id: string }>>
   ) => {
-    return <AvaliarDisciplina {...props} action={AvaliarAction.create} />;
+    return <AvaliarDisciplina {...props} action={AvaliarAction.edit} />;
   };
 }
 

@@ -98,6 +98,7 @@ export const UfvClassDetailQuery = gql`
         id
         createdAt
         useful
+        score
         easy
         description
         recommended
@@ -134,6 +135,7 @@ export const ReviewsFromUserQuery = gql`
     reviews(where: { userId: $userId, first: $first }) {
       id
       createdAt
+      score
       useful
       easy
       description
@@ -152,6 +154,7 @@ export const MyOwnReviewsQuery = gql`
   query MyOwnReviews {
     myreviews {
       id
+      score
       createdAt
       useful
       easy
@@ -175,6 +178,45 @@ export const ReviewExtraDataQuery = gql`
 
     myvote(where: { reviewId: $id }) {
       type
+    }
+  }
+`;
+
+export const ReviewDataToEditQuery = gql`
+  query ReviewDataToEdit($id: String!) {
+    review(where: { id: $id }) {
+      classReviewed {
+        cod
+        id
+      }
+      description
+      easy
+      useful
+      anonymous
+      recommended
+      teacher
+    }
+  }
+`;
+
+export const AllMyVotesQuery = gql`
+  query AllMyVotes {
+    myvotes {
+      review {
+        id
+        score
+        createdAt
+        useful
+        easy
+        description
+        recommended
+        anonymous
+        reviewer {
+          id
+          name
+          rate
+        }
+      }
     }
   }
 `;

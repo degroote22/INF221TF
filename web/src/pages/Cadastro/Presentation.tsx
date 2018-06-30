@@ -6,11 +6,10 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import { Form, Formik, FormikProps } from "formik";
 import * as React from "react";
-import { MutationFunc } from "react-apollo";
 import { Redirect } from "react-router";
 import Layout from "src/components/Layout";
 import { FormikAutoCompleteSelect } from "src/Formuik/AutocompleteSelect";
-import { Register } from "src/generated/types";
+import { withRegisterMutationFunc } from "src/generated/types";
 import { BLOCK } from "src/utils/constants";
 import { Home } from "src/utils/routes";
 import UfvCourses from "src/utils/UfvCourses";
@@ -25,7 +24,7 @@ class Cadastro extends React.Component<
   {
     registered: boolean;
     logged: boolean;
-    register?: MutationFunc<Register.Mutation, Register.Variables>;
+    register: withRegisterMutationFunc;
   } & WithStyles<ClassesNames>
 > {
   public render() {

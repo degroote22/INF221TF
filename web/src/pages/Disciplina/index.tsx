@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import { ChildProps, graphql } from "react-apollo";
 import { RouteComponentProps } from "react-router";
 import { ComponentBase } from "resub";
 import Fab from "src/components/Fab";
@@ -15,7 +14,11 @@ import Layout from "src/components/Layout";
 import Loading from "src/components/Loading";
 import Review from "src/components/Review";
 import { UfvClassDetailQuery } from "src/config/Queries";
-import { UfvClassDetail } from "src/generated/types";
+import {
+  UfvClassDetail,
+  withUfvClassDetail,
+  withUfvClassDetailChildProps
+} from "src/generated/types";
 import Averages from "src/pages/Disciplina/Averages";
 import HistoryManager from "src/singletons/HistoryManager";
 import { BLOCK } from "../../utils/constants";
@@ -23,15 +26,16 @@ import { BLOCK } from "../../utils/constants";
 const initialState = {
   showMore: false
 };
-type IProps = WithStyles<DisciplinaClassNames> &
-  RouteComponentProps<{ id: string }> &
-  ChildProps<RouteComponentProps<{ id: string }>, UfvClassDetail.Query>;
+
+type IProps = withUfvClassDetailChildProps<
+  WithStyles<DisciplinaClassNames> & RouteComponentProps<{ id: string }>
+>;
+
 class Disciplina extends ComponentBase<IProps, typeof initialState> {
   public readonly state = initialState;
 
   public render() {
     if (
-      !this.props.data ||
       this.props.data.loading ||
       this.props.data.error ||
       !this.props.data.ufvClass
@@ -39,11 +43,10 @@ class Disciplina extends ComponentBase<IProps, typeof initialState> {
       return <Loading layout={true} />;
     }
     const disciplina = this.props.data.ufvClass;
-    const reviews = disciplina
-      ? disciplina.reviews
-        ? disciplina.reviews
-        : []
+    const reviews = disciplina.reviews
+      ? [...disciplina.reviews].sort((a, b) => b.score - a.score)
       : [];
+
     const title = disciplina.cod + " - " + disciplina.name;
 
     return (
@@ -122,11 +125,8 @@ const styles: StyleRulesCallback<DisciplinaClassNames> = () => ({
   }
 });
 
-const withData = graphql<
-  RouteComponentProps<{ id: string }>,
-  UfvClassDetail.Query,
-  UfvClassDetail.Variables,
-  RouteComponentProps<{ id: string }>
+const withData = withUfvClassDetail<
+  RouteComponentProps<{ id: string }> & WithStyles<DisciplinaClassNames>
 >(UfvClassDetailQuery, {
   options: props => ({
     variables: {
@@ -135,4 +135,4 @@ const withData = graphql<
   })
 });
 
-export default withData(withStyles(styles)(Disciplina));
+export default withStyles(styles)(withData(Disciplina));

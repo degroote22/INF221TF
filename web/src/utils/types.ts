@@ -13,6 +13,6 @@ export interface IKindResponse {
 export type IReviewPosition = "first" | "second" | "third" | "other" | "mine";
 
 export enum AvaliarAction {
-  create,
-  edit
+  create = "create",
+  edit = "edit"
 }

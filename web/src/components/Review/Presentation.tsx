@@ -14,6 +14,7 @@ import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import * as React from "react";
 import { MutationFunc } from "react-apollo";
+import { Link } from "react-router-dom";
 import {
   ReviewVotesTypes,
   SetVoteOnReview,
@@ -22,13 +23,15 @@ import {
 import HistoryManager from "src/singletons/HistoryManager";
 import { BLOCK } from "src/utils/constants";
 import { IReviewPosition } from "src/utils/types";
+import { LinkStyle } from "../../utils/styles";
 
 class Review extends React.Component<
   WithStyles<ButtonClassesNames> & {
     review: UfvClassDetail.Reviews;
     position: IReviewPosition;
+    registered: boolean;
     myVote: ReviewVotesTypes | null;
-    setVote?: MutationFunc<SetVoteOnReview.Mutation, SetVoteOnReview.Variables>;
+    setVote: MutationFunc<SetVoteOnReview.Mutation, SetVoteOnReview.Variables>;
   }
 > {
   public render() {
@@ -114,15 +117,19 @@ class Review extends React.Component<
 
     if (position === "mine") {
       return (
-        <Button
-          onClick={this.onEdit}
-          variant="contained"
-          className={classes.button}
-          color="secondary"
+        <Link
+          style={LinkStyle}
+          to={HistoryManager.editarRoute(this.props.review.id)}
         >
-          <Edit className={classes.leftIcon} />
-          Editar
-        </Button>
+          <Button
+            variant="contained"
+            className={classes.button}
+            color="secondary"
+          >
+            <Edit className={classes.leftIcon} />
+            Editar
+          </Button>
+        </Link>
       );
     }
 
@@ -154,25 +161,24 @@ class Review extends React.Component<
     );
   };
 
-  private onEdit = () => {
-    // tslint:disable-next-line:no-console
-    console.log("onedit");
-  };
-
   private onUpvote = () => {
-    if (this.props.setVote) {
-      this.props.setVote({
-        variables: { reviewId: this.props.review.id, type: "Agree" }
-      });
+    if (!this.props.registered) {
+      HistoryManager.goToLogin();
     }
+
+    this.props.setVote({
+      variables: { reviewId: this.props.review.id, type: "Agree" }
+    });
   };
 
   private onDownvote = () => {
-    if (this.props.setVote) {
-      this.props.setVote({
-        variables: { reviewId: this.props.review.id, type: "Disagree" }
-      });
+    if (!this.props.registered) {
+      HistoryManager.goToLogin();
     }
+
+    this.props.setVote({
+      variables: { reviewId: this.props.review.id, type: "Disagree" }
+    });
   };
 }
 type ButtonClassesNames =

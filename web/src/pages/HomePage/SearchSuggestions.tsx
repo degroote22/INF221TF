@@ -7,29 +7,44 @@ import Paper from "@material-ui/core/Paper";
 import Face from "@material-ui/icons/Face";
 import School from "@material-ui/icons/School";
 import * as React from "react";
-import { DataProps, graphql } from "react-apollo";
 import { Link } from "react-router-dom";
 import Loading from "src/components/Loading";
 import { SearchHomeQuery } from "src/config/Queries";
-import { SearchHome } from "src/generated/types";
+import {
+  SearchHome,
+  withSearchHome,
+  withSearchHomeDataValue
+} from "src/generated/types";
 import Tabs from "src/pages/HomePage/Tabs";
 import HistoryManager from "src/singletons/HistoryManager";
 import { LinkStyle } from "src/utils/styles";
-interface IRename {
-  result: DataProps<SearchHome.Query, SearchHome.Variables>["data"];
+
+interface IProps extends IExternalProps, IWithDataProps {}
+
+interface IExternalProps {
   search: string;
   inputFocused: boolean;
 }
-const getList = (
-  result: DataProps<SearchHome.Query, SearchHome.Variables>["data"]
-) => {
+
+interface IWithDataProps {
+  result: withSearchHomeDataValue;
+}
+
+const withData = withSearchHome<IExternalProps, IWithDataProps>(
+  SearchHomeQuery,
+  {
+    options: p => ({ delay: true, variables: { value: p.search } }),
+    props: p => ({ result: p.data })
+  }
+);
+
+const getList = (result: withSearchHomeDataValue) => {
   if (!result || result.loading || !result.searchAll) {
     return [];
   }
-  const list: SearchHome.Query["searchAll"] = result.searchAll;
-  return list;
+  return result.searchAll;
 };
-class SearchSuggestions extends React.Component<IRename> {
+class SearchSuggestions extends React.Component<IProps> {
   public render() {
     const list = getList(this.props.result);
     return (
@@ -105,18 +120,5 @@ class SearchSuggestions extends React.Component<IRename> {
     );
   };
 }
-
-const withData = graphql<
-  {
-    search: string;
-    inputFocused: boolean;
-  },
-  SearchHome.Query,
-  SearchHome.Variables,
-  IRename
->(SearchHomeQuery, {
-  options: (p: any) => ({ delay: true, variables: { value: p.search } }),
-  props: (p: any) => ({ ...p, result: p.data })
-});
 
 export default withData(SearchSuggestions);
