@@ -229,12 +229,13 @@ type Query {
 
 type Review implements Node {
   id: ID!
-  score: Int!
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int!
   classReviewed(where: UfvClassWhereInput): UfvClass!
   reviewer(where: UserWhereInput): User!
   votes(where: ReviewVotesWhereInput, orderBy: ReviewVotesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewVotes!]
@@ -253,12 +254,13 @@ type ReviewConnection {
 }
 
 input ReviewCreateInput {
-  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int
   classReviewed: UfvClassCreateOneWithoutReviewsInput!
   reviewer: UserCreateOneWithoutReviewsInput!
   votes: ReviewVotesCreateManyWithoutReviewInput
@@ -280,34 +282,37 @@ input ReviewCreateOneWithoutVotesInput {
 }
 
 input ReviewCreateWithoutClassReviewedInput {
-  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int
   reviewer: UserCreateOneWithoutReviewsInput!
   votes: ReviewVotesCreateManyWithoutReviewInput
 }
 
 input ReviewCreateWithoutReviewerInput {
-  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int
   classReviewed: UfvClassCreateOneWithoutReviewsInput!
   votes: ReviewVotesCreateManyWithoutReviewInput
 }
 
 input ReviewCreateWithoutVotesInput {
-  score: Int
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int
   classReviewed: UfvClassCreateOneWithoutReviewsInput!
   reviewer: UserCreateOneWithoutReviewsInput!
 }
@@ -333,8 +338,6 @@ type ReviewEdge {
 enum ReviewOrderByInput {
   id_ASC
   id_DESC
-  score_ASC
-  score_DESC
   useful_ASC
   useful_DESC
   easy_ASC
@@ -345,6 +348,10 @@ enum ReviewOrderByInput {
   anonymous_DESC
   recommended_ASC
   recommended_DESC
+  teacher_ASC
+  teacher_DESC
+  score_ASC
+  score_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -353,12 +360,13 @@ enum ReviewOrderByInput {
 
 type ReviewPreviousValues {
   id: ID!
-  score: Int!
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
+  score: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -403,12 +411,13 @@ input ReviewSubscriptionWhereInput {
 }
 
 input ReviewUpdateInput {
-  score: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score: Int
   classReviewed: UfvClassUpdateOneWithoutReviewsInput
   reviewer: UserUpdateOneWithoutReviewsInput
   votes: ReviewVotesUpdateManyWithoutReviewInput
@@ -441,34 +450,37 @@ input ReviewUpdateOneWithoutVotesInput {
 }
 
 input ReviewUpdateWithoutClassReviewedDataInput {
-  score: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score: Int
   reviewer: UserUpdateOneWithoutReviewsInput
   votes: ReviewVotesUpdateManyWithoutReviewInput
 }
 
 input ReviewUpdateWithoutReviewerDataInput {
-  score: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score: Int
   classReviewed: UfvClassUpdateOneWithoutReviewsInput
   votes: ReviewVotesUpdateManyWithoutReviewInput
 }
 
 input ReviewUpdateWithoutVotesDataInput {
-  score: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score: Int
   classReviewed: UfvClassUpdateOneWithoutReviewsInput
   reviewer: UserUpdateOneWithoutReviewsInput
 }
@@ -793,28 +805,6 @@ input ReviewWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  score: Int
-
-  """All values that are not equal to given value."""
-  score_not: Int
-
-  """All values that are contained in given list."""
-  score_in: [Int!]
-
-  """All values that are not contained in given list."""
-  score_not_in: [Int!]
-
-  """All values less than the given value."""
-  score_lt: Int
-
-  """All values less than or equal the given value."""
-  score_lte: Int
-
-  """All values greater than the given value."""
-  score_gt: Int
-
-  """All values greater than or equal the given value."""
-  score_gte: Int
   useful: ReviewUseful
 
   """All values that are not equal to given value."""
@@ -883,6 +873,68 @@ input ReviewWhereInput {
 
   """All values that are not equal to given value."""
   recommended_not: Boolean
+  teacher: String
+
+  """All values that are not equal to given value."""
+  teacher_not: String
+
+  """All values that are contained in given list."""
+  teacher_in: [String!]
+
+  """All values that are not contained in given list."""
+  teacher_not_in: [String!]
+
+  """All values less than the given value."""
+  teacher_lt: String
+
+  """All values less than or equal the given value."""
+  teacher_lte: String
+
+  """All values greater than the given value."""
+  teacher_gt: String
+
+  """All values greater than or equal the given value."""
+  teacher_gte: String
+
+  """All values containing the given string."""
+  teacher_contains: String
+
+  """All values not containing the given string."""
+  teacher_not_contains: String
+
+  """All values starting with the given string."""
+  teacher_starts_with: String
+
+  """All values not starting with the given string."""
+  teacher_not_starts_with: String
+
+  """All values ending with the given string."""
+  teacher_ends_with: String
+
+  """All values not ending with the given string."""
+  teacher_not_ends_with: String
+  score: Int
+
+  """All values that are not equal to given value."""
+  score_not: Int
+
+  """All values that are contained in given list."""
+  score_in: [Int!]
+
+  """All values that are not contained in given list."""
+  score_not_in: [Int!]
+
+  """All values less than the given value."""
+  score_lt: Int
+
+  """All values less than or equal the given value."""
+  score_lte: Int
+
+  """All values greater than the given value."""
+  score_gt: Int
+
+  """All values greater than or equal the given value."""
+  score_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -1949,24 +2001,12 @@ export type Department =   'Depto__de_Economia_Rural' |
   'Depto__de_Historia' |
   'Depto__de_Letras'
 
-export type ReviewOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'score_ASC' |
-  'score_DESC' |
-  'useful_ASC' |
-  'useful_DESC' |
-  'easy_ASC' |
-  'easy_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'anonymous_ASC' |
-  'anonymous_DESC' |
-  'recommended_ASC' |
-  'recommended_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC'
+export type ReviewUseful =   'U0' |
+  'U1' |
+  'U2' |
+  'U3' |
+  'U4' |
+  'U5'
 
 export type UfvCourses =   'Agronegocio' |
   'Agronomia' |
@@ -2036,19 +2076,33 @@ export type UserOrderByInput =   'id_ASC' |
   'updatedAt_ASC' |
   'updatedAt_DESC'
 
+export type ReviewOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'useful_ASC' |
+  'useful_DESC' |
+  'easy_ASC' |
+  'easy_DESC' |
+  'description_ASC' |
+  'description_DESC' |
+  'anonymous_ASC' |
+  'anonymous_DESC' |
+  'recommended_ASC' |
+  'recommended_DESC' |
+  'teacher_ASC' |
+  'teacher_DESC' |
+  'score_ASC' |
+  'score_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
 export type ReviewEasy =   'E0' |
   'E1' |
   'E2' |
   'E3' |
   'E4' |
   'E5'
-
-export type ReviewUseful =   'U0' |
-  'U1' |
-  'U2' |
-  'U3' |
-  'U4' |
-  'U5'
 
 export type UfvYears =   'Y19201' |
   'Y19211' |
@@ -2179,12 +2233,13 @@ export type UserRate =   'Iniciante' |
   'Confiavel'
 
 export interface ReviewCreateWithoutVotesInput {
-  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score?: Int
   classReviewed: UfvClassCreateOneWithoutReviewsInput
   reviewer: UserCreateOneWithoutReviewsInput
 }
@@ -2293,12 +2348,13 @@ export interface UfvClassCreateWithoutReviewsInput {
 }
 
 export interface ReviewCreateWithoutClassReviewedInput {
-  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score?: Int
   reviewer: UserCreateOneWithoutReviewsInput
   votes?: ReviewVotesCreateManyWithoutReviewInput
 }
@@ -2358,14 +2414,6 @@ export interface ReviewWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
-  score?: Int
-  score_not?: Int
-  score_in?: Int[] | Int
-  score_not_in?: Int[] | Int
-  score_lt?: Int
-  score_lte?: Int
-  score_gt?: Int
-  score_gte?: Int
   useful?: ReviewUseful
   useful_not?: ReviewUseful
   useful_in?: ReviewUseful[] | ReviewUseful
@@ -2392,6 +2440,28 @@ export interface ReviewWhereInput {
   anonymous_not?: Boolean
   recommended?: Boolean
   recommended_not?: Boolean
+  teacher?: String
+  teacher_not?: String
+  teacher_in?: String[] | String
+  teacher_not_in?: String[] | String
+  teacher_lt?: String
+  teacher_lte?: String
+  teacher_gt?: String
+  teacher_gte?: String
+  teacher_contains?: String
+  teacher_not_contains?: String
+  teacher_starts_with?: String
+  teacher_not_starts_with?: String
+  teacher_ends_with?: String
+  teacher_not_ends_with?: String
+  score?: Int
+  score_not?: Int
+  score_in?: Int[] | Int
+  score_not_in?: Int[] | Int
+  score_lt?: Int
+  score_lte?: Int
+  score_gt?: Int
+  score_gte?: Int
   createdAt?: DateTime
   createdAt_not?: DateTime
   createdAt_in?: DateTime[] | DateTime
@@ -2514,23 +2584,25 @@ export interface ReviewVotesCreateInput {
 }
 
 export interface ReviewUpdateWithoutVotesDataInput {
-  score?: Int
   useful?: ReviewUseful
   easy?: ReviewEasy
   description?: String
   anonymous?: Boolean
   recommended?: Boolean
+  teacher?: String
+  score?: Int
   classReviewed?: UfvClassUpdateOneWithoutReviewsInput
   reviewer?: UserUpdateOneWithoutReviewsInput
 }
 
 export interface ReviewCreateInput {
-  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score?: Int
   classReviewed: UfvClassCreateOneWithoutReviewsInput
   reviewer: UserCreateOneWithoutReviewsInput
   votes?: ReviewVotesCreateManyWithoutReviewInput
@@ -2568,12 +2640,13 @@ export interface ReviewCreateManyWithoutClassReviewedInput {
 }
 
 export interface ReviewCreateWithoutReviewerInput {
-  score?: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score?: Int
   classReviewed: UfvClassCreateOneWithoutReviewsInput
   votes?: ReviewVotesCreateManyWithoutReviewInput
 }
@@ -2660,12 +2733,13 @@ export interface ReviewUpdateManyWithoutClassReviewedInput {
 }
 
 export interface ReviewUpdateWithoutReviewerDataInput {
-  score?: Int
   useful?: ReviewUseful
   easy?: ReviewEasy
   description?: String
   anonymous?: Boolean
   recommended?: Boolean
+  teacher?: String
+  score?: Int
   classReviewed?: UfvClassUpdateOneWithoutReviewsInput
   votes?: ReviewVotesUpdateManyWithoutReviewInput
 }
@@ -2803,12 +2877,13 @@ export interface ReviewVotesUpdateManyWithoutReviewInput {
 }
 
 export interface ReviewUpdateWithoutClassReviewedDataInput {
-  score?: Int
   useful?: ReviewUseful
   easy?: ReviewEasy
   description?: String
   anonymous?: Boolean
   recommended?: Boolean
+  teacher?: String
+  score?: Int
   reviewer?: UserUpdateOneWithoutReviewsInput
   votes?: ReviewVotesUpdateManyWithoutReviewInput
 }
@@ -2819,12 +2894,13 @@ export interface ReviewVotesUpdateWithWhereUniqueWithoutReviewInput {
 }
 
 export interface ReviewUpdateInput {
-  score?: Int
   useful?: ReviewUseful
   easy?: ReviewEasy
   description?: String
   anonymous?: Boolean
   recommended?: Boolean
+  teacher?: String
+  score?: Int
   classReviewed?: UfvClassUpdateOneWithoutReviewsInput
   reviewer?: UserUpdateOneWithoutReviewsInput
   votes?: ReviewVotesUpdateManyWithoutReviewInput
@@ -2989,12 +3065,13 @@ export interface AggregateReviewVotes {
 
 export interface ReviewPreviousValues {
   id: ID_Output
-  score: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -3011,12 +3088,13 @@ export interface ReviewVotesConnection {
 
 export interface Review extends Node {
   id: ID_Output
-  score: Int
   useful: ReviewUseful
   easy: ReviewEasy
   description: String
   anonymous: Boolean
   recommended: Boolean
+  teacher: String
+  score: Int
   classReviewed: UfvClass
   reviewer: User
   votes?: ReviewVotes[]
@@ -3139,9 +3217,9 @@ export type ID_Output = string
 export type DateTime = Date | string
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type Boolean = boolean
+export type Int = number
 
 /*
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -3155,6 +3233,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Int = number
+export type Boolean = boolean

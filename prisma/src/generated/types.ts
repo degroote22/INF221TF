@@ -41,12 +41,13 @@ export interface UfvClass extends Node {
 
 export interface Review extends Node {
   id: string;
-  score: number;
   useful: ReviewUseful;
   easy: ReviewEasy;
   description: string;
   anonymous: boolean;
   recommended: boolean;
+  teacher: string;
+  score: number;
   classReviewed: UfvClass;
   reviewer: User;
   votes?: ReviewVotes[] | null;
@@ -78,6 +79,7 @@ export interface Mutation {
   register: User;
   deleteAcc?: User | null;
   createReview?: Review | null;
+  editReview?: Review | null;
   setVote?: ReviewVotes | null;
 }
 
@@ -171,12 +173,13 @@ export namespace UfvClassResolvers {
 export namespace ReviewResolvers {
   export interface Resolvers {
     id?: IdResolver;
-    score?: ScoreResolver;
     useful?: UsefulResolver;
     easy?: EasyResolver;
     description?: DescriptionResolver;
     anonymous?: AnonymousResolver;
     recommended?: RecommendedResolver;
+    teacher?: TeacherResolver;
+    score?: ScoreResolver;
     classReviewed?: ClassReviewedResolver;
     reviewer?: ReviewerResolver;
     votes?: VotesResolver;
@@ -185,12 +188,13 @@ export namespace ReviewResolvers {
   }
 
   export type IdResolver = Resolver<string>;
-  export type ScoreResolver = Resolver<number>;
   export type UsefulResolver = Resolver<ReviewUseful>;
   export type EasyResolver = Resolver<ReviewEasy>;
   export type DescriptionResolver = Resolver<string>;
   export type AnonymousResolver = Resolver<boolean>;
   export type RecommendedResolver = Resolver<boolean>;
+  export type TeacherResolver = Resolver<string>;
+  export type ScoreResolver = Resolver<number>;
   export type ClassReviewedResolver = Resolver<UfvClass, ClassReviewedArgs>;
   export interface ClassReviewedArgs {
     where?: UfvClassWhereInput | null;
@@ -289,6 +293,7 @@ export namespace MutationResolvers {
     register?: RegisterResolver;
     deleteAcc?: DeleteAccResolver;
     createReview?: CreateReviewResolver;
+    editReview?: EditReviewResolver;
     setVote?: SetVoteResolver;
   }
 
@@ -301,6 +306,11 @@ export namespace MutationResolvers {
   export type CreateReviewResolver = Resolver<Review | null, CreateReviewArgs>;
   export interface CreateReviewArgs {
     data: CreateReviewData;
+  }
+
+  export type EditReviewResolver = Resolver<Review | null, EditReviewArgs>;
+  export interface EditReviewArgs {
+    data: EditReviewData;
   }
 
   export type SetVoteResolver = Resolver<ReviewVotes | null, SetVoteArgs>;
@@ -683,7 +693,8 @@ export interface UserInput {
 }
 
 export interface UfvClassInput {
-  id: string;
+  id?: string | null;
+  cod?: string | null;
 }
 
 export interface ReviewsWhereInput {
@@ -702,6 +713,18 @@ export interface UserRegisterInput {
 
 export interface CreateReviewData {
   cod: string;
+  teacher: string;
+  useful: ReviewUseful;
+  easy: ReviewEasy;
+  description: string;
+  anonymous: boolean;
+  recommended: boolean;
+}
+
+export interface EditReviewData {
+  id: string;
+  cod: string;
+  teacher: string;
   useful: ReviewUseful;
   easy: ReviewEasy;
   description: string;
@@ -788,6 +811,9 @@ export interface RegisterMutationArgs {
 export interface CreateReviewMutationArgs {
   data: CreateReviewData;
 }
+export interface EditReviewMutationArgs {
+  data: EditReviewData;
+}
 export interface SetVoteMutationArgs {
   data: SetVoteData;
 }
@@ -835,8 +861,6 @@ export type Department =
 export type ReviewOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "score_ASC"
-  | "score_DESC"
   | "useful_ASC"
   | "useful_DESC"
   | "easy_ASC"
@@ -847,6 +871,10 @@ export type ReviewOrderByInput =
   | "anonymous_DESC"
   | "recommended_ASC"
   | "recommended_DESC"
+  | "teacher_ASC"
+  | "teacher_DESC"
+  | "score_ASC"
+  | "score_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"

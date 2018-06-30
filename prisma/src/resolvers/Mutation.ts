@@ -87,9 +87,75 @@ const deleteAcc: MutationResolvers.DeleteAccResolver = async (
   return ctx.db.mutation.deleteUser({ where: { facebookId: id } }, info);
 };
 
+const editReview: MutationResolvers.EditReviewResolver = async (
+  _,
+  {
+    data: {
+      useful,
+      easy,
+      description,
+      anonymous,
+      recommended,
+      id,
+      teacher,
+      cod
+    }
+  },
+  ctx: Context,
+  info
+) => {
+  const infox = `
+    {
+      id
+      useful
+      easy
+      recommended
+    }
+  `;
+
+  const allReviews =
+    (await ctx.db.query.reviews(
+      { where: { classReviewed: { cod } } },
+      infox
+    )) || [];
+
+  const reviews = allReviews.filter(x => x.id !== id);
+
+  const length = reviews.length + 1;
+  const usefulSum =
+    reviews.reduce((prev, curr) => {
+      return prev + parseInt(curr.useful[1]);
+    }, 0) + parseInt(useful[1]);
+
+  const easySum =
+    reviews.reduce((prev, curr) => {
+      return prev + parseInt(curr.easy[1]);
+    }, 0) + parseInt(easy[1]);
+
+  let recommendedLength = reviews.filter(x => x.recommended).length;
+  if (recommended) {
+    recommendedLength++;
+  }
+  const newUseful = usefulSum / length;
+  const newEasy = easySum / length;
+
+  await ctx.db.mutation.updateUfvClass({
+    data: { recommended: recommendedLength, useful: newUseful, easy: newEasy },
+    where: { cod }
+  });
+
+  return ctx.db.mutation.updateReview(
+    {
+      where: { id },
+      data: { useful, easy, description, anonymous, recommended, teacher }
+    },
+    info
+  );
+};
+
 const createReview: MutationResolvers.CreateReviewResolver = async (
   _,
-  { data: { useful, easy, description, anonymous, recommended, cod } },
+  { data: { useful, easy, description, anonymous, recommended, cod, teacher } },
   ctx: Context,
   info
 ) => {
@@ -143,6 +209,7 @@ const createReview: MutationResolvers.CreateReviewResolver = async (
   return ctx.db.mutation.createReview(
     {
       data: {
+        teacher,
         useful,
         easy,
         description,
@@ -168,5 +235,6 @@ export const Mutation = {
   setVote,
   register,
   createReview,
+  editReview,
   deleteAcc
 };

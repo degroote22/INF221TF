@@ -23,7 +23,8 @@ input UserInput {
 }
 
 input UfvClassInput {
-  id: String!
+  id: String
+  cod: String
 }
 
 input VoteWhereInput {
@@ -60,6 +61,18 @@ input UserRegisterInput {
 
 input CreateReviewData {
   cod: String!
+  teacher: String!
+  useful: ReviewUseful!
+  easy: ReviewEasy!
+  description: String!
+  anonymous: Boolean!
+  recommended: Boolean!
+}
+
+input EditReviewData {
+  id: String!
+  cod: String!
+  teacher: String!
   useful: ReviewUseful!
   easy: ReviewEasy!
   description: String!
@@ -76,5 +89,6 @@ type Mutation {
   register(user: UserRegisterInput!): User!
   deleteAcc: User
   createReview(data: CreateReviewData!): Review
+  editReview(data: EditReviewData!): Review
   setVote(data: SetVoteData!): ReviewVotes
 }

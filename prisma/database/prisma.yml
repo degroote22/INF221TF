@@ -1,14 +1,9 @@
-# endpoint: http://localhost:4466
 datamodel: datamodel.graphql
 seed:
   import: seed.graphql
-
-
-# The endpoint of your Prisma API (deployed to a Prisma Sandbox).
+  
 endpoint: ${env:PRISMA_ENDPOINT}
-# endpoint: http://localhost:4466
-# secret: mysecret123
-# secret: ${env:PRISMA_SECRET}
+secret: ${env:PRISMA_SECRET}
 
 
 # Download the GraphQL schema of the Prisma API into

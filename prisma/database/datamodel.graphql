@@ -250,6 +250,7 @@ type Review {
   description: String!
   anonymous: Boolean!
   recommended: Boolean!
+  teacher: String!
   score: Int! @default(value: "0")
   classReviewed: UfvClass! @relation(name: "ReviewFrom", onDelete: SET_NULL)
   reviewer: User! @relation(name: "ReviewAuthor", onDelete: SET_NULL)

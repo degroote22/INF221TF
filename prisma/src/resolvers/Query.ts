@@ -26,21 +26,21 @@ const myvote: QueryResolvers.MyvoteResolver = async (
 ) => {
   try {
     const { id } = await getUserData(ctx);
-    return ctx.db.query
-      .reviewVoteses(
-        {
-          where: {
-            review: {
-              id: reviewId
-            },
-            user: {
-              facebookId: id
-            }
+    const response = await ctx.db.query.reviewVoteses(
+      {
+        where: {
+          review: {
+            id: reviewId
+          },
+          user: {
+            facebookId: id
           }
-        },
-        info
-      )
-      .then(x => x[0]);
+        }
+      },
+      info
+    );
+
+    return response[0];
   } catch {
     return null;
   }
@@ -97,12 +97,16 @@ const myreviews: QueryResolvers.MyreviewsResolver = async (
 
 const ufvClass: QueryResolvers.UfvClassResolver = async (
   _,
-  { where: { id } },
+  { where: { id, cod } },
   ctx: Context,
   info
 ) => {
-  return ctx.db.query.ufvClass({ where: { id } }, info);
+  return ctx.db.query.ufvClass(
+    { where: { id: id || undefined, cod: cod || undefined } },
+    info
+  );
 };
+
 const user: QueryResolvers.UserResolver = async (
   _,
   { where: { id } },
